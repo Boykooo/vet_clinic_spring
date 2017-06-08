@@ -31,9 +31,8 @@ public class Employee {
     @Column(name = "role", length = 100, nullable = false)
     private String role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<Patient> patients;
-
 
     public Employee(String email, String password, String phoneNumber,
                     String firstName, String lastName, String role) {

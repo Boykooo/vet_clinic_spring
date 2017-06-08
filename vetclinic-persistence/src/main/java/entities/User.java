@@ -1,5 +1,7 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -27,11 +29,8 @@ public class User {
     @Column(name = "last_name", length = 100, nullable = false)
     private String lastName;
 
-    @Column(name = "role", length = 100, nullable = false)
-    private String role;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Patient> patients;
+    private List<Animal> animals;
 
     public User(String email, String password, String phoneNumber, String firstName, String lastName) {
         this.email = email;
@@ -39,20 +38,18 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = "user";
     }
 
     public User() {
-        role = "user";
     }
 
     //region GetSet
 
-    public List<Patient> getPatients() {
-        return patients;
+    public List<Animal> getAnimals() {
+        return animals;
     }
-    public void setPatients(List<Patient> patients) {
-        this.patients = patients;
+    public void setAnimals(List<Animal> animals) {
+        this.animals = animals;
     }
 
     public String getEmail() {
@@ -88,13 +85,6 @@ public class User {
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
     }
 
     //endregion
