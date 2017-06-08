@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="vetclinic-persistence" />
+        <module name="vetclinic-service" />
+        <module name="vetclinic-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="vetclinic" target="1.8" />
+      <module name="vetclinic-persistence" target="1.8" />
+      <module name="vetclinic-service" target="1.5" />
+      <module name="vetclinic-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

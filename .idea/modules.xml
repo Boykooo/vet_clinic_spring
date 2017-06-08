@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/vetclinic.iml" filepath="$PROJECT_DIR$/vetclinic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vetclinic-persistence/vetclinic-persistence.iml" filepath="$PROJECT_DIR$/vetclinic-persistence/vetclinic-persistence.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vetclinic-service/vetclinic-service.iml" filepath="$PROJECT_DIR$/vetclinic-service/vetclinic-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vetclinic-web/vetclinic-web.iml" filepath="$PROJECT_DIR$/vetclinic-web/vetclinic-web.iml" />
+    </modules>
+  </component>
+</project>
