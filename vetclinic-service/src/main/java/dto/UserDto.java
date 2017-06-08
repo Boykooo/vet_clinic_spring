@@ -1,7 +1,12 @@
 package dto;
 
+import entities.Animal;
 import entities.User;
 
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 /**
@@ -14,25 +19,28 @@ public class UserDto {
     private String phoneNumber;
     private String firstName;
     private String lastName;
-    private String role;
-    private List<PatientDto> patients;
+    private List<AnimalDto> animals;
 
     public UserDto(String email, String password, String phoneNumber,
-                   String firstName, String lastName, List<PatientDto> patients) {
+                   String firstName, String lastName) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = "user";
-        this.patients = patients;
     }
 
-    public UserDto(){
-        this.role = "user";
+    public UserDto() {
     }
 
     //region GetSet
+
+    public List<AnimalDto> getAnimals() {
+        return animals;
+    }
+    public void setAnimals(List<AnimalDto> animals) {
+        this.animals = animals;
+    }
 
     public String getEmail() {
         return email;
@@ -67,20 +75,6 @@ public class UserDto {
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public List<PatientDto> getPatients() {
-        return patients;
-    }
-    public void setPatients(List<PatientDto> patients) {
-        this.patients = patients;
     }
 
     //endregion

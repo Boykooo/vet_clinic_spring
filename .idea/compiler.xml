@@ -14,7 +14,7 @@
     <bytecodeTargetLevel>
       <module name="vetclinic" target="1.8" />
       <module name="vetclinic-persistence" target="1.8" />
-      <module name="vetclinic-service" target="1.5" />
+      <module name="vetclinic-service" target="1.8" />
       <module name="vetclinic-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>

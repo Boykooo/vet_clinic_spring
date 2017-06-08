@@ -1,10 +1,10 @@
 package services;
 
-import dto.PatientDto;
+import dto.AnimalDto;
 import dto.UserDto;
+import entities.Animal;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 
@@ -16,10 +16,12 @@ import java.util.List;
  */
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserService implements GenericService<UserDto, String> {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AnimalService animalService;
 
     public List<UserDto> findAll() {
         List<UserDto> users = new ArrayList<UserDto>();
@@ -47,18 +49,29 @@ public class UserServiceImpl implements IUserService {
     }
 
     private UserDto convertToDto(User user){
-        UserDto userDto = new UserDto();
-        userDto.setEmail(user.getEmail());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setPassword(user.getPassword());
-        userDto.setPhoneNumber(user.getPhoneNumber());
-        userDto.setRole(user.getRole());
+        UserDto userDto = convertToDtoWithoutLists(user);
 
-       /* List<PatientDto> patients = new ArrayList<PatientDto>();
-        user...*/
+        List<AnimalDto> animals = new ArrayList<>();
+        user.getAnimals().stream().forEach(
+                (Animal animal) -> animals.add(animalService.convertToDto(animal))
+        );
+
+        userDto.setAnimals(animals);
 
        return userDto;
     }
 
+    public UserDto convertToDtoWithoutLists(User user){
+        UserDto userDto = new UserDto();
+        if (user != null)
+        {
+            userDto.setEmail(user.getEmail());
+            userDto.setFirstName(user.getFirstName());
+            userDto.setLastName(user.getLastName());
+            userDto.setPassword(user.getPassword());
+            userDto.setPhoneNumber(user.getPhoneNumber());
+        }
+
+        return  userDto;
+    }
 }

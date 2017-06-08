@@ -1,8 +1,9 @@
-package entities;
+package dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import entities.Patient;
+import entities.User;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -10,39 +11,20 @@ import java.sql.Date;
 /**
  * Created by andrey on 08.06.17.
  */
+public class AnimalDto {
 
-@Entity
-@Table(name = "animal")
-public class Animal {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @Column(name = "name", length = 100, nullable = false)
     private String name;
-
-    @Column(name = "age", nullable = false)
     private Integer age;
-
-    @Column(name = "description", length = 1000)
     private String description;
-
-    @Column(name = "reg_date", nullable = false)
     private Date regDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_email", nullable = false)
     @JsonIgnoreProperties("animals")
-    private User user;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "animal")
+    private UserDto user;
     @JsonIgnoreProperties("animal")
-    private Patient patient;
+    private PatientDto patient;
 
-    public Animal(String name, Integer age, String description,
-                  Date regDate, User user, Patient patient) {
+    public AnimalDto(String name, Integer age, String description,
+                  Date regDate, UserDto user, PatientDto patient) {
         this.name = name;
         this.age = age;
         this.description = description;
@@ -51,7 +33,7 @@ public class Animal {
         this.patient = patient;
     }
 
-    public Animal() {
+    public AnimalDto() {
 
     }
 
@@ -92,17 +74,17 @@ public class Animal {
         this.regDate = regDate;
     }
 
-    public User getUser() {
+    public UserDto getUser() {
         return user;
     }
-    public void setUser(User user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
 
-    public Patient getPatient() {
+    public PatientDto getPatient() {
         return patient;
     }
-    public void setPatient(Patient patient) {
+    public void setPatient(PatientDto patient) {
         this.patient = patient;
     }
 

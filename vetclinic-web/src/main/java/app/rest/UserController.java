@@ -1,10 +1,12 @@
 package app.rest;
 
+import dto.UserDto;
 import entities.Animal;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import repository.UserRepository;
+import services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,16 +16,16 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserRepository repository;
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<User> getAll() {
-        return repository.findAll();
+    public List<UserDto> getAll() {
+        return userService.findAll();
     }
 
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)
-    public User getSpecificUser(@PathVariable("email") String email) {
-        return repository.findOne(email);
+    public UserDto getSpecificUser(@PathVariable("email") String email) {
+        return userService.findById(email);
     }
 
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -25,6 +27,7 @@ public class Patient {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_email")
+    @JsonIgnoreProperties("patients")
     private Employee employee;
 
     @Column(name = "description", length = 1000, nullable = false)
