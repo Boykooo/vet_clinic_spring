@@ -10,5 +10,5 @@ public interface GenericService<Entity, PK> {
     Entity findById(PK key);
     void add(Entity entity);
     void update(Entity entity);
-    boolean delete(PK key);
+    void delete(PK key);
 }

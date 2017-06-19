@@ -28,8 +28,8 @@
     </schema>
     <schema id="9" parent="2" name="vetclinic">
       <ObjectId>16654</ObjectId>
-      <IntrospectionTimestamp>2017-06-08.14:26:20.759</IntrospectionTimestamp>
-      <IntrospectionStateNumber>781</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2017-06-19.13:52:00.026</IntrospectionTimestamp>
+      <IntrospectionStateNumber>790</IntrospectionStateNumber>
       <Visible>1</Visible>
     </schema>
     <sequence id="10" parent="9" name="animal_id_seq">
@@ -37,12 +37,17 @@
       <StateNumber>779</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
     </sequence>
-    <sequence id="11" parent="9" name="patient_id_seq">
+    <sequence id="11" parent="9" name="hibernate_sequence">
+      <ObjectId>16716</ObjectId>
+      <StateNumber>787</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+    </sequence>
+    <sequence id="12" parent="9" name="patient_id_seq">
       <ObjectId>16697</ObjectId>
       <StateNumber>781</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
     </sequence>
-    <object-type id="12" parent="9" name="status">
+    <object-type id="13" parent="9" name="status">
       <ObjectId>16656</ObjectId>
       <StateNumber>777</StateNumber>
       <SubKind>enum</SubKind>
@@ -52,23 +57,23 @@ in_progress
 done
 rejected</Labels>
     </object-type>
-    <table id="13" parent="9" name="animal">
+    <table id="14" parent="9" name="animal">
       <ObjectId>16675</ObjectId>
-      <StateNumber>781</StateNumber>
+      <StateNumber>789</StateNumber>
     </table>
-    <table id="14" parent="9" name="employee">
+    <table id="15" parent="9" name="employee">
       <ObjectId>16689</ObjectId>
-      <StateNumber>781</StateNumber>
+      <StateNumber>790</StateNumber>
     </table>
-    <table id="15" parent="9" name="patient">
+    <table id="16" parent="9" name="patient">
       <ObjectId>16699</ObjectId>
-      <StateNumber>781</StateNumber>
+      <StateNumber>790</StateNumber>
     </table>
-    <table id="16" parent="9" name="user">
+    <table id="17" parent="9" name="user">
       <ObjectId>16665</ObjectId>
-      <StateNumber>779</StateNumber>
+      <StateNumber>788</StateNumber>
     </table>
-    <column id="17" parent="13" name="id">
+    <column id="18" parent="14" name="id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -76,47 +81,47 @@ rejected</Labels>
       <SequenceName>vetclinic.animal_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;vetclinic.animal_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="18" parent="13" name="name">
+    <column id="19" parent="14" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>779</StateNumber>
     </column>
-    <column id="19" parent="13" name="age">
+    <column id="20" parent="14" name="age">
       <Position>3</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>779</StateNumber>
     </column>
-    <column id="20" parent="13" name="description">
+    <column id="21" parent="14" name="description">
       <Position>4</Position>
       <DataType>varchar(1000)|0</DataType>
       <StateNumber>779</StateNumber>
     </column>
-    <column id="21" parent="13" name="reg_date">
+    <column id="22" parent="14" name="reg_date">
       <Position>5</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>779</StateNumber>
     </column>
-    <column id="22" parent="13" name="user_email">
+    <column id="23" parent="14" name="user_email">
       <Position>6</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>779</StateNumber>
     </column>
-    <index id="23" parent="13" name="animal_pkey">
+    <index id="24" parent="14" name="animal_pkey">
       <ObjectId>16682</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="24" parent="13" name="animal_pkey">
+    <key id="25" parent="14" name="animal_pkey">
       <ObjectId>16683</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>animal_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="25" parent="13" name="fk_user_email">
+    <foreign-key id="26" parent="14" name="fk_user_email">
       <ObjectId>16684</ObjectId>
       <ColNames>user_email</ColNames>
       <RefTableName>user</RefTableName>
@@ -125,60 +130,67 @@ rejected</Labels>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="26" parent="14" name="email">
+    <foreign-key id="27" parent="14" name="fkqridep0fm6xc32y792qyg57os">
+      <ObjectId>16718</ObjectId>
+      <ColNames>user_email</ColNames>
+      <RefTableName>user</RefTableName>
+      <RefKeyName>user_pkey</RefKeyName>
+      <RefColNames>email</RefColNames>
+    </foreign-key>
+    <column id="28" parent="15" name="email">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>780</StateNumber>
     </column>
-    <column id="27" parent="14" name="password">
+    <column id="29" parent="15" name="password">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>780</StateNumber>
     </column>
-    <column id="28" parent="14" name="phone_number">
+    <column id="30" parent="15" name="phone_number">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>780</StateNumber>
     </column>
-    <column id="29" parent="14" name="first_name">
+    <column id="31" parent="15" name="first_name">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>780</StateNumber>
     </column>
-    <column id="30" parent="14" name="last_name">
+    <column id="32" parent="15" name="last_name">
       <Position>5</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>780</StateNumber>
     </column>
-    <column id="31" parent="14" name="reg_date">
+    <column id="33" parent="15" name="reg_date">
       <Position>6</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>780</StateNumber>
     </column>
-    <column id="32" parent="14" name="role">
+    <column id="34" parent="15" name="role">
       <Position>7</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>780</StateNumber>
     </column>
-    <index id="33" parent="14" name="employee_pkey">
+    <index id="35" parent="15" name="employee_pkey">
       <ObjectId>16695</ObjectId>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="34" parent="14" name="employee_pkey">
+    <key id="36" parent="15" name="employee_pkey">
       <ObjectId>16696</ObjectId>
       <ColNames>email</ColNames>
       <UnderlyingIndexName>employee_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="35" parent="15" name="id">
+    <column id="37" parent="16" name="id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -186,58 +198,58 @@ rejected</Labels>
       <SequenceName>vetclinic.patient_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;vetclinic.patient_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="36" parent="15" name="status">
+    <column id="38" parent="16" name="status">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>781</StateNumber>
     </column>
-    <column id="37" parent="15" name="animal_id">
+    <column id="39" parent="16" name="animal_id">
       <Position>3</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>781</StateNumber>
     </column>
-    <column id="38" parent="15" name="employee_email">
+    <column id="40" parent="16" name="employee_email">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
       <StateNumber>781</StateNumber>
     </column>
-    <column id="39" parent="15" name="description">
+    <column id="41" parent="16" name="description">
       <Position>5</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>781</StateNumber>
     </column>
-    <column id="40" parent="15" name="start_date">
+    <column id="42" parent="16" name="start_date">
       <Position>6</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>781</StateNumber>
     </column>
-    <column id="41" parent="15" name="end_date">
+    <column id="43" parent="16" name="end_date">
       <Position>7</Position>
       <DataType>date|0</DataType>
       <StateNumber>781</StateNumber>
     </column>
-    <column id="42" parent="15" name="curr_status">
+    <column id="44" parent="16" name="curr_status">
       <Position>8</Position>
       <DataType>status|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>781</StateNumber>
     </column>
-    <index id="43" parent="15" name="patient_pkey">
+    <index id="45" parent="16" name="patient_pkey">
       <ObjectId>16703</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="44" parent="15" name="patient_pkey">
+    <key id="46" parent="16" name="patient_pkey">
       <ObjectId>16704</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>patient_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="45" parent="15" name="fk_animal_id">
+    <foreign-key id="47" parent="16" name="fk_animal_id">
       <ObjectId>16705</ObjectId>
       <ColNames>animal_id</ColNames>
       <RefTableName>animal</RefTableName>
@@ -246,7 +258,14 @@ rejected</Labels>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="46" parent="15" name="fk_employee_email">
+    <foreign-key id="48" parent="16" name="fkaxj6dnqn2ylw2cic0w0najs8a">
+      <ObjectId>16723</ObjectId>
+      <ColNames>animal_id</ColNames>
+      <RefTableName>animal</RefTableName>
+      <RefKeyName>animal_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="49" parent="16" name="fk_employee_email">
       <ObjectId>16710</ObjectId>
       <ColNames>employee_email</ColNames>
       <RefTableName>employee</RefTableName>
@@ -254,48 +273,55 @@ rejected</Labels>
       <RefColNames>email</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="47" parent="16" name="email">
+    <foreign-key id="50" parent="16" name="fkoqtqy6m65jj3p9fbxgg6r2ad">
+      <ObjectId>16728</ObjectId>
+      <ColNames>employee_email</ColNames>
+      <RefTableName>employee</RefTableName>
+      <RefKeyName>employee_pkey</RefKeyName>
+      <RefColNames>email</RefColNames>
+    </foreign-key>
+    <column id="51" parent="17" name="email">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>778</StateNumber>
     </column>
-    <column id="48" parent="16" name="password">
+    <column id="52" parent="17" name="password">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>778</StateNumber>
     </column>
-    <column id="49" parent="16" name="phone_number">
+    <column id="53" parent="17" name="phone_number">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>778</StateNumber>
     </column>
-    <column id="50" parent="16" name="first_name">
+    <column id="54" parent="17" name="first_name">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>778</StateNumber>
     </column>
-    <column id="51" parent="16" name="last_name">
+    <column id="55" parent="17" name="last_name">
       <Position>5</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>778</StateNumber>
     </column>
-    <column id="52" parent="16" name="reg_date">
+    <column id="56" parent="17" name="reg_date">
       <Position>6</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>778</StateNumber>
     </column>
-    <index id="53" parent="16" name="user_pkey">
+    <index id="57" parent="17" name="user_pkey">
       <ObjectId>16671</ObjectId>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="54" parent="16" name="user_pkey">
+    <key id="58" parent="17" name="user_pkey">
       <ObjectId>16672</ObjectId>
       <ColNames>email</ColNames>
       <UnderlyingIndexName>user_pkey</UnderlyingIndexName>

@@ -41,8 +41,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     }
 
     @Override
-    public boolean delete(Integer key) {
-        return false;
+    public void delete(Integer key) {
     }
 
     public PatientDto convertToDto(Patient patient) {

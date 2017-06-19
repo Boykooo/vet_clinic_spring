@@ -1,12 +1,12 @@
 package entities;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 /**
  * Created by andrey on 07.06.17.
  */
-
 
 @Entity
 @Table(name = "employee")
@@ -30,6 +30,10 @@ public class Employee {
 
     @Column(name = "role", length = 100, nullable = false)
     private String role;
+
+    @Column(name="reg_date", nullable = false)
+    private Date regDate;
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<Patient> patients;
@@ -97,6 +101,13 @@ public class Employee {
     }
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Date getRegDate() {
+        return regDate;
+    }
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
     }
 
     //endregion

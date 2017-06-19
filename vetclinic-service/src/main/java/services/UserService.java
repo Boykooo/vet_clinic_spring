@@ -1,13 +1,16 @@
 package services;
 
 import dto.AnimalDto;
+import dto.EmployeeDto;
 import dto.UserDto;
 import entities.Animal;
+import entities.Employee;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,15 +40,17 @@ public class UserService implements GenericService<UserDto, String> {
     }
 
     public void add(UserDto userDto) {
-
+        userRepository.save(convertToEntity(userDto));
     }
 
     public void update(UserDto userDto) {
-
+        User user = userRepository.findOne(userDto.getEmail());
+        userDto.setRegDate(user.getRegDate());
+        userRepository.save(convertToEntity(userDto));
     }
 
-    public boolean delete(String key) {
-        return false;
+    public void delete(String key) {
+        userRepository.delete(key);
     }
 
     private UserDto convertToDto(User user){
@@ -70,8 +75,27 @@ public class UserService implements GenericService<UserDto, String> {
             userDto.setLastName(user.getLastName());
             userDto.setPassword(user.getPassword());
             userDto.setPhoneNumber(user.getPhoneNumber());
+            userDto.setRegDate(user.getRegDate());
         }
 
         return  userDto;
+    }
+
+    public User convertToEntity(UserDto dto){
+        User user = new User();
+        user.setEmail(dto.getEmail());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setPassword(dto.getPassword());
+        user.setPhoneNumber(dto.getPhoneNumber());
+        if (dto.getRegDate() == null){
+            java.util.Date currDate = new java.util.Date();
+            user.setRegDate(new Date(currDate.getTime()));
+        }
+        else{
+            user.setRegDate(dto.getRegDate());
+        }
+
+        return user;
     }
 }

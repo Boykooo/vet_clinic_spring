@@ -49,8 +49,7 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
     }
 
     @Override
-    public boolean delete(Integer key) {
-        return false;
+    public void delete(Integer key) {
     }
 
     public AnimalDto convertToDto(Animal animal){

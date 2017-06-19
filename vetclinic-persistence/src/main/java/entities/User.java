@@ -3,6 +3,7 @@ package entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -28,6 +29,11 @@ public class User {
 
     @Column(name = "last_name", length = 100, nullable = false)
     private String lastName;
+
+    @Column(name = "reg_date", nullable = false)
+    private Date regDate;
+
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Animal> animals;
@@ -85,6 +91,13 @@ public class User {
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Date getRegDate() {
+        return regDate;
+    }
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
     }
 
     //endregion

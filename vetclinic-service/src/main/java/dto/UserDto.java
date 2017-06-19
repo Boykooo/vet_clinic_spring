@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -19,15 +20,18 @@ public class UserDto {
     private String phoneNumber;
     private String firstName;
     private String lastName;
+    private Date regDate;
+
     private List<AnimalDto> animals;
 
     public UserDto(String email, String password, String phoneNumber,
-                   String firstName, String lastName) {
+                   String firstName, String lastName, Date regDate) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.regDate = regDate;
     }
 
     public UserDto() {
@@ -75,6 +79,13 @@ public class UserDto {
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Date getRegDate() {
+        return regDate;
+    }
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
     }
 
     //endregion

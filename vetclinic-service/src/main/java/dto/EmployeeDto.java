@@ -1,5 +1,6 @@
 package dto;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -14,16 +15,19 @@ public class EmployeeDto {
     private String firstName;
     private String lastName;
     private String role;
+    private Date regDate;
+
     private List<PatientDto> patients;
 
     public EmployeeDto(String email, String password, String phoneNumber,
-                    String firstName, String lastName, String role) {
+                    String firstName, String lastName, String role, Date regDate) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.regDate = regDate;
     }
 
     public EmployeeDto() {
@@ -78,6 +82,13 @@ public class EmployeeDto {
     }
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Date getRegDate() {
+        return regDate;
+    }
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
     }
 
     //endregion
