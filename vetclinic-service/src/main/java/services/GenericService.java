@@ -11,4 +11,5 @@ public interface GenericService<Entity, PK> {
     void add(Entity entity);
     void update(Entity entity);
     void delete(PK key);
+    List<Entity> getLimit(Integer startPage, Integer amount);
 }

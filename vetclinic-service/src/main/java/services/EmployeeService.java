@@ -5,6 +5,8 @@ import dto.PatientDto;
 import entities.Employee;
 import entities.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import repository.EmployeeRepository;
 
@@ -35,6 +37,25 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
     }
 
     @Override
+    public List<EmployeeDto> getLimit(Integer startPage, Integer amount) {
+
+//        Long count = employeeRepository.count();
+//        Integer newAmount = amount;
+//        if ((startPage * amount + amount) > count)
+//        {
+//            newAmount = count - startPage * amount;
+//        }
+
+        Pageable limit = new PageRequest(startPage * amount, amount);
+        List<EmployeeDto> employees = new ArrayList<>();
+        employeeRepository.findAll(limit).forEach(
+                (Employee employee) -> employees.add(convertToDto(employee))
+        );
+
+        return employees;
+    }
+
+    @Override
     public EmployeeDto findById(String key) {
         return convertToDto(employeeRepository.findOne(key));
     }
@@ -58,7 +79,7 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
     }
 
     private EmployeeDto convertToDto(Employee employee) {
-        EmployeeDto dto = convertToDtoWithoutList(employee);
+        EmployeeDto dto = convertToDtoWithoutDepend(employee);
 
         List<PatientDto> patients = new ArrayList<>();
         employee.getPatients().stream().forEach(
@@ -69,7 +90,7 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
         return dto;
     }
 
-    public EmployeeDto convertToDtoWithoutList(Employee employee) {
+    public EmployeeDto convertToDtoWithoutDepend(Employee employee) {
         EmployeeDto dto = new EmployeeDto();
         if (employee != null) {
             dto.setEmail(employee.getEmail());

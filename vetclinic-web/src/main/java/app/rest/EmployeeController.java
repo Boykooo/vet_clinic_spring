@@ -25,23 +25,33 @@ public class EmployeeController {
         return employeeService.findAll();
     }
 
+    @RequestMapping(value = "/{startPage}/{amount}",
+            method = RequestMethod.GET)
+    public List<EmployeeDto> getLimitEmployees(
+            @PathVariable("startPage") Integer startPage,
+            @PathVariable("amount") Integer amount) {
+        return employeeService.getLimit(startPage, amount);
+    }
+
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)
     public EmployeeDto getSpecificEmployee(@PathVariable("email") String email) {
         return employeeService.findById(email);
     }
 
-    @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("email") String email){
-        employeeService.delete(email);
-    }
-
     @RequestMapping(method = RequestMethod.POST)
-    public void add(@RequestBody EmployeeDto employeeDto){
+    public void add(@RequestBody EmployeeDto employeeDto) {
         employeeService.add(employeeDto);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void update(@RequestBody EmployeeDto employeeDto){
+    public void update(@RequestBody EmployeeDto employeeDto) {
         employeeService.update(employeeDto);
     }
+
+    @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("email") String email) {
+        employeeService.delete(email);
+    }
+
+
 }

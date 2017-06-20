@@ -1,10 +1,8 @@
 package services;
 
 import dto.AnimalDto;
-import dto.EmployeeDto;
 import dto.UserDto;
 import entities.Animal;
-import entities.Employee;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,8 +51,13 @@ public class UserService implements GenericService<UserDto, String> {
         userRepository.delete(key);
     }
 
+    @Override
+    public List<UserDto> getLimit(Integer startPage, Integer amount) {
+        return null;
+    }
+
     private UserDto convertToDto(User user){
-        UserDto userDto = convertToDtoWithoutLists(user);
+        UserDto userDto = convertToDtoWithoutDepend(user);
 
         List<AnimalDto> animals = new ArrayList<>();
         user.getAnimals().stream().forEach(
@@ -66,7 +69,7 @@ public class UserService implements GenericService<UserDto, String> {
        return userDto;
     }
 
-    public UserDto convertToDtoWithoutLists(User user){
+    public UserDto convertToDtoWithoutDepend(User user){
         UserDto userDto = new UserDto();
         if (user != null)
         {

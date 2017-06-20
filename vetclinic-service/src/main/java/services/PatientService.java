@@ -44,6 +44,11 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     public void delete(Integer key) {
     }
 
+    @Override
+    public List<PatientDto> getLimit(Integer startPage, Integer amount) {
+        return null;
+    }
+
     public PatientDto convertToDto(Patient patient) {
         PatientDto dto = new PatientDto();
         if (patient != null)
@@ -54,7 +59,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
             dto.setEndDate(patient.getEndDate());
             dto.setStatus(patient.getStatus());
             dto.setAnimal(animalService.convertToDto(patient.getAnimal()));
-            dto.setEmployee(employeeService.convertToDtoWithoutList(patient.getEmployee()));
+            dto.setEmployee(employeeService.convertToDtoWithoutDepend(patient.getEmployee()));
         }
 
         return dto;

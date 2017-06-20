@@ -52,6 +52,11 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
     public void delete(Integer key) {
     }
 
+    @Override
+    public List<AnimalDto> getLimit(Integer startPage, Integer amount) {
+        return null;
+    }
+
     public AnimalDto convertToDto(Animal animal){
         AnimalDto dto = new AnimalDto();
         if (animal != null)
@@ -62,7 +67,7 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
             dto.setName(animal.getName());
             dto.setRegDate(animal.getRegDate());
 
-            dto.setUser(userService.convertToDtoWithoutLists(animal.getUser()));
+            dto.setUser(userService.convertToDtoWithoutDepend(animal.getUser()));
             dto.setPatient(patientService.convertToDto(animal.getPatient()));
         }
 
