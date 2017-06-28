@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(value = "/user", produces="application/json")
 @CrossOrigin
 public class UserController {
 
@@ -32,18 +32,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("email") String email){
+    public void delete(@PathVariable("email") String email) {
         userService.delete(email);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void add(@RequestBody UserDto user){
+    public void add(@RequestBody UserDto user) {
         userService.add(user);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void update(@RequestBody UserDto user){
+    public void update(@RequestBody UserDto user) {
         userService.update(user);
     }
-
 }

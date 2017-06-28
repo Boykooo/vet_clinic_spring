@@ -37,7 +37,7 @@ public class Patient {
     private Date startDate;
 
     @Column(name = "end_date", nullable = false)
-    private String endDate;
+    private Date endDate;
 
     public Patient(Animal animal, String description, String status,
                    Employee employee, Date startDate) {
@@ -96,10 +96,10 @@ public class Patient {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

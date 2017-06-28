@@ -12,4 +12,5 @@ public interface GenericService<Entity, PK> {
     void update(Entity entity);
     void delete(PK key);
     List<Entity> getLimit(Integer startPage, Integer amount);
+    public Long count();
 }

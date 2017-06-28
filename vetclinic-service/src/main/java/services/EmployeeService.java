@@ -38,16 +38,23 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
 
     @Override
     public List<EmployeeDto> getLimit(Integer startPage, Integer amount) {
-
-//        Long count = employeeRepository.count();
-//        Integer newAmount = amount;
-//        if ((startPage * amount + amount) > count)
-//        {
-//            newAmount = count - startPage * amount;
-//        }
-
-        Pageable limit = new PageRequest(startPage * amount, amount);
         List<EmployeeDto> employees = new ArrayList<>();
+        startPage--;
+
+        Long count = employeeRepository.count();
+        Integer newAmount = amount;
+        if ((startPage * amount + amount) > count)
+        {
+            Long lValue = count - startPage * amount;
+            newAmount = lValue.intValue();
+        }
+
+        if (newAmount <= 0)
+        {
+            return employees;
+        }
+
+        Pageable limit = new PageRequest(startPage * amount, newAmount);
         employeeRepository.findAll(limit).forEach(
                 (Employee employee) -> employees.add(convertToDto(employee))
         );
@@ -76,6 +83,10 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
     @Override
     public void delete(String key) {
         employeeRepository.delete(key);
+    }
+
+    public Long count(){
+        return employeeRepository.count();
     }
 
     private EmployeeDto convertToDto(Employee employee) {

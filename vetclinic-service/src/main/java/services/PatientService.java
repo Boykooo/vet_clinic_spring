@@ -49,6 +49,11 @@ public class PatientService implements GenericService<PatientDto, Integer> {
         return null;
     }
 
+    @Override
+    public Long count() {
+        return null;
+    }
+
     public PatientDto convertToDto(Patient patient) {
         PatientDto dto = new PatientDto();
         if (patient != null)

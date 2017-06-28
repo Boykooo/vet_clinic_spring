@@ -56,6 +56,11 @@ public class UserService implements GenericService<UserDto, String> {
         return null;
     }
 
+    @Override
+    public Long count() {
+        return null;
+    }
+
     private UserDto convertToDto(User user){
         UserDto userDto = convertToDtoWithoutDepend(user);
 

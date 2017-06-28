@@ -57,6 +57,11 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
         return null;
     }
 
+    @Override
+    public Long count() {
+        return null;
+    }
+
     public AnimalDto convertToDto(Animal animal){
         AnimalDto dto = new AnimalDto();
         if (animal != null)

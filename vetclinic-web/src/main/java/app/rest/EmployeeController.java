@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping(value = "/employee", produces="application/json")
 @CrossOrigin
 public class EmployeeController {
 
@@ -38,6 +38,11 @@ public class EmployeeController {
         return employeeService.findById(email);
     }
 
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public Long count(){
+        return employeeService.count();
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public void add(@RequestBody EmployeeDto employeeDto) {
         employeeService.add(employeeDto);
@@ -52,6 +57,4 @@ public class EmployeeController {
     public void delete(@PathVariable("email") String email) {
         employeeService.delete(email);
     }
-
-
 }

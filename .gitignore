@@ -1,0 +1,5 @@
+
+.idea/
+vetclinic-persistence/target/
+vetclinic-service/target/
+vetclinic-web/target/
