@@ -1,16 +1,11 @@
 package app.rest;
 
 import dto.EmployeeDto;
-import dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import services.EmployeeService;
 
 import java.util.List;
-
-/**
- * Created by andrey on 08.06.17.
- */
 
 @RestController
 @RequestMapping(value = "/employee", produces="application/json")

@@ -1,7 +1,5 @@
 package entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements BaseUser{
 
     @Id
     @Column(name = "email", length = 100, nullable = false)
@@ -33,8 +31,6 @@ public class User {
     @Column(name = "reg_date", nullable = false)
     private Date regDate;
 
-
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Animal> animals;
 
@@ -47,6 +43,11 @@ public class User {
     }
 
     public User() {
+    }
+
+    @Override
+    public String getRole() {
+        return "USER";
     }
 
     //region GetSet

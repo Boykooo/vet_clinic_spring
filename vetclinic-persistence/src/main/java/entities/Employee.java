@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class Employee implements BaseUser{
 
     @Id
     @Column(name = "email", length = 100, nullable = false)
