@@ -18,12 +18,13 @@ import java.util.Optional;
 @Component
 public class TokenHandler {
 
-    private final SecretKey secretKey;
+    private final String secretKey;
 
     public TokenHandler() {
-        String jwtKey = "jwtKey1234567890";
-        byte[] decodeKey = BaseEncoding.base64().decode(jwtKey);
-        secretKey = new SecretKeySpec(decodeKey, 0, decodeKey.length, "AES");
+        this.secretKey = "olololololo";
+//        String jwtKey = "jwtKey1234567890";
+//        byte[] decodeKey = BaseEncoding.base64().decode(jwtKey);
+//        secretKey = new SecretKeySpec(decodeKey, 0, decodeKey.length, "AES");
     }
 
     public Optional<String> extractId(String token) {
