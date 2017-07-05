@@ -5,11 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import security.UserDetailsServiceImpl;
-import services.TokenAuthService;
+import security.TokenAuthService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,26 +27,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(new AuthFilter(tokenAuthService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/api").permitAll()
-                .anyRequest().authenticated()
-                .antMatchers("/api/auth/*").permitAll().anyRequest().permitAll()
-                .and()
-                .formLogin()
-                .and()
-                .logout()
+                .antMatchers("/api").permitAll().anyRequest().authenticated()
                 .and()
                 .csrf().disable();
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/api/auth/**");
-//    }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/api/auth/**");
+    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
-
-
 }
+
+//.antMatchers("/api/auth/*").permitAll().anyRequest().permitAll()

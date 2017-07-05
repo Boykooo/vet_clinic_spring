@@ -1,7 +1,11 @@
 package app.rest;
 
 
-import app.entity.LoginForm;
+import app.entities.LoginForm;
+import app.responses.BaseResponse;
+import app.responses.ErrorResponse;
+import app.responses.ErrorType;
+import app.responses.TokenResponse;
 import dto.EmployeeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +15,7 @@ import util.CryptManager;
 import util.DateManager;
 
 @RestController
-@RequestMapping(value = "/auth", produces = "application/json")
+@RequestMapping(value = "/auth", produces = {"application/json"})
 @CrossOrigin
 public class AuthController {
 
@@ -21,20 +25,16 @@ public class AuthController {
     private EmployeeService employeeService;
 
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
-    public String employeeLogin(@RequestBody LoginForm loginForm) {
-
+    public BaseResponse employeeLogin(@RequestBody LoginForm loginForm) {
         try {
-
             EmployeeDto employee = employeeService.findById(loginForm.email);
             if (CryptManager.matchesPasswords(loginForm.password, employee.getPassword())){
-                return tokenHandler.generateAccessToken(loginForm.email, DateManager.getDateForToken());
+                return new TokenResponse(tokenHandler.generateAccessToken(loginForm.email, DateManager.getDateForToken()));
             } else {
-                //TODO: throw exception or send bad response
+                return new ErrorResponse(ErrorType.INVALID_PASSWORD);
             }
         } catch (Exception e) {
-
+            return new ErrorResponse(ErrorType.BAD_REQUEST);
         }
-
-        return null;
     }
 }

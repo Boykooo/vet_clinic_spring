@@ -2,7 +2,7 @@ package app.filters;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
-import services.TokenAuthService;
+import security.TokenAuthService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

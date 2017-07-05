@@ -19,4 +19,3 @@ public class TokenTest {
         System.out.println(email.orElse("null"));
     }
 }
-
