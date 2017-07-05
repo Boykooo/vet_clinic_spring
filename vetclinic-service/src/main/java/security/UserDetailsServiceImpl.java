@@ -16,6 +16,7 @@ import util.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -49,5 +50,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private User buildUserForAuthorization(BaseUser user, List<GrantedAuthority> authorities){
         return new User(user.getEmail(), user.getPassword(), true, true, true, true, authorities);
+    }
+
+    public Optional<BaseUser> findById(String email) {
+        BaseUser user;
+        if (UserUtils.defineUserType(email) == UserType.USER){
+            user = userRepository.findOne(email);
+        }
+        else {
+            user = employeeRepository.findOne(email);
+        }
+
+        return Optional.ofNullable(user);
     }
 }
