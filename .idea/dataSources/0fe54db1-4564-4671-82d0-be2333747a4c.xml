@@ -9,7 +9,7 @@
     </database>
     <schema id="3" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2017-07-05.14:49:41.605</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2017-07-05.15:30:06.318</IntrospectionTimestamp>
       <IntrospectionStateNumber>755</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
@@ -31,7 +31,7 @@
     </schema>
     <schema id="9" parent="2" name="vetclinic">
       <ObjectId>16654</ObjectId>
-      <IntrospectionTimestamp>2017-07-05.14:49:41.605</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2017-07-05.15:30:06.318</IntrospectionTimestamp>
       <IntrospectionStateNumber>790</IntrospectionStateNumber>
       <Visible>1</Visible>
     </schema>

@@ -27,9 +27,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(new AuthFilter(tokenAuthService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
+                .antMatchers("/api").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .and()
+                .csrf().ignoringAntMatchers("/api/auth/*")
                 .and()
                 .logout();
 
