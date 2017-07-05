@@ -16,6 +16,7 @@ public class TokenTest {
         Optional<String> email = handler.extractId(token);
 
         System.out.println(email.orElse("null"));
+
     }
 }
 

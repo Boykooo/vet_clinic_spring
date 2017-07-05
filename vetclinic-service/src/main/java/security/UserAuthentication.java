@@ -15,6 +15,7 @@ public class UserAuthentication implements Authentication {
     private boolean authenticated;
 
     public UserAuthentication(BaseUser user) {
+        this.authenticated = true;
         this.user = user;
     }
 
