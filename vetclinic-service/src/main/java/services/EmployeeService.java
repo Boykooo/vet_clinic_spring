@@ -7,6 +7,7 @@ import entities.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.EmployeeRepository;
 
@@ -122,7 +123,7 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
         employee.setEmail(dto.getEmail());
         employee.setFirstName(dto.getFirstName());
         employee.setLastName(dto.getLastName());
-        employee.setPassword(dto.getPassword());
+        employee.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
         employee.setPhoneNumber(dto.getPhoneNumber());
         employee.setRole(dto.getRole());
 

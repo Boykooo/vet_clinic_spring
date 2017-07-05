@@ -5,6 +5,7 @@ import dto.UserDto;
 import entities.Animal;
 import entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 
@@ -94,7 +95,7 @@ public class UserService implements GenericService<UserDto, String> {
         user.setEmail(dto.getEmail());
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
-        user.setPassword(dto.getPassword());
+        user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
         user.setPhoneNumber(dto.getPhoneNumber());
         if (dto.getRegDate() == null){
             java.util.Date currDate = new java.util.Date();
