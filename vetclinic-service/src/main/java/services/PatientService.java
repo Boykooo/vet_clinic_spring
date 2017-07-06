@@ -2,9 +2,12 @@ package services;
 
 import dto.PatientDto;
 import entities.Patient;
+import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import repository.PatientRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,29 +22,43 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     private AnimalService animalService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private PatientRepository patientRepository;
 
     @Override
     public List<PatientDto> findAll() {
-        return null;
+        List<PatientDto> patients = new ArrayList();
+        patientRepository.findAll()
+                .forEach(
+                        (Patient patient) -> patients.add(convertToDto(patient))
+                );
+
+        return patients;
     }
 
     @Override
     public PatientDto findById(Integer key) {
-        return null;
+        return convertToDto(patientRepository.findOne(key));
     }
 
     @Override
     public void add(PatientDto patientDto) {
-
+        patientRepository.save(convertToEntity(patientDto));
     }
 
     @Override
-    public void update(PatientDto patientDto) {
-
+    public void update(PatientDto patientDto) throws ObjectNotFoundException {
+        Patient patient = patientRepository.findOne(patientDto.getId());
+        if (patient != null) {
+            patientRepository.save(convertToEntity(patientDto));
+        } else {
+            throw new ObjectNotFoundException();
+        }
     }
 
     @Override
     public void delete(Integer key) {
+        patientRepository.delete(key);
     }
 
     @Override
@@ -51,13 +68,12 @@ public class PatientService implements GenericService<PatientDto, Integer> {
 
     @Override
     public Long count() {
-        return null;
+        return patientRepository.count();
     }
 
     public PatientDto convertToDto(Patient patient) {
         PatientDto dto = new PatientDto();
-        if (patient != null)
-        {
+        if (patient != null) {
             dto.setId(patient.getId());
             dto.setDescription(patient.getDescription());
             dto.setStartDate(patient.getStartDate());
@@ -69,4 +85,19 @@ public class PatientService implements GenericService<PatientDto, Integer> {
 
         return dto;
     }
+
+    private Patient convertToEntity(PatientDto dto) {
+        Patient patient = new Patient();
+        patient.setDescription(dto.getDescription());
+        patient.setEndDate(dto.getEndDate());
+        patient.setStatus(dto.getStatus());
+        patient.setStartDate(dto.getStartDate());
+
+        if (dto.getId() != null) {
+            patient.setId(dto.getId());
+        }
+
+        return patient;
+    }
+
 }

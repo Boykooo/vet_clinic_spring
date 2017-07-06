@@ -2,10 +2,13 @@ package services;
 
 import dto.AnimalDto;
 import entities.Animal;
+import exceptions.ObjectAlreadyExistException;
+import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.AnimalRepository;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,17 +42,28 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
     }
 
     @Override
-    public void add(AnimalDto animalDto) {
-
+    public void add(AnimalDto animalDto) throws ObjectAlreadyExistException {
+        Animal animal = animalRepository.findOne(animalDto.getId());
+        if (animal == null){
+            animalRepository.save(convertToEntity(animalDto));
+        } else {
+            throw new ObjectAlreadyExistException();
+        }
     }
 
     @Override
-    public void update(AnimalDto animalDto) {
-
+    public void update(AnimalDto animalDto) throws ObjectNotFoundException {
+        Animal animal = animalRepository.findOne(animalDto.getId());
+        if (animal != null){
+            animalRepository.save(convertToEntity(animalDto));
+        } else {
+            throw new ObjectNotFoundException();
+        }
     }
 
     @Override
     public void delete(Integer key) {
+        animalRepository.delete(key);
     }
 
     @Override
@@ -77,6 +91,24 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
         }
 
         return dto;
+    }
+
+    public Animal convertToEntity(AnimalDto dto){
+        Animal animal = new Animal();
+        if (dto.getId() != null){
+            animal.setId(dto.getId());
+        }
+        animal.setAge(dto.getAge());
+        animal.setDescription(dto.getDescription());
+        animal.setName(dto.getName());
+        if (dto.getRegDate() == null) {
+            java.util.Date currDate = new java.util.Date();
+            animal.setRegDate(new Date(currDate.getTime()));
+        } else {
+            animal.setRegDate(dto.getRegDate());
+        }
+
+        return animal;
     }
 
 }

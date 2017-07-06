@@ -4,6 +4,8 @@ import dto.AnimalDto;
 import dto.UserDto;
 import entities.Animal;
 import entities.User;
+import exceptions.ObjectAlreadyExistException;
+import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,14 +40,27 @@ public class UserService implements GenericService<UserDto, String> {
         return null;
     }
 
-    public void add(UserDto userDto) {
-        userRepository.save(convertToEntity(userDto));
+    public void add(UserDto userDto) throws ObjectAlreadyExistException {
+        User user = userRepository.findOne(userDto.getEmail());
+        if (user == null) {
+            userRepository.save(convertToEntity(userDto));
+        } else {
+            throw new ObjectAlreadyExistException();
+        }
+
     }
 
-    public void update(UserDto userDto) {
+    public void update(UserDto userDto) throws ObjectNotFoundException {
         User user = userRepository.findOne(userDto.getEmail());
-        userDto.setRegDate(user.getRegDate());
-        userRepository.save(convertToEntity(userDto));
+
+        if (user != null){
+
+            userDto.setRegDate(user.getRegDate());
+            userRepository.save(convertToEntity(userDto));
+        } else {
+            throw new ObjectNotFoundException();
+        }
+
     }
 
     public void delete(String key) {
@@ -62,7 +77,7 @@ public class UserService implements GenericService<UserDto, String> {
         return null;
     }
 
-    private UserDto convertToDto(User user){
+    private UserDto convertToDto(User user) {
         UserDto userDto = convertToDtoWithoutDepend(user);
 
         List<AnimalDto> animals = new ArrayList<>();
@@ -72,13 +87,12 @@ public class UserService implements GenericService<UserDto, String> {
 
         userDto.setAnimals(animals);
 
-       return userDto;
+        return userDto;
     }
 
-    public UserDto convertToDtoWithoutDepend(User user){
+    public UserDto convertToDtoWithoutDepend(User user) {
         UserDto userDto = new UserDto();
-        if (user != null)
-        {
+        if (user != null) {
             userDto.setEmail(user.getEmail());
             userDto.setFirstName(user.getFirstName());
             userDto.setLastName(user.getLastName());
@@ -87,21 +101,20 @@ public class UserService implements GenericService<UserDto, String> {
             userDto.setRegDate(user.getRegDate());
         }
 
-        return  userDto;
+        return userDto;
     }
 
-    public User convertToEntity(UserDto dto){
+    public User convertToEntity(UserDto dto) {
         User user = new User();
         user.setEmail(dto.getEmail());
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
         user.setPhoneNumber(dto.getPhoneNumber());
-        if (dto.getRegDate() == null){
+        if (dto.getRegDate() == null) {
             java.util.Date currDate = new java.util.Date();
             user.setRegDate(new Date(currDate.getTime()));
-        }
-        else{
+        } else {
             user.setRegDate(dto.getRegDate());
         }
 

@@ -1,5 +1,8 @@
 package services;
 
+import exceptions.ObjectAlreadyExistException;
+import exceptions.ObjectNotFoundException;
+
 import java.util.List;
 
 /**
@@ -8,8 +11,8 @@ import java.util.List;
 public interface GenericService<Entity, PK> {
     List<Entity> findAll();
     Entity findById(PK key);
-    void add(Entity entity);
-    void update(Entity entity);
+    void add(Entity entity) throws ObjectAlreadyExistException;
+    void update(Entity entity) throws ObjectNotFoundException;
     void delete(PK key);
     List<Entity> getLimit(Integer startPage, Integer amount);
     public Long count();

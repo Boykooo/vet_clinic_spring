@@ -4,6 +4,8 @@ import dto.EmployeeDto;
 import dto.PatientDto;
 import entities.Employee;
 import entities.Patient;
+import exceptions.ObjectAlreadyExistException;
+import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,14 +46,12 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
 
         Long count = employeeRepository.count();
         Integer newAmount = amount;
-        if ((startPage * amount + amount) > count)
-        {
+        if ((startPage * amount + amount) > count) {
             Long lValue = count - startPage * amount;
             newAmount = lValue.intValue();
         }
 
-        if (newAmount <= 0)
-        {
+        if (newAmount <= 0) {
             return employees;
         }
 
@@ -69,16 +69,25 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
     }
 
     @Override
-    public void add(EmployeeDto employeeDto) {
-        employeeRepository.save(convertToEntity(employeeDto));
+    public void add(EmployeeDto employeeDto) throws ObjectAlreadyExistException {
+        Employee employee = employeeRepository.findOne(employeeDto.getEmail());
+        if (employee == null) {
+            employeeRepository.save(convertToEntity(employeeDto));
+        } else {
+            throw new ObjectAlreadyExistException();
+        }
     }
 
     @Override
-    public void update(EmployeeDto employeeDto) {
+    public void update(EmployeeDto employeeDto) throws ObjectNotFoundException {
         Employee employee = employeeRepository.findOne(employeeDto.getEmail());
-        employeeDto.setRegDate(employee.getRegDate());
+        if (employee != null) {
+            employeeDto.setRegDate(employee.getRegDate());
+            employeeRepository.save(convertToEntity(employeeDto));
+        } else {
+            throw new ObjectNotFoundException();
+        }
 
-        employeeRepository.save(convertToEntity(employeeDto));
     }
 
     @Override
@@ -86,7 +95,7 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
         employeeRepository.delete(key);
     }
 
-    public Long count(){
+    public Long count() {
         return employeeRepository.count();
     }
 
