@@ -30,7 +30,8 @@ public class Employee implements BaseUser{
     @Column(name = "last_name", length = 100, nullable = false)
     private String lastName;
 
-    @Column(name = "role", length = 100, nullable = false)
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name="reg_date", nullable = false)
