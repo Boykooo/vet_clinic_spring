@@ -1,6 +1,12 @@
 package app.rest;
 
+import app.responses.BaseResponse;
+import app.responses.ErrorResponse;
+import app.responses.ErrorType;
+import app.responses.SuccessResponse;
 import dto.EmployeeDto;
+import exceptions.ObjectAlreadyExistException;
+import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import services.EmployeeService;
@@ -39,17 +45,31 @@ public class EmployeeController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void add(@RequestBody EmployeeDto employeeDto) {
-        employeeService.add(employeeDto);
+    public BaseResponse add(@RequestBody EmployeeDto employeeDto) {
+        try {
+            employeeService.add(employeeDto);
+        } catch (ObjectAlreadyExistException e) {
+            return new ErrorResponse(ErrorType.OBJECT_ALREADY_EXISTS);
+        }
+
+        return new SuccessResponse();
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void update(@RequestBody EmployeeDto employeeDto) {
-        employeeService.update(employeeDto);
+    public BaseResponse update(@RequestBody EmployeeDto employeeDto) {
+        try {
+            employeeService.update(employeeDto);
+        } catch (ObjectNotFoundException e) {
+            return new ErrorResponse(ErrorType.USER_NOT_FOUND);
+        }
+
+        return new SuccessResponse();
     }
 
     @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("email") String email) {
+    public BaseResponse delete(@PathVariable("email") String email) {
         employeeService.delete(email);
+
+        return new SuccessResponse();
     }
 }

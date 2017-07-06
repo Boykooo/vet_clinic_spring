@@ -1,8 +1,14 @@
 package app.rest;
 
+import app.responses.BaseResponse;
+import app.responses.ErrorResponse;
+import app.responses.ErrorType;
+import app.responses.SuccessResponse;
 import dto.UserDto;
 import entities.Animal;
 import entities.User;
+import exceptions.ObjectAlreadyExistException;
+import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import repository.UserRepository;
@@ -32,17 +38,31 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("email") String email) {
+    public BaseResponse delete(@PathVariable("email") String email) {
         userService.delete(email);
+
+        return new SuccessResponse();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void add(@RequestBody UserDto user) {
-        userService.add(user);
+    public BaseResponse add(@RequestBody UserDto user) {
+        try {
+            userService.add(user);
+        } catch (ObjectAlreadyExistException e) {
+            return new ErrorResponse(ErrorType.OBJECT_ALREADY_EXISTS);
+        }
+
+        return new SuccessResponse();
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void update(@RequestBody UserDto user) {
-        userService.update(user);
+    public BaseResponse update(@RequestBody UserDto user) {
+        try {
+            userService.update(user);
+        } catch (ObjectNotFoundException e) {
+            return new ErrorResponse(ErrorType.USER_NOT_FOUND);
+        }
+
+        return new SuccessResponse();
     }
 }
