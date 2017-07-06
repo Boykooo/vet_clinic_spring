@@ -3,6 +3,7 @@ package app.filters;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 import security.TokenAuthService;
+import security.UserAuthentication;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,7 +22,7 @@ public class AuthFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         SecurityContextHolder.getContext().setAuthentication(
-                tokenAuthService.getAuthentication((HttpServletRequest) servletRequest).orElse(null)
+                tokenAuthService.getAuthentication((HttpServletRequest) servletRequest).orElse(new UserAuthentication(null))
         );
         filterChain.doFilter(servletRequest, servletResponse);
     }

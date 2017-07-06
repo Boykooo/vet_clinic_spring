@@ -27,14 +27,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(new AuthFilter(tokenAuthService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/api").permitAll().anyRequest().authenticated()
+                .antMatchers("/api/*").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .csrf().disable();
+                .cors();
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/api/auth/**");
+        web.ignoring().antMatchers("/auth/*");
     }
 
     @Autowired

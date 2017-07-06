@@ -8,7 +8,7 @@ import services.EmployeeService;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/employee", produces="application/json")
+@RequestMapping(value = "/api/employee", produces="application/json")
 @CrossOrigin
 public class EmployeeController {
 

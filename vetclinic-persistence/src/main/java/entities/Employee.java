@@ -1,5 +1,7 @@
 package entities;
 
+import enums.Role;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -29,7 +31,7 @@ public class Employee implements BaseUser{
     private String lastName;
 
     @Column(name = "role", length = 100, nullable = false)
-    private String role;
+    private Role role;
 
     @Column(name="reg_date", nullable = false)
     private Date regDate;
@@ -39,7 +41,7 @@ public class Employee implements BaseUser{
     private List<Patient> patients;
 
     public Employee(String email, String password, String phoneNumber,
-                    String firstName, String lastName, String role) {
+                    String firstName, String lastName, Role role) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
@@ -96,10 +98,10 @@ public class Employee implements BaseUser{
         this.lastName = lastName;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

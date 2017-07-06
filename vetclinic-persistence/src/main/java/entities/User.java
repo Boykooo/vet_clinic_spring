@@ -1,5 +1,7 @@
 package entities;
 
+import enums.Role;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -46,8 +48,8 @@ public class User implements BaseUser{
     }
 
     @Override
-    public String getRole() {
-        return "USER";
+    public Role getRole() {
+        return Role.USER;
     }
 
     //region GetSet

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/user", produces="application/json")
+@RequestMapping(value = "/api/user", produces="application/json")
 @CrossOrigin
 public class UserController {
 

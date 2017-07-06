@@ -1,7 +1,9 @@
 package entities;
 
+import enums.Role;
+
 public interface BaseUser {
-    String getRole();
+    Role getRole();
     String getEmail();
     String getPassword();
 }

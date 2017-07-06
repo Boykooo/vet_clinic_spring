@@ -24,6 +24,10 @@ public class TokenHandler {
     }
 
     public Optional<String> extractId(String token) {
+        if (token.isEmpty()){
+            return Optional.empty();
+        }
+
         try {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             Claims body = claimsJws.getBody();
@@ -33,7 +37,6 @@ public class TokenHandler {
                     .map(String::new);
 
         } catch (RuntimeException e) {
-            e.printStackTrace();
             return Optional.empty();
         }
     }

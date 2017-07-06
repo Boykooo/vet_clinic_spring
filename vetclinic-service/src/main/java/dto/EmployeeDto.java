@@ -1,5 +1,7 @@
 package dto;
 
+import enums.Role;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -14,13 +16,13 @@ public class EmployeeDto {
     private String phoneNumber;
     private String firstName;
     private String lastName;
-    private String role;
+    private Role role;
     private Date regDate;
 
     private List<PatientDto> patients;
 
     public EmployeeDto(String email, String password, String phoneNumber,
-                    String firstName, String lastName, String role, Date regDate) {
+                    String firstName, String lastName, Role role, Date regDate) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
@@ -77,10 +79,10 @@ public class EmployeeDto {
         this.lastName = lastName;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
