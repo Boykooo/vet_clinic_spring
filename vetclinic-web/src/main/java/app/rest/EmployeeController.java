@@ -5,13 +5,18 @@ import app.responses.ErrorResponse;
 import app.responses.ErrorType;
 import app.responses.SuccessResponse;
 import dto.EmployeeDto;
+import enums.Role;
 import exceptions.ObjectAlreadyExistException;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import services.EmployeeService;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/api/employee", produces="application/json")
@@ -37,6 +42,23 @@ public class EmployeeController {
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)
     public EmployeeDto getSpecificEmployee(@PathVariable("email") String email) {
         return employeeService.findById(email);
+    }
+
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public EmployeeDto getEmployeeInfo(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean accessRole = false;
+        for (GrantedAuthority authority: authentication.getAuthorities()){
+            if (!Objects.equals(authority.getAuthority(), Role.CLIENT.toString())){
+                accessRole = true;
+                break;
+            }
+        }
+        if (accessRole){
+            return employeeService.findById(authentication.getName());
+        }
+
+        return null;
     }
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)
