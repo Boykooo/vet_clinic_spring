@@ -22,7 +22,7 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
     @Autowired
     private AnimalRepository animalRepository;
     @Autowired
-    private UserService userService;
+    private ClientService clientService;
     @Autowired
     private PatientService patientService;
 
@@ -86,7 +86,7 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
             dto.setName(animal.getName());
             dto.setRegDate(animal.getRegDate());
 
-            dto.setUser(userService.convertToDtoWithoutDepend(animal.getUser()));
+            dto.setUser(clientService.convertToDtoWithoutDepend(animal.getClient()));
             dto.setPatient(patientService.convertToDto(animal.getPatient()));
         }
 

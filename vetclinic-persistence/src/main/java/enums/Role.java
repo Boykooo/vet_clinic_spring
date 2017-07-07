@@ -2,7 +2,7 @@ package enums;
 
 
 public enum Role {
-    USER,
+    CLIENT,
     EMPLOYEE,
     ADMIN
 }

@@ -1,11 +1,7 @@
 package dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import entities.Patient;
-import entities.User;
 
-import javax.persistence.*;
 import java.sql.Date;
 
 /**
@@ -19,12 +15,12 @@ public class AnimalDto {
     private String description;
     private Date regDate;
     @JsonIgnoreProperties("animals")
-    private UserDto user;
+    private ClientDto user;
     @JsonIgnoreProperties("animal")
     private PatientDto patient;
 
     public AnimalDto(String name, Integer age, String description,
-                  Date regDate, UserDto user, PatientDto patient) {
+                     Date regDate, ClientDto user, PatientDto patient) {
         this.name = name;
         this.age = age;
         this.description = description;
@@ -74,10 +70,10 @@ public class AnimalDto {
         this.regDate = regDate;
     }
 
-    public UserDto getUser() {
+    public ClientDto getUser() {
         return user;
     }
-    public void setUser(UserDto user) {
+    public void setUser(ClientDto user) {
         this.user = user;
     }
 

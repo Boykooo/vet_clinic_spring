@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import repository.EmployeeRepository;
-import repository.UserRepository;
+import repository.ClientRepository;
 import util.UserUtils;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.Optional;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private ClientRepository clientRepository;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -31,8 +31,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         BaseUser user;
-        if (UserUtils.defineUserType(email) == UserType.USER){
-            user = userRepository.findOne(email);
+        if (UserUtils.defineUserType(email) == UserType.CLIENT){
+            user = clientRepository.findOne(email);
         }
         else {
             user = employeeRepository.findOne(email);
@@ -54,8 +54,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public Optional<BaseUser> findById(String email) {
         BaseUser user;
-        if (UserUtils.defineUserType(email) == UserType.USER){
-            user = userRepository.findOne(email);
+        if (UserUtils.defineUserType(email) == UserType.CLIENT){
+            user = clientRepository.findOne(email);
         }
         else {
             user = employeeRepository.findOne(email);

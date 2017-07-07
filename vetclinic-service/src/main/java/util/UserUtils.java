@@ -10,6 +10,6 @@ public final class UserUtils {
         if (partsEmails.length < 2){
             throw new UsernameNotFoundException(email);
         }
-        return partsEmails[1].equals("vetclinic.ru") ? UserType.EMPLOYEE : UserType.USER;
+        return partsEmails[1].equals("vetclinic.ru") ? UserType.EMPLOYEE : UserType.CLIENT;
     }
 }

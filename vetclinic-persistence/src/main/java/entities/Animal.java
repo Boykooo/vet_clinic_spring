@@ -1,7 +1,5 @@
 package entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -33,21 +31,21 @@ public class Animal {
     private Date regDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_email", nullable = false)
+    @JoinColumn(name = "client_email", nullable = false)
     @JsonIgnoreProperties("animals")
-    private User user;
+    private Client client;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "animal")
     @JsonIgnoreProperties("animal")
     private Patient patient;
 
     public Animal(String name, Integer age, String description,
-                  Date regDate, User user, Patient patient) {
+                  Date regDate, Client client, Patient patient) {
         this.name = name;
         this.age = age;
         this.description = description;
         this.regDate = regDate;
-        this.user = user;
+        this.client = client;
         this.patient = patient;
     }
 
@@ -92,11 +90,11 @@ public class Animal {
         this.regDate = regDate;
     }
 
-    public User getUser() {
-        return user;
+    public Client getClient() {
+        return client;
     }
-    public void setUser(User user) {
-        this.user = user;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Patient getPatient() {

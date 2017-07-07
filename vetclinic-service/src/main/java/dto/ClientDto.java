@@ -1,19 +1,12 @@
 package dto;
 
-import entities.Animal;
-import entities.User;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.sql.Date;
 import java.util.List;
 
 /**
  * Created by andrey on 07.06.17.
  */
-public class UserDto {
+public class ClientDto {
 
     private String email;
     private String password;
@@ -24,8 +17,8 @@ public class UserDto {
 
     private List<AnimalDto> animals;
 
-    public UserDto(String email, String password, String phoneNumber,
-                   String firstName, String lastName, Date regDate) {
+    public ClientDto(String email, String password, String phoneNumber,
+                     String firstName, String lastName, Date regDate) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
@@ -34,7 +27,7 @@ public class UserDto {
         this.regDate = regDate;
     }
 
-    public UserDto() {
+    public ClientDto() {
     }
 
     //region GetSet

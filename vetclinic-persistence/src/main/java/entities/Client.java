@@ -11,8 +11,8 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "user")
-public class User implements BaseUser{
+@Table(name = "client")
+public class Client implements BaseUser{
 
     @Id
     @Column(name = "email", length = 100, nullable = false)
@@ -33,10 +33,10 @@ public class User implements BaseUser{
     @Column(name = "reg_date", nullable = false)
     private Date regDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<Animal> animals;
 
-    public User(String email, String password, String phoneNumber, String firstName, String lastName) {
+    public Client(String email, String password, String phoneNumber, String firstName, String lastName) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
@@ -44,12 +44,12 @@ public class User implements BaseUser{
         this.lastName = lastName;
     }
 
-    public User() {
+    public Client() {
     }
 
     @Override
     public Role getRole() {
-        return Role.USER;
+        return Role.CLIENT;
     }
 
     //region GetSet

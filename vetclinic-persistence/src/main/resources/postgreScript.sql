@@ -3,9 +3,9 @@ DROP SCHEMA vetclinic CASCADE;
 CREATE SCHEMA vetclinic;
 
 CREATE TYPE vetclinic.STATUS AS ENUM ('new', 'in_progress', 'done', 'rejected');
-CREATE TYPE vetclinic.ROLE AS ENUM ('USER', 'EMPLOYEE', 'ADMIN');
+CREATE TYPE vetclinic.ROLE AS ENUM ('CLIENT', 'EMPLOYEE', 'ADMIN');
 
-CREATE TABLE vetclinic.user (
+CREATE TABLE vetclinic.client (
   email        VARCHAR(100) PRIMARY KEY,
   password     VARCHAR(100) NOT NULL,
   phone_number VARCHAR(100) NOT NULL,
@@ -20,9 +20,10 @@ CREATE TABLE vetclinic.animal (
   age         INTEGER      NOT NULL,
   description VARCHAR(1000),
   reg_date    DATE         NOT NULL,
-  user_email  VARCHAR(100) NOT NULL,
-  CONSTRAINT fk_user_email FOREIGN KEY (user_email) REFERENCES vetclinic.user (email) ON UPDATE CASCADE ON DELETE CASCADE
+  client_email  VARCHAR(100) NOT NULL,
+  CONSTRAINT fk_user_email FOREIGN KEY (user_email) REFERENCES vetclinic.client (email) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 
 
 CREATE TABLE vetclinic.employee (
@@ -47,5 +48,6 @@ CREATE TABLE vetclinic.patient (
   CONSTRAINT fk_animal_id FOREIGN KEY (animal_id) REFERENCES vetclinic.animal (id) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT fk_employee_email FOREIGN KEY (employee_email) REFERENCES vetclinic.employee (email) ON UPDATE CASCADE
 );
+
 
 

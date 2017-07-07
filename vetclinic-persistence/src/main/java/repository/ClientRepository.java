@@ -1,10 +1,10 @@
 package repository;
 
-import entities.User;
+import entities.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Created by andrey on 07.06.17.
  */
-public interface UserRepository extends JpaRepository<User, String> {
+public interface ClientRepository extends JpaRepository<Client, String> {
 }
