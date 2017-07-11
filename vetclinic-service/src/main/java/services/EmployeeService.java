@@ -17,9 +17,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by andrey on 08.06.17.
- */
 
 @Service
 public class EmployeeService implements GenericService<EmployeeDto, String> {

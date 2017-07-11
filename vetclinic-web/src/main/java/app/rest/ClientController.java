@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping(value = "/api/user", produces="application/json")
+@RequestMapping(value = "/api/client", produces="application/json")
 @CrossOrigin
 public class ClientController {
 
