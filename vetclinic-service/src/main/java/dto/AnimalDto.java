@@ -29,6 +29,12 @@ public class AnimalDto {
         this.patient = patient;
     }
 
+    public AnimalDto(String name, Integer age, String description) {
+        this.name = name;
+        this.age = age;
+        this.description = description;
+    }
+
     public AnimalDto() {
 
     }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AnimalService implements GenericService<AnimalDto,Integer> {
+public class AnimalService {
 
     @Autowired
     private AnimalRepository animalRepository;
@@ -22,7 +22,6 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
     @Autowired
     private PatientService patientService;
 
-    @Override
     public List<AnimalDto> findAll() {
         List<AnimalDto> animals = new ArrayList<>();
         animalRepository.findAll().stream().forEach(
@@ -32,50 +31,40 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
         return animals;
     }
 
-    @Override
     public AnimalDto findById(Integer key) {
         return convertToDto(animalRepository.findOne(key));
     }
 
-    @Override
-    public void add(AnimalDto animalDto) throws ObjectAlreadyExistException {
-        Animal animal = animalRepository.findOne(animalDto.getId());
-        if (animal == null){
-            animalRepository.save(convertToEntity(animalDto));
-        } else {
-            throw new ObjectAlreadyExistException();
-        }
+    public AnimalDto add(AnimalDto animalDto) {
+        Animal animal = animalRepository.save(convertToEntity(animalDto));
+
+        return convertToDto(animal);
     }
 
-    @Override
     public void update(AnimalDto animalDto) throws ObjectNotFoundException {
         Animal animal = animalRepository.findOne(animalDto.getId());
-        if (animal != null){
+        if (animal != null) {
             animalRepository.save(convertToEntity(animalDto));
         } else {
             throw new ObjectNotFoundException();
         }
     }
 
-    @Override
     public void delete(Integer key) {
         animalRepository.delete(key);
     }
 
-    @Override
     public List<AnimalDto> getLimit(Integer startPage, Integer amount) {
         return null;
     }
 
-    @Override
     public Long count() {
         return null;
     }
 
-    public AnimalDto convertToDto(Animal animal){
+    public AnimalDto convertToDto(Animal animal) {
         AnimalDto dto = new AnimalDto();
-        if (animal != null)
-        {
+        if (animal != null) {
             dto.setAge(animal.getAge());
             dto.setDescription(animal.getDescription());
             dto.setId(animal.getId());
@@ -89,9 +78,9 @@ public class AnimalService implements GenericService<AnimalDto,Integer> {
         return dto;
     }
 
-    public Animal convertToEntity(AnimalDto dto){
+    public Animal convertToEntity(AnimalDto dto) {
         Animal animal = new Animal();
-        if (dto.getId() != null){
+        if (dto.getId() != null) {
             animal.setId(dto.getId());
         }
         animal.setAge(dto.getAge());
