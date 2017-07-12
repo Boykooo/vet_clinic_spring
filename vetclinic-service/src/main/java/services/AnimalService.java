@@ -2,7 +2,6 @@ package services;
 
 import dto.AnimalDto;
 import entities.Animal;
-import exceptions.ObjectAlreadyExistException;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +62,17 @@ public class AnimalService {
     }
 
     public AnimalDto convertToDto(Animal animal) {
+        AnimalDto dto = null;
+        if (animal != null) {
+            dto = convertToDtoWithoutDepend(animal);
+            dto.setUser(clientService.convertToDtoWithoutDepend(animal.getClient()));
+            dto.setPatient(patientService.convertToDto(animal.getPatient()));
+        }
+
+        return dto;
+    }
+
+    public AnimalDto convertToDtoWithoutDepend(Animal animal) {
         AnimalDto dto = new AnimalDto();
         if (animal != null) {
             dto.setAge(animal.getAge());
@@ -70,9 +80,6 @@ public class AnimalService {
             dto.setId(animal.getId());
             dto.setName(animal.getName());
             dto.setRegDate(animal.getRegDate());
-
-            dto.setUser(clientService.convertToDtoWithoutDepend(animal.getClient()));
-            dto.setPatient(patientService.convertToDto(animal.getPatient()));
         }
 
         return dto;

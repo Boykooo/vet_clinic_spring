@@ -79,7 +79,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
             dto.setStartDate(patient.getStartDate());
             dto.setEndDate(patient.getEndDate());
             dto.setStatus(patient.getStatus());
-            dto.setAnimal(animalService.convertToDto(patient.getAnimal()));
+            dto.setAnimal(animalService.convertToDtoWithoutDepend(patient.getAnimal()));
             dto.setEmployee(employeeService.convertToDtoWithoutDepend(patient.getEmployee()));
         }
 
