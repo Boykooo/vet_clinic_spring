@@ -1,13 +1,10 @@
 package entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import enums.PatientStatus;
 
 import javax.persistence.*;
 import java.sql.Date;
-
-/**
- * Created by andrey on 07.06.17.
- */
 
 @Entity
 @Table(name = "patient")
@@ -18,8 +15,9 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "status", length = 100, nullable = false)
-    private String status;
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PatientStatus status;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id", nullable = false)
@@ -39,7 +37,7 @@ public class Patient {
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
-    public Patient(Animal animal, String description, String status,
+    public Patient(Animal animal, String description, PatientStatus status,
                    Employee employee, Date startDate) {
         this.animal = animal;
         this.description = description;
@@ -61,10 +59,10 @@ public class Patient {
         this.id = id;
     }
 
-    public String getStatus() {
+    public PatientStatus getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(PatientStatus status) {
         this.status = status;
     }
 
