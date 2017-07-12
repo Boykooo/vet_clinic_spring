@@ -14,6 +14,7 @@ import services.AnimalMongoService;
 import services.AnimalService;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -24,6 +25,11 @@ public class AnimalController {
     private AnimalMongoService animalMongoService;
     @Autowired
     private AnimalService animalService;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<AnimalDto> getAll() {
+        return animalService.findAll();
+    }
 
     @RequestMapping(value = "/{id}/image", method = RequestMethod.POST)
     public BaseResponse uploadImage(@PathVariable("id") Integer id,
@@ -41,7 +47,7 @@ public class AnimalController {
     public BaseResponse add(@RequestBody AnimalForm form) throws IOException {
         if (form != null) {
             AnimalDto dto = animalService.add(new AnimalDto(form.name, form.age, form.description));
-            if (form.file != null){
+            if (form.file != null) {
                 try {
                     animalMongoService.add(form.file.getInputStream(), dto.getId());
                 } catch (ObjectAlreadyExistException e) {
