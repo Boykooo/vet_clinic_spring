@@ -1,19 +1,20 @@
 package app.rest;
 
 import app.entities.AnimalForm;
-import app.responses.BaseResponse;
-import app.responses.ErrorResponse;
-import app.responses.ErrorType;
-import app.responses.SuccessResponse;
+import app.responses.*;
 import dto.AnimalDto;
+import dto.ClientDto;
 import exceptions.ObjectAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import services.AnimalMongoService;
 import services.AnimalService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,29 +37,44 @@ public class AnimalController {
                                     @RequestBody MultipartFile file) {
         try {
             animalMongoService.add(file.getInputStream(), id);
+            return new SuccessResponse();
+
         } catch (ObjectAlreadyExistException | IOException e) {
             return new ErrorResponse(ErrorType.BAD_REQUEST);
         }
 
-        return new SuccessResponse();
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public BaseResponse add(@RequestBody AnimalForm form) throws IOException {
+
         if (form != null) {
-            AnimalDto dto = animalService.add(new AnimalDto(form.name, form.age, form.description));
-            if (form.file != null) {
-                try {
-                    animalMongoService.add(form.file.getInputStream(), dto.getId());
-                } catch (ObjectAlreadyExistException e) {
-                    return new ErrorResponse(ErrorType.OBJECT_ALREADY_EXISTS);
-                }
-            }
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            AnimalDto dto = animalService.add(
+                    new AnimalDto(
+                            form.name,
+                            form.age,
+                            form.description,
+                            new ClientDto(authentication.getName())
+                    )
+            );
+
+            return new DataResponse<Integer>(dto.getId());
+
         } else {
             return new ErrorResponse(ErrorType.BAD_REQUEST);
         }
 
-        return new SuccessResponse();
+    }
+
+    @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
+    public BaseResponse getinfo(@PathVariable("id") Integer id) {
+        if (id == null) {
+            return new ErrorResponse(ErrorType.BAD_REQUEST);
+        }
+
+        return new DataResponse<AnimalDto>(animalService.findById(id));
     }
 
 }

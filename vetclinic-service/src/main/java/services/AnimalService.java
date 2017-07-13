@@ -2,6 +2,7 @@ package services;
 
 import dto.AnimalDto;
 import entities.Animal;
+import entities.Client;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,7 +66,7 @@ public class AnimalService {
         AnimalDto dto = null;
         if (animal != null) {
             dto = convertToDtoWithoutDepend(animal);
-            dto.setUser(clientService.convertToDtoWithoutDepend(animal.getClient()));
+            dto.setClient(clientService.convertToDtoWithoutDepend(animal.getClient()));
             dto.setPatient(patientService.convertToDto(animal.getPatient()));
         }
 
@@ -98,6 +99,10 @@ public class AnimalService {
             animal.setRegDate(new Date(currDate.getTime()));
         } else {
             animal.setRegDate(dto.getRegDate());
+        }
+
+        if (dto.getClient() != null){
+            animal.setClient(new Client(dto.getClient().getEmail()));
         }
 
         return animal;

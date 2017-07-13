@@ -61,7 +61,7 @@ VALUES ('employee@vetclinic.ru', '$2a$04$vNh3eKOxSg.sFDS1YH7QhOjzS57IYo23D8d68AZ
 
 INSERT INTO vetclinic.client (email, password, phone_number, first_name, last_name, reg_date)
 VALUES (
-  'denis@mail.ru', '$2a$04$dmnXwRIwARmKP.c.QJXyhO0RudkcmNKSE4IifxVb4071zLZZvs.8m',
+  'denis@mail.ru', '$2a$04$gDrcY8GnEHAhJ19.mJM.u.cQZbMkyQ8TDuvMXQ6VlJwcuqo92ijre',
   '88005553535', 'Денис', 'Валинуров', '2017-07-12'
 );
 
@@ -75,7 +75,7 @@ VALUES (
   2, 'Алан', 3, 'Описание Алана', '2017-07-14', 'denis@mail.ru'
 );
 
-INSERT INTO vetclinic.patient(animal_id, employee_email, description, start_date, end_date, status)
+INSERT INTO vetclinic.patient (animal_id, employee_email, description, start_date, end_date, status)
 VALUES (
   1, 'employee@vetclinic.ru', 'Описание пациента', '2017-09-24', NULL, 'NEW'
 );

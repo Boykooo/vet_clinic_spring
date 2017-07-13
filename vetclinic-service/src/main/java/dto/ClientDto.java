@@ -27,6 +27,10 @@ public class ClientDto {
         this.regDate = regDate;
     }
 
+    public ClientDto(String email) {
+        this.email = email;
+    }
+
     public ClientDto() {
     }
 
@@ -35,6 +39,7 @@ public class ClientDto {
     public List<AnimalDto> getAnimals() {
         return animals;
     }
+
     public void setAnimals(List<AnimalDto> animals) {
         this.animals = animals;
     }
@@ -42,6 +47,7 @@ public class ClientDto {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -49,6 +55,7 @@ public class ClientDto {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -56,6 +63,7 @@ public class ClientDto {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -63,6 +71,7 @@ public class ClientDto {
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -70,6 +79,7 @@ public class ClientDto {
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -77,6 +87,7 @@ public class ClientDto {
     public Date getRegDate() {
         return regDate;
     }
+
     public void setRegDate(Date regDate) {
         this.regDate = regDate;
     }

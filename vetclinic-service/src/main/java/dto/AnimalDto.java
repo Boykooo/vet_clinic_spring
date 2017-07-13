@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.sql.Date;
 
-/**
- * Created by andrey on 08.06.17.
- */
+
 public class AnimalDto {
 
     private Integer id;
@@ -15,23 +13,24 @@ public class AnimalDto {
     private String description;
     private Date regDate;
     @JsonIgnoreProperties("animals")
-    private ClientDto user;
+    private ClientDto client;
     @JsonIgnoreProperties("animal")
     private PatientDto patient;
 
     public AnimalDto(String name, Integer age, String description,
-                     Date regDate, ClientDto user, PatientDto patient) {
+                     Date regDate, ClientDto client, PatientDto patient) {
         this.name = name;
         this.age = age;
         this.description = description;
         this.regDate = regDate;
-        this.user = user;
+        this.client = client;
         this.patient = patient;
     }
 
-    public AnimalDto(String name, Integer age, String description) {
+    public AnimalDto(String name, Integer age, String description, ClientDto client) {
         this.name = name;
         this.age = age;
+        this.client = client;
         this.description = description;
     }
 
@@ -76,11 +75,11 @@ public class AnimalDto {
         this.regDate = regDate;
     }
 
-    public ClientDto getUser() {
-        return user;
+    public ClientDto getClient() {
+        return client;
     }
-    public void setUser(ClientDto user) {
-        this.user = user;
+    public void setClient(ClientDto client) {
+        this.client = client;
     }
 
     public PatientDto getPatient() {
