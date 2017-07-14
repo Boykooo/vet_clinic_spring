@@ -34,6 +34,14 @@ public class AnimalDto {
         this.description = description;
     }
 
+    public AnimalDto(Integer id, String name, Integer age, String description, ClientDto client) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.client = client;
+        this.description = description;
+    }
+
     public AnimalDto() {
 
     }
