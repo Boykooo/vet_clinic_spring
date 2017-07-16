@@ -47,6 +47,9 @@ CREATE TABLE vetclinic.patient (
   CONSTRAINT fk_employee_email FOREIGN KEY (employee_email) REFERENCES vetclinic.employee (email) ON UPDATE CASCADE
 );
 
+CREATE CAST (CHARACTER VARYING as vetclinic.ROLE) WITH INOUT AS IMPLICIT;
+CREATE CAST (CHARACTER VARYING as vetclinic.STATUS) WITH INOUT AS IMPLICIT;
+
 -- Basic filling of tables
 
 INSERT INTO vetclinic.employee (email, password, phone_number, first_name, last_name, reg_date, role)

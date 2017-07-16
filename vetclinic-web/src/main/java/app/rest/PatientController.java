@@ -2,6 +2,7 @@ package app.rest;
 
 import app.responses.*;
 import app.util.RoleManager;
+import dto.AnimalDto;
 import dto.PatientDto;
 import enums.Role;
 import exceptions.ObjectNotFoundException;
@@ -38,7 +39,10 @@ public class PatientController {
     public BaseResponse add(@RequestBody PatientDto patient) {
         if (patient != null) {
             try {
-                animalService.update(patient.getAnimal());
+
+                AnimalDto animal = patient.getAnimal();
+                animal.setIll(true);
+                animalService.update(animal);
                 patientService.add(patient);
 
                 return new SuccessResponse();
