@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import services.AnimalService;
 import services.PatientService;
 
 
@@ -19,6 +20,8 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
+    @Autowired
+    private AnimalService animalService;
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -33,11 +36,15 @@ public class PatientController {
 
     @RequestMapping(method = RequestMethod.POST)
     public BaseResponse add(@RequestBody PatientDto patient) {
-
-
         if (patient != null) {
-            patientService.add(patient);
-            return new SuccessResponse();
+            try {
+                animalService.update(patient.getAnimal());
+                patientService.add(patient);
+
+                return new SuccessResponse();
+            } catch (ObjectNotFoundException e) {
+                return new ErrorResponse(ErrorType.BAD_REQUEST);
+            }
         } else {
             return new ErrorResponse(ErrorType.BAD_REQUEST);
         }

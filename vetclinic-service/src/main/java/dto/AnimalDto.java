@@ -14,7 +14,7 @@ public class AnimalDto {
     private Date regDate;
     @JsonIgnoreProperties("animals")
     private ClientDto client;
-    @JsonIgnoreProperties("animal")
+    @JsonIgnoreProperties(value = "animal", allowSetters = true, allowGetters = true)
     private PatientDto patient;
     private boolean ill;
 

@@ -10,7 +10,7 @@ public class PatientDto {
     private Integer id;
     private PatientStatus status;
     private AnimalDto animal;
-    @JsonIgnoreProperties("patients")
+    @JsonIgnoreProperties(value = "patients", allowSetters = true)
     private EmployeeDto employee;
     private String description;
     private Date startDate;

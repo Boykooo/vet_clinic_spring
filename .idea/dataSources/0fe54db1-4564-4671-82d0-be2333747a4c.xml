@@ -9,7 +9,7 @@
     </database>
     <schema id="3" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2017-07-16.23:13:15.459</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2017-07-17.00:28:13.322</IntrospectionTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -29,7 +29,281 @@
       <ObjectId>12113</ObjectId>
     </schema>
     <schema id="9" parent="2" name="vetclinic">
-      <ObjectId>42137</ObjectId>
+      <ObjectId>42295</ObjectId>
+      <IntrospectionTimestamp>2017-07-17.00:28:13.322</IntrospectionTimestamp>
+      <IntrospectionStateNumber>1427</IntrospectionStateNumber>
+      <Visible>1</Visible>
     </schema>
+    <sequence id="10" parent="9" name="animal_id_seq">
+      <ObjectId>42321</ObjectId>
+      <StateNumber>1425</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+    </sequence>
+    <sequence id="11" parent="9" name="patient_id_seq">
+      <ObjectId>42346</ObjectId>
+      <StateNumber>1427</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+    </sequence>
+    <object-type id="12" parent="9" name="status">
+      <ObjectId>42297</ObjectId>
+      <StateNumber>1422</StateNumber>
+      <SubKind>enum</SubKind>
+      <SubCategory>enum</SubCategory>
+      <Labels>NEW
+IN_PROGRESS
+DONE
+REJECTED</Labels>
+    </object-type>
+    <object-type id="13" parent="9" name="role">
+      <ObjectId>42306</ObjectId>
+      <StateNumber>1423</StateNumber>
+      <SubKind>enum</SubKind>
+      <SubCategory>enum</SubCategory>
+      <Labels>CLIENT
+EMPLOYEE
+ADMIN</Labels>
+    </object-type>
+    <table id="14" parent="9" name="animal">
+      <ObjectId>42323</ObjectId>
+      <StateNumber>1427</StateNumber>
+    </table>
+    <table id="15" parent="9" name="client">
+      <ObjectId>42313</ObjectId>
+      <StateNumber>1425</StateNumber>
+    </table>
+    <table id="16" parent="9" name="employee">
+      <ObjectId>42338</ObjectId>
+      <StateNumber>1427</StateNumber>
+    </table>
+    <table id="17" parent="9" name="patient">
+      <ObjectId>42348</ObjectId>
+      <StateNumber>1427</StateNumber>
+    </table>
+    <column id="18" parent="14" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1425</StateNumber>
+      <DefaultExpression>nextval(&apos;vetclinic.animal_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="19" parent="14" name="name">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1425</StateNumber>
+    </column>
+    <column id="20" parent="14" name="age">
+      <Position>3</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1425</StateNumber>
+    </column>
+    <column id="21" parent="14" name="description">
+      <Position>4</Position>
+      <DataType>varchar(1000)|0</DataType>
+      <StateNumber>1425</StateNumber>
+    </column>
+    <column id="22" parent="14" name="reg_date">
+      <Position>5</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1425</StateNumber>
+    </column>
+    <column id="23" parent="14" name="client_email">
+      <Position>6</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1425</StateNumber>
+    </column>
+    <column id="24" parent="14" name="ill">
+      <Position>7</Position>
+      <DataType>boolean|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1425</StateNumber>
+      <DefaultExpression>false</DefaultExpression>
+    </column>
+    <index id="25" parent="14" name="animal_pkey">
+      <ObjectId>42331</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="26" parent="14" name="animal_pkey">
+      <ObjectId>42332</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>animal_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="27" parent="14" name="fk_client_email">
+      <ObjectId>42333</ObjectId>
+      <ColNames>client_email</ColNames>
+      <RefTableName>client</RefTableName>
+      <RefKeyName>client_pkey</RefKeyName>
+      <RefColNames>email</RefColNames>
+    </foreign-key>
+    <column id="28" parent="15" name="email">
+      <Position>1</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1424</StateNumber>
+    </column>
+    <column id="29" parent="15" name="password">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1424</StateNumber>
+    </column>
+    <column id="30" parent="15" name="phone_number">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1424</StateNumber>
+    </column>
+    <column id="31" parent="15" name="first_name">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1424</StateNumber>
+    </column>
+    <column id="32" parent="15" name="last_name">
+      <Position>5</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1424</StateNumber>
+    </column>
+    <column id="33" parent="15" name="reg_date">
+      <Position>6</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1424</StateNumber>
+    </column>
+    <index id="34" parent="15" name="client_pkey">
+      <ObjectId>42319</ObjectId>
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="35" parent="15" name="client_pkey">
+      <ObjectId>42320</ObjectId>
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>client_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="36" parent="16" name="email">
+      <Position>1</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1426</StateNumber>
+    </column>
+    <column id="37" parent="16" name="password">
+      <Position>2</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1426</StateNumber>
+    </column>
+    <column id="38" parent="16" name="phone_number">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1426</StateNumber>
+    </column>
+    <column id="39" parent="16" name="first_name">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1426</StateNumber>
+    </column>
+    <column id="40" parent="16" name="last_name">
+      <Position>5</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1426</StateNumber>
+    </column>
+    <column id="41" parent="16" name="reg_date">
+      <Position>6</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1426</StateNumber>
+    </column>
+    <column id="42" parent="16" name="role">
+      <Position>7</Position>
+      <DataType>vetclinic.role|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1426</StateNumber>
+    </column>
+    <index id="43" parent="16" name="employee_pkey">
+      <ObjectId>42344</ObjectId>
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="44" parent="16" name="employee_pkey">
+      <ObjectId>42345</ObjectId>
+      <ColNames>email</ColNames>
+      <UnderlyingIndexName>employee_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="45" parent="17" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1427</StateNumber>
+      <DefaultExpression>nextval(&apos;vetclinic.patient_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="46" parent="17" name="animal_id">
+      <Position>2</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1427</StateNumber>
+    </column>
+    <column id="47" parent="17" name="employee_email">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <StateNumber>1427</StateNumber>
+    </column>
+    <column id="48" parent="17" name="description">
+      <Position>4</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1427</StateNumber>
+    </column>
+    <column id="49" parent="17" name="start_date">
+      <Position>5</Position>
+      <DataType>date|0</DataType>
+      <StateNumber>1427</StateNumber>
+    </column>
+    <column id="50" parent="17" name="end_date">
+      <Position>6</Position>
+      <DataType>date|0</DataType>
+      <StateNumber>1427</StateNumber>
+    </column>
+    <column id="51" parent="17" name="status">
+      <Position>7</Position>
+      <DataType>vetclinic.status|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1427</StateNumber>
+    </column>
+    <index id="52" parent="17" name="patient_pkey">
+      <ObjectId>42352</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="53" parent="17" name="patient_pkey">
+      <ObjectId>42353</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>patient_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="54" parent="17" name="fk_animal_id">
+      <ObjectId>42354</ObjectId>
+      <ColNames>animal_id</ColNames>
+      <RefTableName>animal</RefTableName>
+      <RefKeyName>animal_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="55" parent="17" name="fk_employee_email">
+      <ObjectId>42359</ObjectId>
+      <ColNames>employee_email</ColNames>
+      <RefTableName>employee</RefTableName>
+      <RefKeyName>employee_pkey</RefKeyName>
+      <RefColNames>email</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>

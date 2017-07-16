@@ -40,7 +40,7 @@ CREATE TABLE vetclinic.patient (
   animal_id      INTEGER          NOT NULL,
   employee_email VARCHAR(100),
   description    VARCHAR(100)     NOT NULL,
-  start_date     DATE             NOT NULL,
+  start_date     DATE,
   end_date       DATE,
   status         vetclinic.STATUS NOT NULL,
   CONSTRAINT fk_animal_id FOREIGN KEY (animal_id) REFERENCES vetclinic.animal (id) ON UPDATE CASCADE ON DELETE CASCADE,
