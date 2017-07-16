@@ -81,6 +81,7 @@ public class AnimalService {
             dto.setId(animal.getId());
             dto.setName(animal.getName());
             dto.setRegDate(animal.getRegDate());
+            dto.setIll(animal.isIll());
         }
 
         return dto;
@@ -94,6 +95,8 @@ public class AnimalService {
         animal.setAge(dto.getAge());
         animal.setDescription(dto.getDescription());
         animal.setName(dto.getName());
+        animal.setIll(dto.isIll());
+
         if (dto.getRegDate() == null) {
             java.util.Date currDate = new java.util.Date();
             animal.setRegDate(new Date(currDate.getTime()));

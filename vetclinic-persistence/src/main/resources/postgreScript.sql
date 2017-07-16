@@ -21,9 +21,9 @@ CREATE TABLE vetclinic.animal (
   description  VARCHAR(1000),
   reg_date     DATE         NOT NULL,
   client_email VARCHAR(100) NOT NULL,
+  ill          BOOLEAN      NOT NULL DEFAULT FALSE,
   CONSTRAINT fk_client_email FOREIGN KEY (client_email) REFERENCES vetclinic.client (email) ON UPDATE CASCADE ON DELETE CASCADE
 );
-
 
 CREATE TABLE vetclinic.employee (
   email        VARCHAR(100) PRIMARY KEY,

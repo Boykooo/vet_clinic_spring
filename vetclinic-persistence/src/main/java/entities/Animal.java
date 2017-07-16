@@ -5,10 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.sql.Date;
 
-/**
- * Created by andrey on 08.06.17.
- */
-
 @Entity
 @Table(name = "animal")
 public class Animal {
@@ -26,6 +22,9 @@ public class Animal {
 
     @Column(name = "description", length = 1000)
     private String description;
+
+    @Column(name = "ill")
+    private boolean ill;
 
     @Column(name = "reg_date", nullable = false)
     private Date regDate;
@@ -58,6 +57,7 @@ public class Animal {
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -65,6 +65,7 @@ public class Animal {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -72,6 +73,7 @@ public class Animal {
     public Integer getAge() {
         return age;
     }
+
     public void setAge(Integer age) {
         this.age = age;
     }
@@ -79,13 +81,23 @@ public class Animal {
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isIll() {
+        return ill;
+    }
+
+    public void setIll(boolean ill) {
+        this.ill = ill;
     }
 
     public Date getRegDate() {
         return regDate;
     }
+
     public void setRegDate(Date regDate) {
         this.regDate = regDate;
     }
@@ -93,6 +105,7 @@ public class Animal {
     public Client getClient() {
         return client;
     }
+
     public void setClient(Client client) {
         this.client = client;
     }
@@ -100,11 +113,11 @@ public class Animal {
     public Patient getPatient() {
         return patient;
     }
+
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
 
     //endregion
-
 
 }

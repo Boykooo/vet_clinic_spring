@@ -16,6 +16,7 @@ public class AnimalDto {
     private ClientDto client;
     @JsonIgnoreProperties("animal")
     private PatientDto patient;
+    private boolean ill;
 
     public AnimalDto(String name, Integer age, String description,
                      Date regDate, ClientDto client, PatientDto patient) {
@@ -76,6 +77,13 @@ public class AnimalDto {
         this.description = description;
     }
 
+    public boolean isIll() {
+        return ill;
+    }
+    public void setIll(boolean ill) {
+        this.ill = ill;
+    }
+
     public Date getRegDate() {
         return regDate;
     }
@@ -98,6 +106,5 @@ public class AnimalDto {
     }
 
     //endregion
-
 
 }

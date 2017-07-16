@@ -2,6 +2,7 @@ package services;
 
 import dto.PatientDto;
 import entities.Patient;
+import enums.PatientStatus;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,14 +89,24 @@ public class PatientService implements GenericService<PatientDto, Integer> {
 
     private Patient convertToEntity(PatientDto dto) {
         Patient patient = new Patient();
-        patient.setDescription(dto.getDescription());
-        patient.setEndDate(dto.getEndDate());
-        patient.setStatus(dto.getStatus());
-        patient.setStartDate(dto.getStartDate());
 
-        if (dto.getId() != null) {
-            patient.setId(dto.getId());
+        if (dto != null){
+            patient.setDescription(dto.getDescription());
+            patient.setEndDate(dto.getEndDate());
+            if (dto.getStatus() == null){
+                patient.setStatus(PatientStatus.NEW);
+            }
+
+            patient.setAnimal(animalService.convertToEntity(dto.getAnimal()));
+
+            patient.setStartDate(dto.getStartDate());
+
+            if (dto.getId() != null) {
+                patient.setId(dto.getId());
+            }
         }
+
+
 
         return patient;
     }
