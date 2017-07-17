@@ -3,7 +3,9 @@ package app.rest;
 import app.responses.*;
 import app.util.RoleManager;
 import dto.AnimalDto;
+import dto.EmployeeDto;
 import dto.PatientDto;
+import enums.PatientStatus;
 import enums.Role;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +14,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import services.AnimalService;
 import services.PatientService;
+import util.DateManager;
+
+import java.sql.Date;
 
 
 @RestController
+@RequestMapping(value = "/api/patient", produces = "application/json")
 @CrossOrigin
-@RequestMapping(value = "/api/patient")
 public class PatientController {
 
     @Autowired
     private PatientService patientService;
     @Autowired
     private AnimalService animalService;
-
 
     @RequestMapping(method = RequestMethod.GET)
     public BaseResponse getAll() {
@@ -77,6 +81,34 @@ public class PatientController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public BaseResponse delete(@PathVariable("id") Integer id) {
         patientService.delete(id);
+        return new SuccessResponse();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public BaseResponse addEmployeeToPatient(@PathVariable("id") Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if  (RoleManager.hasRole(authentication, Role.CLIENT)) {
+            return new ErrorResponse(ErrorType.ACCESS_DENIED);
+        }
+
+        PatientDto patient = patientService.findById(id);
+        if  (patient != null){
+
+            patient.setEmployee(new EmployeeDto(authentication.getName()));
+            patient.setStatus(PatientStatus.IN_PROGRESS);
+            java.util.Date currDate = new java.util.Date();
+            patient.setStartDate(new Date(currDate.getTime()));
+
+            try {
+                patientService.update(patient);
+            } catch (ObjectNotFoundException e) {
+                return new ErrorResponse(ErrorType.BAD_REQUEST);
+            }
+        } else {
+            return new ErrorResponse(ErrorType.BAD_REQUEST);
+        }
+
         return new SuccessResponse();
     }
 }

@@ -111,7 +111,6 @@ public class AnimalController {
         }
     }
 
-
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
     public BaseResponse getinfo(@PathVariable("id") Integer id) {
         if (id == null) {

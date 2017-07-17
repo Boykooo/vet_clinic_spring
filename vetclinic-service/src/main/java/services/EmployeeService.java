@@ -123,7 +123,7 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
         return dto;
     }
 
-    private Employee convertToEntity(EmployeeDto dto) {
+    public Employee convertToEntity(EmployeeDto dto) {
         Employee employee = new Employee();
 
         employee.setEmail(dto.getEmail());

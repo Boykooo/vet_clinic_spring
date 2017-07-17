@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "employee")
-public class Employee implements BaseUser{
+public class Employee implements BaseUser {
 
     @Id
     @Column(name = "email", length = 100, nullable = false)
@@ -34,7 +34,7 @@ public class Employee implements BaseUser{
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name="reg_date", nullable = false)
+    @Column(name = "reg_date", nullable = false)
     private Date regDate;
 
 
@@ -51,6 +51,10 @@ public class Employee implements BaseUser{
         this.role = role;
     }
 
+    public Employee(String email) {
+        this.email = email;
+    }
+
     public Employee() {
 
     }
@@ -60,6 +64,7 @@ public class Employee implements BaseUser{
     public List<Patient> getPatients() {
         return patients;
     }
+
     public void setPatients(List<Patient> patients) {
         this.patients = patients;
     }
@@ -67,6 +72,7 @@ public class Employee implements BaseUser{
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -74,6 +80,7 @@ public class Employee implements BaseUser{
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -81,6 +88,7 @@ public class Employee implements BaseUser{
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -88,6 +96,7 @@ public class Employee implements BaseUser{
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -95,6 +104,7 @@ public class Employee implements BaseUser{
     public String getLastName() {
         return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -102,6 +112,7 @@ public class Employee implements BaseUser{
     public Role getRole() {
         return role;
     }
+
     public void setRole(Role role) {
         this.role = role;
     }
@@ -109,6 +120,7 @@ public class Employee implements BaseUser{
     public Date getRegDate() {
         return regDate;
     }
+
     public void setRegDate(Date regDate) {
         this.regDate = regDate;
     }

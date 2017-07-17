@@ -1,6 +1,7 @@
 package services;
 
 import dto.PatientDto;
+import entities.Employee;
 import entities.Patient;
 import enums.PatientStatus;
 import exceptions.ObjectNotFoundException;
@@ -90,11 +91,13 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     private Patient convertToEntity(PatientDto dto) {
         Patient patient = new Patient();
 
-        if (dto != null){
+        if (dto != null) {
             patient.setDescription(dto.getDescription());
             patient.setEndDate(dto.getEndDate());
-            if (dto.getStatus() == null){
+            if (dto.getStatus() == null) {
                 patient.setStatus(PatientStatus.NEW);
+            } else {
+                patient.setStatus(dto.getStatus());
             }
 
             patient.setAnimal(animalService.convertToEntity(dto.getAnimal()));
@@ -106,6 +109,9 @@ public class PatientService implements GenericService<PatientDto, Integer> {
             }
         }
 
+        if (dto.getEmployee() != null) {
+            patient.setEmployee(new Employee(dto.getEmployee().getEmail()));
+        }
 
 
         return patient;
