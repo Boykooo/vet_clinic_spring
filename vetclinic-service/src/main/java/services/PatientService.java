@@ -38,6 +38,16 @@ public class PatientService implements GenericService<PatientDto, Integer> {
         return patients;
     }
 
+    public List<PatientDto> findNew(){
+        List<PatientDto> newPatients = new ArrayList<>();
+
+        patientRepository.findNew().forEach(
+                (patient -> newPatients.add(convertToDto(patient)))
+        );
+
+        return newPatients;
+    }
+
     @Override
     public PatientDto findById(Integer key) {
         return convertToDto(patientRepository.findOne(key));

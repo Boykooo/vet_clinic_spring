@@ -34,6 +34,11 @@ public class PatientController {
         return new DataResponse<>(patientService.findAll());
     }
 
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public BaseResponse getNew() {
+        return new DataResponse<>(patientService.findNew());
+    }
+
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
     public BaseResponse getInfo(@PathVariable("id") Integer id) {
         return new DataResponse<>(patientService.findById(id));
@@ -88,12 +93,12 @@ public class PatientController {
     public BaseResponse addEmployeeToPatient(@PathVariable("id") Integer id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if  (RoleManager.hasRole(authentication, Role.CLIENT)) {
+        if (RoleManager.hasRole(authentication, Role.CLIENT)) {
             return new ErrorResponse(ErrorType.ACCESS_DENIED);
         }
 
         PatientDto patient = patientService.findById(id);
-        if  (patient != null){
+        if (patient != null) {
 
             patient.setEmployee(new EmployeeDto(authentication.getName()));
             patient.setStatus(PatientStatus.IN_PROGRESS);
