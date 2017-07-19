@@ -9,12 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.PatientRepository;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by andrey on 08.06.17.
- */
 
 @Service
 public class PatientService implements GenericService<PatientDto, Integer> {
@@ -38,10 +35,20 @@ public class PatientService implements GenericService<PatientDto, Integer> {
         return patients;
     }
 
-    public List<PatientDto> findNew(){
+    public List<PatientDto> findNew() {
         List<PatientDto> newPatients = new ArrayList<>();
 
         patientRepository.findNew().forEach(
+                (patient -> newPatients.add(convertToDto(patient)))
+        );
+
+        return newPatients;
+    }
+
+    public List<PatientDto> findInProgress(String email){
+        List<PatientDto> newPatients = new ArrayList<>();
+
+        patientRepository.findInProgress(email).forEach(
                 (patient -> newPatients.add(convertToDto(patient)))
         );
 
@@ -62,7 +69,16 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     public void update(PatientDto patientDto) throws ObjectNotFoundException {
         Patient patient = patientRepository.findOne(patientDto.getId());
         if (patient != null) {
-            patientRepository.save(convertToEntity(patientDto));
+            Patient updatePatient = convertToEntity(patientDto);
+
+            if (updatePatient.getStatus() == PatientStatus.DONE ||
+                    updatePatient.getStatus() == PatientStatus.REJECTED) {
+
+                java.util.Date currDate = new java.util.Date();
+                updatePatient.setEndDate(new Date(currDate.getTime()));
+            }
+
+            patientRepository.save(updatePatient);
         } else {
             throw new ObjectNotFoundException();
         }

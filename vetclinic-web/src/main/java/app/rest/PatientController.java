@@ -34,6 +34,18 @@ public class PatientController {
         return new DataResponse<>(patientService.findAll());
     }
 
+    @RequestMapping(value = "/progress", method = RequestMethod.GET)
+    public BaseResponse getInProgressPatient() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (RoleManager.hasRole(authentication, Role.CLIENT)) {
+            return new ErrorResponse(ErrorType.ACCESS_DENIED);
+        }
+
+        return new DataResponse<>(patientService.findInProgress(authentication.getName()));
+    }
+
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public BaseResponse getNew() {
         return new DataResponse<>(patientService.findNew());
@@ -48,7 +60,6 @@ public class PatientController {
     public BaseResponse add(@RequestBody PatientDto patient) {
         if (patient != null) {
             try {
-
                 AnimalDto animal = patient.getAnimal();
                 animal.setIll(true);
                 animalService.update(animal);
@@ -116,4 +127,5 @@ public class PatientController {
 
         return new SuccessResponse();
     }
+
 }

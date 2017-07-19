@@ -46,7 +46,7 @@ public class EmployeeController {
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public EmployeeDto getEmployeeInfo(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean accessRole = false;
         for (GrantedAuthority authority: authentication.getAuthorities()){
             if (!Objects.equals(authority.getAuthority(), Role.CLIENT.toString())){
