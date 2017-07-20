@@ -10,7 +10,6 @@ import java.util.List;
 @Document(collection = "request")
 public class Request {
 
-    @Id
     private ObjectId id;
     private Integer animalId;
     private String clientEmail;
@@ -33,6 +32,13 @@ public class Request {
     }
     public void setAnimalId(Integer animalId) {
         this.animalId = animalId;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getClientEmail() {
