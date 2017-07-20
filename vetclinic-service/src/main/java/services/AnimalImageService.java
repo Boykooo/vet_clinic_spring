@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Service
-public class AnimalMongoService {
+public class AnimalImageService {
 
     @Autowired
     private GridFsTemplate gridFsTemplate;

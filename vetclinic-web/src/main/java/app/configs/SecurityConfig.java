@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/auth/*");
         web.ignoring().antMatchers("/images/animal/*");
+        web.ignoring().antMatchers("/mongo/*");
     }
 
     @Autowired

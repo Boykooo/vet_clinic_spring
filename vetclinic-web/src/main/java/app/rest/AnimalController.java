@@ -6,20 +6,15 @@ import dto.AnimalDto;
 import dto.ClientDto;
 import exceptions.ObjectAlreadyExistException;
 import exceptions.ObjectNotFoundException;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import services.AnimalMongoService;
+import services.AnimalImageService;
 import services.AnimalService;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,7 +23,7 @@ import java.util.List;
 public class AnimalController {
 
     @Autowired
-    private AnimalMongoService animalMongoService;
+    private AnimalImageService animalImageService;
     @Autowired
     private AnimalService animalService;
 
@@ -41,7 +36,7 @@ public class AnimalController {
     public BaseResponse uploadImage(@PathVariable("id") Integer id,
                                     @RequestBody MultipartFile file) {
         try {
-            animalMongoService.add(file.getInputStream(), id);
+            animalImageService.add(file.getInputStream(), id);
             return new SuccessResponse();
 
         } catch (ObjectAlreadyExistException | IOException e) {
@@ -54,7 +49,7 @@ public class AnimalController {
     public BaseResponse updateImage(@PathVariable("id") Integer id,
                                     @RequestBody MultipartFile file) {
         try {
-            animalMongoService.update(file.getInputStream(), id);
+            animalImageService.update(file.getInputStream(), id);
             return new SuccessResponse();
 
         } catch (ObjectAlreadyExistException | IOException e) {
