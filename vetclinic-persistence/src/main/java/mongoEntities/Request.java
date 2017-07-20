@@ -1,5 +1,7 @@
 package mongoEntities;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Date;
@@ -8,22 +10,30 @@ import java.util.List;
 @Document(collection = "request")
 public class Request {
 
+    @Id
+    private ObjectId id;
+    private Integer animalId;
     private String clientEmail;
-    private String employeeEmail;
-    private Date requestDate;
-    private List<Message> messages;
 
-    public Request(String clientEmail, String employeeEmail, Date requestDate, List<Message> messages) {
+    private List<RequestInfo> history;
+
+    public Request(Integer animalId, String clientEmail, List<RequestInfo> history) {
+        this.animalId = animalId;
         this.clientEmail = clientEmail;
-        this.employeeEmail = employeeEmail;
-        this.requestDate = requestDate;
-        this.messages = messages;
+        this.history = history;
     }
 
     public Request() {
     }
 
     //region GetSet
+
+    public Integer getAnimalId() {
+        return animalId;
+    }
+    public void setAnimalId(Integer animalId) {
+        this.animalId = animalId;
+    }
 
     public String getClientEmail() {
         return clientEmail;
@@ -32,25 +42,11 @@ public class Request {
         this.clientEmail = clientEmail;
     }
 
-    public String getEmployeeEmail() {
-        return employeeEmail;
+    public List<RequestInfo> getHistory() {
+        return history;
     }
-    public void setEmployeeEmail(String employeeEmail) {
-        this.employeeEmail = employeeEmail;
-    }
-
-    public Date getRequestDate() {
-        return requestDate;
-    }
-    public void setRequestDate(Date requestDate) {
-        this.requestDate = requestDate;
-    }
-
-    public List<Message> getMessages() {
-        return messages;
-    }
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
+    public void setHistory(List<RequestInfo> history) {
+        this.history = history;
     }
 
     //endregion

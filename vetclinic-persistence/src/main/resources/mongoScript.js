@@ -1,12 +1,19 @@
 db.request.save({
-    clientEmail: "test",
-    employeeEmail : "test2",
-    requestDate: "2017-07-20",
-    messages: [
+    animalId: "1",
+    clientEmail: "client email",
+    history: [
         {
-            email: "test",
-            msg: "msg",
-            date: "2017-07-20"
+            header: "header message",
+            employeeEmail : "employee email",
+            requestDate: "2017-07-20",
+            messages: [
+                {
+                    email: "user email",
+                    message: "msg",
+                    date: "2017-07-20"
+                }
+            ]
+
         }
     ]
-});
+})

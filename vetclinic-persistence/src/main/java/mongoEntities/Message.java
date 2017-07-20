@@ -1,21 +1,19 @@
 package mongoEntities;
 
-
 import java.sql.Date;
 
 public class Message {
     private String email;
-    private String msg;
+    private String message;
     private Date date;
 
-    public Message(String msg, Date date, String email) {
-        this.msg = msg;
-        this.date = date;
+    public Message(String email, String message, Date date) {
         this.email = email;
+        this.message = message;
+        this.date = date;
     }
 
     public Message() {
-
     }
 
     //region GetSet
@@ -27,11 +25,11 @@ public class Message {
         this.email = email;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Date getDate() {
@@ -42,5 +40,4 @@ public class Message {
     }
 
     //endregion
-
 }

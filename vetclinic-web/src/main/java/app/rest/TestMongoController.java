@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import repository.RequestRepository;
+import services.RequestService;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RestController()
@@ -17,7 +16,7 @@ import java.util.List;
 public class TestMongoController {
 
     @Autowired
-    private RequestRepository requestRepository;
+    private RequestService requestService;
 
 
     @RequestMapping("/test")
@@ -27,7 +26,7 @@ public class TestMongoController {
 
     @RequestMapping("/all")
     public List<Request> findAll(){
-        return requestRepository.findAll();
+        return null;
     }
 
     @RequestMapping("/date")
@@ -37,6 +36,11 @@ public class TestMongoController {
 
         return date;
 
+    }
+
+    @RequestMapping("/last")
+    public Request findLastClientRequest(){
+        return requestService.findLastClientRequest("client email");
     }
 
 }
