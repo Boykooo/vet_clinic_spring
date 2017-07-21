@@ -1,6 +1,7 @@
 package app.rest;
 
 import mongoEntities.ClientRequest;
+import mongoEntities.RequestInfo;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import services.RequestService;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RestController()
@@ -49,9 +49,9 @@ public class TestMongoController {
     }
 
     @RequestMapping("/last")
-    public ClientRequest findLastClientRequest() {
-        ClientRequest lastClientClientRequest = requestService.findLastClientRequest("client email");
-        return lastClientClientRequest;
+    public RequestInfo findLastClientRequest() {
+        RequestInfo lastClientRequest = requestService.findLastClientRequest("denis@mail.ru");
+        return lastClientRequest;
     }
 
 }

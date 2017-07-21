@@ -21,7 +21,7 @@ CREATE TABLE vetclinic.animal (
   description  VARCHAR(1000),
   reg_date     DATE         NOT NULL,
   client_email VARCHAR(100) NOT NULL,
-  ill          BOOLEAN      NOT NULL DEFAULT FALSE,
+  ill          BOOLEAN      NOT NULL,
   CONSTRAINT fk_client_email FOREIGN KEY (client_email) REFERENCES vetclinic.client (email) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -68,14 +68,14 @@ VALUES (
   '88005553535', 'Денис', 'Валинуров', '2017-07-12'
 );
 
-INSERT INTO vetclinic.animal (id, name, age, description, reg_date, client_email)
+INSERT INTO vetclinic.animal (id, name, age, description, reg_date, client_email, ill)
 VALUES (
-  1, 'Баксик', 7, 'Описание Баксика', '2017-07-13', 'denis@mail.ru'
+  1, 'Баксик', 7, 'Описание Баксика', '2017-07-13', 'denis@mail.ru', FALSE
 );
 
-INSERT INTO vetclinic.animal (id, name, age, description, reg_date, client_email)
+INSERT INTO vetclinic.animal (id, name, age, description, reg_date, client_email, ill)
 VALUES (
-  2, 'Алан', 3, 'Описание Алана', '2017-07-14', 'denis@mail.ru'
+  2, 'Алан', 3, 'Описание Алана', '2017-07-14', 'denis@mail.ru', FALSE
 );
 
 INSERT INTO vetclinic.patient (animal_id, employee_email, description, start_date, end_date, status)

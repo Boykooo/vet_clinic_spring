@@ -10,9 +10,9 @@ import forms.ClientRequestForm;
 import mongoEntities.ClientRequest;
 import mongoEntities.RequestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.aggregation.*;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.ClientRepository;
@@ -76,9 +76,15 @@ public class ClientService implements GenericService<ClientDto, String> {
 
     public RequestInfo findLastClientRequest(String email) {
 
+        GroupOperation groupByStateAndSumPop = Aggregation.group("_id");
+        MatchOperation filterStates = Aggregation.match(new Criteria("clientEmail").is(email));
+        SortOperation sortByPopDesc = Aggregation.sort(new Sort(Sort.Direction.DESC, "history.requestDate"));
+
+
+        Aggregation aggregation = Aggregation.newAggregation(groupByStateAndSumPop, filterStates, sortByPopDesc);
+
         ClientRequest request = clientRequestRepository.findLastClientRequest(
-                email,
-                new Sort(Sort.Direction.DESC, "history")
+                aggregation
         );
 
         return request.getHistory().get(0);
