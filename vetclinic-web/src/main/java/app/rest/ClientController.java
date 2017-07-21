@@ -1,5 +1,6 @@
 package app.rest;
 
+import forms.ClientRequestForm;
 import app.responses.BaseResponse;
 import app.responses.ErrorResponse;
 import app.responses.ErrorType;
@@ -15,13 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import services.ClientService;
 
-import javax.ws.rs.core.SecurityContext;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping(value = "/api/client", produces="application/json")
+@RequestMapping(value = "/api/client", produces = "application/json")
 @CrossOrigin
 public class ClientController {
 
@@ -40,16 +39,16 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public ClientDto getClientInfo(){
+    public ClientDto getClientInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean founded = false;
-        for (GrantedAuthority authority: authentication.getAuthorities()){
-            if (Objects.equals(authority.getAuthority(), Role.CLIENT.toString())){
-             founded = true;
-             break;
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (Objects.equals(authority.getAuthority(), Role.CLIENT.toString())) {
+                founded = true;
+                break;
             }
         }
-        if (founded){
+        if (founded) {
             return clientService.findById(authentication.getName());
         }
 
@@ -81,6 +80,19 @@ public class ClientController {
         } catch (ObjectNotFoundException e) {
             return new ErrorResponse(ErrorType.USER_NOT_FOUND);
         }
+
+        return new SuccessResponse();
+    }
+
+    @RequestMapping(value = "/request", method = RequestMethod.POST)
+    public BaseResponse addRequest(@RequestBody ClientRequestForm requestForm) {
+
+        if (requestForm.animalId == null) {
+            return new ErrorResponse(ErrorType.BAD_REQUEST);
+        }
+
+        requestForm.clientEmail =  SecurityContextHolder.getContext().getAuthentication().getName();
+        clientService.addRequest(requestForm);
 
         return new SuccessResponse();
     }

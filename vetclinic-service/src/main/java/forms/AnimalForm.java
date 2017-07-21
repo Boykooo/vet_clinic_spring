@@ -1,4 +1,4 @@
-package app.entities;
+package forms;
 
 public class AnimalForm {
     public Integer id;

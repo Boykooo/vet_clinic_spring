@@ -1,6 +1,6 @@
 package app.rest;
 
-import app.entities.AnimalForm;
+import forms.AnimalForm;
 import app.responses.*;
 import dto.AnimalDto;
 import dto.ClientDto;

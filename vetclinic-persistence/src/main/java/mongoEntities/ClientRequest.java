@@ -4,26 +4,45 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "request")
-public class Request {
+public class ClientRequest {
 
+    @Id
     private ObjectId id;
     private Integer animalId;
     private String clientEmail;
 
     private List<RequestInfo> history;
 
-    public Request(Integer animalId, String clientEmail, List<RequestInfo> history) {
+    public ClientRequest(ObjectId id, Integer animalId, String clientEmail, List<RequestInfo> history) {
+        this.id = id;
         this.animalId = animalId;
         this.clientEmail = clientEmail;
         this.history = history;
     }
 
-    public Request() {
+    public ClientRequest(Integer animalId, String clientEmail, RequestInfo info) {
+        this.animalId = animalId;
+        this.clientEmail = clientEmail;
+        this.history = new ArrayList<>();
+        this.history.add(info);
     }
+
+    public ClientRequest(Integer animalId) {
+        this.animalId = animalId;
+    }
+
+    public ClientRequest() {
+
+    }
+
+    public void addRequestInfo(RequestInfo info) {
+        this.history.add(info);
+    }
+
 
     //region GetSet
 

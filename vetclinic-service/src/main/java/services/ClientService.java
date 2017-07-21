@@ -6,10 +6,16 @@ import entities.Animal;
 import entities.Client;
 import exceptions.ObjectAlreadyExistException;
 import exceptions.ObjectNotFoundException;
+import forms.ClientRequestForm;
+import mongoEntities.ClientRequest;
+import mongoEntities.RequestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.ClientRepository;
+import repository.ClientRequestRepository;
+import util.DateManager;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -23,6 +29,8 @@ public class ClientService implements GenericService<ClientDto, String> {
     private ClientRepository clientRepository;
     @Autowired
     private AnimalService animalService;
+    @Autowired
+    private ClientRequestRepository clientRequestRepository;
 
     public List<ClientDto> findAll() {
         List<ClientDto> users = new ArrayList<ClientDto>();
@@ -50,7 +58,7 @@ public class ClientService implements GenericService<ClientDto, String> {
     public void update(ClientDto clientDto) throws ObjectNotFoundException {
         Client client = clientRepository.findOne(clientDto.getEmail());
 
-        if (client != null){
+        if (client != null) {
 
             clientDto.setRegDate(client.getRegDate());
             clientRepository.save(convertToEntity(clientDto));
@@ -62,6 +70,34 @@ public class ClientService implements GenericService<ClientDto, String> {
 
     public void delete(String key) {
         clientRepository.delete(key);
+    }
+
+    public ClientRequest findLastClientRequest(String email) {
+        return clientRequestRepository.findLastClientRequest(
+                email,
+                new Sort(Sort.Direction.DESC, "history")
+        );
+    }
+
+    public void addRequest(ClientRequestForm requestForm) {
+
+        requestForm.employeeEmail = animalService.findById(requestForm.animalId)
+                .getPatient()
+                .getEmployee()
+                .getEmail();
+
+        RequestInfo info = new RequestInfo(requestForm.header, requestForm.description, requestForm.employeeEmail,
+                DateManager.getCurrentFormattedDate(), new ArrayList<>());
+
+        ClientRequest clientRequest = clientRequestRepository.findByAnimalId(requestForm.animalId);
+        if (clientRequest != null) {
+            clientRequest.addRequestInfo(info);
+        } else {
+            clientRequest = new ClientRequest(requestForm.animalId, requestForm.clientEmail, info);
+        }
+
+        clientRequestRepository.save(clientRequest);
+
     }
 
     @Override

@@ -1,29 +1,30 @@
 package app.rest;
 
 
-import app.entities.LoginForm;
+import forms.LoginForm;
 import app.responses.BaseResponse;
 import app.responses.ErrorResponse;
 import app.responses.ErrorType;
 import app.responses.TokenResponse;
-import dto.EmployeeDto;
 import entities.BaseUser;
 import entities.Employee;
 import enums.Role;
 import enums.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import repository.ClientRepository;
 import repository.EmployeeRepository;
 import security.TokenHandler;
-import services.ClientService;
-import services.EmployeeService;
 import util.CryptManager;
 import util.DateManager;
 import util.UserUtils;
 
+import java.awt.*;
+
 @RestController
-@RequestMapping(value = "/auth", produces = {"application/json"})
+@RequestMapping(value = "/auth",
+        produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin
 public class AuthController {
 

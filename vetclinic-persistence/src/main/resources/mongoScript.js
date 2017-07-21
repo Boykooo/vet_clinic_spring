@@ -1,9 +1,10 @@
 db.request.save({
-    animalId: "1",
+    animalId: 1,
     clientEmail: "client email",
     history: [
         {
             header: "header message",
+            description: "descr request",
             employeeEmail : "employee email",
             requestDate: "2017-07-20",
             messages: [
@@ -16,4 +17,4 @@ db.request.save({
 
         }
     ]
-})
+});

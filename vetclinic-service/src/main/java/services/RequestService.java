@@ -1,11 +1,11 @@
 package services;
 
-import mongoEntities.Request;
+import mongoEntities.ClientRequest;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import repository.RequestRepository;
+import repository.ClientRequestRepository;
 
 import java.util.List;
 
@@ -13,24 +13,24 @@ import java.util.List;
 public class RequestService {
 
     @Autowired
-    private RequestRepository requestRepository;
+    private ClientRequestRepository clientRequestRepository;
 
-    public Request findLastClientRequest(String email) {
-        return requestRepository.findLastClientRequest(
+    public ClientRequest findLastClientRequest(String email) {
+        return clientRequestRepository.findLastClientRequest(
                 email,
                 new Sort(Sort.Direction.DESC, "history")
         );
     }
 
-    public Request findById(ObjectId id) {
-        return requestRepository.findOne(id);
+    public ClientRequest findById(ObjectId id) {
+        return clientRequestRepository.findOne(id);
     }
 
     public Integer requstCount(Integer animalId) {
         return null;
     }
 
-    public List<Request> findAll(Integer animalId) {
+    public List<ClientRequest> findAll(Integer animalId) {
         return null;
     }
 
