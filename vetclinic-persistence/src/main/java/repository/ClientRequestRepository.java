@@ -11,6 +11,6 @@ public interface ClientRequestRepository extends MongoRepository<ClientRequest, 
     @Query("{clientEmail: ?0}")
     ClientRequest findLastClientRequest(String email, Sort sort);
 
-    @Query("{animalId: ?0}")
+    @Query("{animalId: ?0}, $limit:1")
     ClientRequest findByAnimalId(Integer animalId);
 }

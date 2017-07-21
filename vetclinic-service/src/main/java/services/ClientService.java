@@ -10,6 +10,8 @@ import forms.ClientRequestForm;
 import mongoEntities.ClientRequest;
 import mongoEntities.RequestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -72,11 +74,19 @@ public class ClientService implements GenericService<ClientDto, String> {
         clientRepository.delete(key);
     }
 
-    public ClientRequest findLastClientRequest(String email) {
-        return clientRequestRepository.findLastClientRequest(
+    public RequestInfo findLastClientRequest(String email) {
+
+        ClientRequest request = clientRequestRepository.findLastClientRequest(
                 email,
                 new Sort(Sort.Direction.DESC, "history")
         );
+
+        return request.getHistory().get(0);
+
+//        return clientRequestRepository.findLastClientRequest(
+//                email,
+//                new Sort(Sort.Direction.DESC, "history")
+//        );
     }
 
     public void addRequest(ClientRequestForm requestForm) {
@@ -87,7 +97,7 @@ public class ClientService implements GenericService<ClientDto, String> {
                 .getEmail();
 
         RequestInfo info = new RequestInfo(requestForm.header, requestForm.description, requestForm.employeeEmail,
-                DateManager.getCurrentFormattedDate(), new ArrayList<>());
+                DateManager.getCurrentSqlDate() , new ArrayList<>());
 
         ClientRequest clientRequest = clientRequestRepository.findByAnimalId(requestForm.animalId);
         if (clientRequest != null) {

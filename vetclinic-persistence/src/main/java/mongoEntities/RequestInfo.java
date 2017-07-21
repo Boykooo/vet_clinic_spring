@@ -9,12 +9,12 @@ public class RequestInfo {
     private String header;
     private String description;
     private String employeeEmail;
-    private String requestDate;
+    private Date requestDate;
 
     private List<Message> messages;
 
     public RequestInfo(String header, String description, String employeeEmail,
-                       String requestDate, List<Message> messages) {
+                       Date requestDate, List<Message> messages) {
         this.header = header;
         this.description = description;
         this.employeeEmail = employeeEmail;
@@ -45,11 +45,11 @@ public class RequestInfo {
         this.employeeEmail = employeeEmail;
     }
 
-    public String getRequestDate() {
+    public Date getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate(String requestDate) {
+    public void setRequestDate(Date requestDate) {
         this.requestDate = requestDate;
     }
 

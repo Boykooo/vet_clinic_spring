@@ -1,14 +1,13 @@
 package app.rest;
 
+import app.responses.*;
 import forms.ClientRequestForm;
-import app.responses.BaseResponse;
-import app.responses.ErrorResponse;
-import app.responses.ErrorType;
-import app.responses.SuccessResponse;
 import dto.ClientDto;
 import enums.Role;
 import exceptions.ObjectAlreadyExistException;
 import exceptions.ObjectNotFoundException;
+import mongoEntities.ClientRequest;
+import mongoEntities.RequestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,7 +27,6 @@ public class ClientController {
     private ClientService clientService;
 
     @RequestMapping(method = RequestMethod.GET)
-
     public List<ClientDto> getAll() {
         return clientService.findAll();
     }
@@ -91,9 +89,22 @@ public class ClientController {
             return new ErrorResponse(ErrorType.BAD_REQUEST);
         }
 
-        requestForm.clientEmail =  SecurityContextHolder.getContext().getAuthentication().getName();
+        requestForm.clientEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         clientService.addRequest(requestForm);
 
         return new SuccessResponse();
+    }
+
+    @RequestMapping(value = "/request/last", method = RequestMethod.GET)
+    public BaseResponse getLastRequest() {
+
+        RequestInfo lastClientRequest = clientService.findLastClientRequest(
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication()
+                        .getName()
+        );
+
+        return new DataResponse<>(lastClientRequest);
     }
 }

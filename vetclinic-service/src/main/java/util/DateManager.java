@@ -21,4 +21,8 @@ public class DateManager {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         return dateFormat.format(new java.util.Date());
     }
+
+    public static java.util.Date getCurrentDate(){
+        return new java.util.Date();
+    }
 }

@@ -1,13 +1,14 @@
 package mongoEntities;
 
+
 import java.sql.Date;
 
 public class Message {
     private String email;
     private String message;
-    private String date;
+    private Date date;
 
-    public Message(String email, String message, String date) {
+    public Message(String email, String message, Date date) {
         this.email = email;
         this.message = message;
         this.date = date;
@@ -32,10 +33,10 @@ public class Message {
         this.message = message;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
