@@ -11,6 +11,8 @@ import mongoEntities.ClientRequest;
 import mongoEntities.RequestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +25,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+
 
 @Service
 public class ClientService implements GenericService<ClientDto, String> {
@@ -33,6 +37,9 @@ public class ClientService implements GenericService<ClientDto, String> {
     private AnimalService animalService;
     @Autowired
     private ClientRequestRepository clientRequestRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     public List<ClientDto> findAll() {
         List<ClientDto> users = new ArrayList<ClientDto>();
@@ -76,43 +83,40 @@ public class ClientService implements GenericService<ClientDto, String> {
 
     public RequestInfo findLastClientRequest(String email) {
 
-        GroupOperation groupByStateAndSumPop = Aggregation.group("_id");
-        MatchOperation filterStates = Aggregation.match(new Criteria("clientEmail").is(email));
-        SortOperation sortByPopDesc = Aggregation.sort(new Sort(Sort.Direction.DESC, "history.requestDate"));
+        GroupOperation groupOpt = group("history");
+        MatchOperation matchOpt = match(new Criteria("clientEmail").is(email));
+        SortOperation sortOpt = sort(new Sort(Sort.Direction.DESC, "_id.requestDate"));
+        UnwindOperation unwind = Aggregation.unwind("history");
 
+        Aggregation aggregation = Aggregation.newAggregation(matchOpt, unwind, sortOpt, groupOpt);
 
-        Aggregation aggregation = Aggregation.newAggregation(groupByStateAndSumPop, filterStates, sortByPopDesc);
+        AggregationResults<RequestInfo> aggregate = mongoTemplate.aggregate(aggregation, "request", RequestInfo.class);
 
-        ClientRequest request = clientRequestRepository.findLastClientRequest(
-                aggregation
-        );
+        RequestInfo info = aggregate.getMappedResults().get(0);
 
-        return request.getHistory().get(0);
+        return info;
 
-//        return clientRequestRepository.findLastClientRequest(
-//                email,
-//                new Sort(Sort.Direction.DESC, "history")
-//        );
     }
 
     public void addRequest(ClientRequestForm requestForm) {
 
-        requestForm.employeeEmail = animalService.findById(requestForm.animalId)
-                .getPatient()
-                .getEmployee()
-                .getEmail();
+        AnimalDto foundAnimal = animalService.findById(requestForm.animalId);
 
-        RequestInfo info = new RequestInfo(requestForm.header, requestForm.description, requestForm.employeeEmail,
-                DateManager.getCurrentSqlDate() , new ArrayList<>());
+        if (foundAnimal.getPatient().getEmployee() != null) {
+            requestForm.employeeEmail = foundAnimal.getPatient().getEmployee().getEmail();
 
-        ClientRequest clientRequest = clientRequestRepository.findByAnimalId(requestForm.animalId);
-        if (clientRequest != null) {
-            clientRequest.addRequestInfo(info);
-        } else {
-            clientRequest = new ClientRequest(requestForm.animalId, requestForm.clientEmail, info);
+            RequestInfo info = new RequestInfo(requestForm.header, requestForm.description, requestForm.employeeEmail,
+                    DateManager.getCurrentDate() , new ArrayList<>());
+
+            ClientRequest clientRequest = clientRequestRepository.findByAnimalId(requestForm.animalId);
+            if (clientRequest != null) {
+                clientRequest.addRequestInfo(info);
+            } else {
+                clientRequest = new ClientRequest(requestForm.animalId, requestForm.clientEmail, info);
+            }
+
+            clientRequestRepository.save(clientRequest);
         }
-
-        clientRequestRepository.save(clientRequest);
 
     }
 

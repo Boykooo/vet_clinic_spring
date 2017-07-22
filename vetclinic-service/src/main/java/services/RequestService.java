@@ -35,10 +35,10 @@ public class RequestService {
 
         GroupOperation groupOpt = group("history");
         MatchOperation matchOpt = match(new Criteria("clientEmail").is(email));
-        SortOperation sortOpt = sort(new Sort(Sort.Direction.ASC, "history.requestDate"));
+        SortOperation sortOpt = sort(new Sort(Sort.Direction.DESC, "_id.requestDate"));
         UnwindOperation unwind = Aggregation.unwind("history");
 
-        Aggregation aggregation = Aggregation.newAggregation(matchOpt, unwind, sortOpt, groupOpt);
+        Aggregation aggregation = Aggregation.newAggregation(matchOpt, unwind, groupOpt, sortOpt);
 
         AggregationResults<RequestInfo> aggregate = mongoTemplate.aggregate(aggregation, "request", RequestInfo.class);
 
@@ -58,6 +58,5 @@ public class RequestService {
     public List<ClientRequest> findAll(Integer animalId) {
         return null;
     }
-
 
 }
