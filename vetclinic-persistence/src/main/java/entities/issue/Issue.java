@@ -35,6 +35,11 @@ public class Issue {
         this.animalId = animalId;
     }
 
+    public Issue(IssueInfo info) {
+        this.history = new ArrayList<>();
+        this.history.add(info);
+    }
+
     public Issue() {
 
     }
@@ -48,6 +53,7 @@ public class Issue {
     public Integer getAnimalId() {
         return animalId;
     }
+
     public void setAnimalId(Integer animalId) {
         this.animalId = animalId;
     }
@@ -55,6 +61,7 @@ public class Issue {
     public ObjectId getId() {
         return id;
     }
+
     public void setId(ObjectId id) {
         this.id = id;
     }
@@ -62,6 +69,7 @@ public class Issue {
     public String getClientEmail() {
         return clientEmail;
     }
+
     public void setClientEmail(String clientEmail) {
         this.clientEmail = clientEmail;
     }
@@ -69,6 +77,7 @@ public class Issue {
     public List<IssueInfo> getHistory() {
         return history;
     }
+
     public void setHistory(List<IssueInfo> history) {
         this.history = history;
     }

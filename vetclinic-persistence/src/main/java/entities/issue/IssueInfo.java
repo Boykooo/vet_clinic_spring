@@ -2,7 +2,6 @@ package entities.issue;
 
 import enums.RequestStatus;
 
-import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +15,6 @@ public class IssueInfo {
     private Date requestDate;
     private List<Message> messages;
 
-
-
     public IssueInfo(Long id, String header, String description, String employeeEmail,
                      Date requestDate, List<Message> messages, RequestStatus status) {
         this.header = header;
@@ -29,8 +26,16 @@ public class IssueInfo {
         this.id = id;
     }
 
+    public IssueInfo(Long id) {
+        this.id = id;
+    }
+
     public IssueInfo() {
 
+    }
+
+    public void addMessage(Message message) {
+        this.messages.add(message);
     }
 
     //region GetSet
