@@ -15,7 +15,7 @@ CREATE TABLE vetclinic.client (
 );
 
 CREATE TABLE vetclinic.animal (
-  id           SERIAL PRIMARY KEY,
+  issueId           SERIAL PRIMARY KEY,
   name         VARCHAR(100) NOT NULL,
   age          INTEGER      NOT NULL,
   description  VARCHAR(1000),
@@ -36,14 +36,14 @@ CREATE TABLE vetclinic.employee (
 );
 
 CREATE TABLE vetclinic.patient (
-  id             SERIAL PRIMARY KEY,
+  issueId             SERIAL PRIMARY KEY,
   animal_id      INTEGER          NOT NULL,
   employee_email VARCHAR(100),
   description    VARCHAR(100)     NOT NULL,
   start_date     DATE,
   end_date       DATE,
   status         vetclinic.STATUS NOT NULL,
-  CONSTRAINT fk_animal_id FOREIGN KEY (animal_id) REFERENCES vetclinic.animal (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_animal_id FOREIGN KEY (animal_id) REFERENCES vetclinic.animal (issueId) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT fk_employee_email FOREIGN KEY (employee_email) REFERENCES vetclinic.employee (email) ON UPDATE CASCADE
 );
 
@@ -68,12 +68,12 @@ VALUES (
   '88005553535', 'Денис', 'Валинуров', '2017-07-12'
 );
 
-INSERT INTO vetclinic.animal (id, name, age, description, reg_date, client_email, ill)
+INSERT INTO vetclinic.animal (issueId, name, age, description, reg_date, client_email, ill)
 VALUES (
   1, 'Баксик', 7, 'Описание Баксика', '2017-07-13', 'denis@mail.ru', FALSE
 );
 
-INSERT INTO vetclinic.animal (id, name, age, description, reg_date, client_email, ill)
+INSERT INTO vetclinic.animal (issueId, name, age, description, reg_date, client_email, ill)
 VALUES (
   2, 'Алан', 3, 'Описание Алана', '2017-07-14', 'denis@mail.ru', FALSE
 );

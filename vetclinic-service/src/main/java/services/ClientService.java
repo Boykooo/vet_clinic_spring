@@ -111,7 +111,7 @@ public class ClientService implements GenericService<ClientDto, String> {
             IssueInfo info = new IssueInfo(sequenceDao.getNextSequenceId(seqName), requestForm.header, requestForm.description,
                     requestForm.employeeEmail, DateManager.getCurrentDate(), new ArrayList<>(), RequestStatus.OPEN);
 
-            Issue issue = issueDao.findByAnimalId(requestForm.animalId);
+            Issue issue = issueDao.findByAnimalId(requestForm.animalId, null);
             if (issue != null) {
                 issue.addRequestInfo(info);
             } else {

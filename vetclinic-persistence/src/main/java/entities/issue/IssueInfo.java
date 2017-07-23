@@ -2,12 +2,13 @@ package entities.issue;
 
 import enums.RequestStatus;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class IssueInfo {
 
-    private Long id;
+    private Long issueId;
     private String header;
     private String description;
     private String employeeEmail;
@@ -15,7 +16,7 @@ public class IssueInfo {
     private Date requestDate;
     private List<Message> messages;
 
-    public IssueInfo(Long id, String header, String description, String employeeEmail,
+    public IssueInfo(Long issueId, String header, String description, String employeeEmail,
                      Date requestDate, List<Message> messages, RequestStatus status) {
         this.header = header;
         this.description = description;
@@ -23,11 +24,16 @@ public class IssueInfo {
         this.requestDate = requestDate;
         this.messages = messages;
         this.status = status;
-        this.id = id;
+        this.issueId = issueId;
     }
 
-    public IssueInfo(Long id) {
-        this.id = id;
+    public IssueInfo(Long issueId) {
+        this.issueId = issueId;
+    }
+
+    public IssueInfo(Message message){
+        this.messages = new ArrayList<>();
+        this.messages.add(message);
     }
 
     public IssueInfo() {
@@ -40,12 +46,12 @@ public class IssueInfo {
 
     //region GetSet
 
-    public Long getId() {
-        return id;
+    public Long getIssueId() {
+        return issueId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIssueId(Long issueId) {
+        this.issueId = issueId;
     }
 
     public RequestStatus getStatus() {
