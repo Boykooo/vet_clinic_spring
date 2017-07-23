@@ -15,11 +15,11 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {
         "app.rest", "services", "app.filters",
-        "security", "app.configs", "config"
+        "security", "app.configs", "config", "dao"
 })
-@EntityScan(value = {"entities", "mongoEntities"})
-@EnableJpaRepositories("repository")
-@EnableMongoRepositories("repository")
+@EntityScan(value = {"entities", "entities/issue"})
+@EnableJpaRepositories("dao")
+@EnableMongoRepositories("dao")
 public class SpringApp {
     public static void main(String[] args) {
         SpringApplication.run(SpringApp.class, args);

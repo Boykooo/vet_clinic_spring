@@ -1,7 +1,6 @@
-package repository;
+package dao;
 
 import entities.Animal;
-import entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 
-public interface AnimalRepository extends JpaRepository<Animal, Integer> {
+public interface AnimalDao extends JpaRepository<Animal, Integer> {
 }

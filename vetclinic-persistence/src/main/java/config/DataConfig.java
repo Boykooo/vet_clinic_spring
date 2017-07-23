@@ -18,7 +18,7 @@ import java.util.Properties;
 //@Configuration
 //@EnableTransactionManagement
 //@PropertySource("classpath:application.properties")
-//@EnableJpaRepositories("repository")
+//@EnableJpaRepositories("dao")
 public class DataConfig {
 
     private static final String PROP_DATABASE_DRIVER = "db.driver";

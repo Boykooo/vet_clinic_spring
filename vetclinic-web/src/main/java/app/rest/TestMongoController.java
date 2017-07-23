@@ -1,7 +1,7 @@
 package app.rest;
 
-import mongoEntities.ClientRequest;
-import mongoEntities.RequestInfo;
+import entities.issue.Issue;
+import entities.issue.IssueInfo;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,12 +28,12 @@ public class TestMongoController {
     }
 
     @RequestMapping("/all")
-    public List<ClientRequest> findAll() {
+    public List<Issue> findAll() {
         return null;
     }
 
     @RequestMapping("/{id}")
-    public ClientRequest findById(@PathVariable("id") String id) {
+    public Issue findById(@PathVariable("id") String id) {
         ObjectId objectId = new ObjectId(id);
         return requestService.findById(objectId);
     }
@@ -49,8 +49,8 @@ public class TestMongoController {
     }
 
     @RequestMapping("/last")
-    public RequestInfo findLastClientRequest() {
-        RequestInfo lastClientRequest = requestService.findLastClientRequest("denis@mail.ru");
+    public IssueInfo findLastClientRequest() {
+        IssueInfo lastClientRequest = requestService.findLastClientRequest("denis@mail.ru");
         return lastClientRequest;
     }
 

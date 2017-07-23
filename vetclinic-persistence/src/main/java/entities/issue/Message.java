@@ -1,4 +1,4 @@
-package mongoEntities;
+package entities.issue;
 
 
 import java.util.Date;

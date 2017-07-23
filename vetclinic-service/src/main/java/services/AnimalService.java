@@ -6,7 +6,7 @@ import entities.Client;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.AnimalRepository;
+import dao.AnimalDao;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 public class AnimalService {
 
     @Autowired
-    private AnimalRepository animalRepository;
+    private AnimalDao animalDao;
     @Autowired
     private ClientService clientService;
     @Autowired
@@ -24,7 +24,7 @@ public class AnimalService {
 
     public List<AnimalDto> findAll() {
         List<AnimalDto> animals = new ArrayList<>();
-        animalRepository.findAll().stream().forEach(
+        animalDao.findAll().stream().forEach(
                 (Animal animal) -> animals.add(convertToDto(animal))
         );
 
@@ -32,26 +32,26 @@ public class AnimalService {
     }
 
     public AnimalDto findById(Integer key) {
-        return convertToDto(animalRepository.findOne(key));
+        return convertToDto(animalDao.findOne(key));
     }
 
     public AnimalDto add(AnimalDto animalDto) {
-        Animal animal = animalRepository.save(convertToEntity(animalDto));
+        Animal animal = animalDao.save(convertToEntity(animalDto));
 
         return convertToDto(animal);
     }
 
     public void update(AnimalDto animalDto) throws ObjectNotFoundException {
-        Animal animal = animalRepository.findOne(animalDto.getId());
+        Animal animal = animalDao.findOne(animalDto.getId());
         if (animal != null) {
-            animalRepository.save(convertToEntity(animalDto));
+            animalDao.save(convertToEntity(animalDto));
         } else {
             throw new ObjectNotFoundException();
         }
     }
 
     public void delete(Integer key) {
-        animalRepository.delete(key);
+        animalDao.delete(key);
     }
 
     public List<AnimalDto> getLimit(Integer startPage, Integer amount) {

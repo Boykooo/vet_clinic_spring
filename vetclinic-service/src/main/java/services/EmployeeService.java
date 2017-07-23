@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import repository.EmployeeRepository;
+import dao.EmployeeDao;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -24,12 +24,12 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
     @Autowired
     private PatientService patientService;
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeDao employeeDao;
 
     @Override
     public List<EmployeeDto> findAll() {
         List<EmployeeDto> employees = new ArrayList<>();
-        employeeRepository.findAll().stream().forEach(
+        employeeDao.findAll().stream().forEach(
                 (Employee employee) -> employees.add(convertToDto(employee))
         );
 
@@ -41,7 +41,7 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
         List<EmployeeDto> employees = new ArrayList<>();
         startPage--;
 
-        Long count = employeeRepository.count();
+        Long count = employeeDao.count();
         Integer newAmount = amount;
         if ((startPage * amount + amount) > count) {
             Long lValue = count - startPage * amount;
@@ -53,7 +53,7 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
         }
 
         Pageable limit = new PageRequest(startPage * amount, newAmount);
-        employeeRepository.findAll(limit).forEach(
+        employeeDao.findAll(limit).forEach(
                 (Employee employee) -> employees.add(convertToDto(employee))
         );
 
@@ -62,14 +62,14 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
 
     @Override
     public EmployeeDto findById(String key) {
-        return convertToDto(employeeRepository.findOne(key));
+        return convertToDto(employeeDao.findOne(key));
     }
 
     @Override
     public void add(EmployeeDto employeeDto) throws ObjectAlreadyExistException {
-        Employee employee = employeeRepository.findOne(employeeDto.getEmail());
+        Employee employee = employeeDao.findOne(employeeDto.getEmail());
         if (employee == null) {
-            employeeRepository.save(convertToEntity(employeeDto));
+            employeeDao.save(convertToEntity(employeeDto));
         } else {
             throw new ObjectAlreadyExistException();
         }
@@ -77,10 +77,10 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
 
     @Override
     public void update(EmployeeDto employeeDto) throws ObjectNotFoundException {
-        Employee employee = employeeRepository.findOne(employeeDto.getEmail());
+        Employee employee = employeeDao.findOne(employeeDto.getEmail());
         if (employee != null) {
             employeeDto.setRegDate(employee.getRegDate());
-            employeeRepository.save(convertToEntity(employeeDto));
+            employeeDao.save(convertToEntity(employeeDto));
         } else {
             throw new ObjectNotFoundException();
         }
@@ -89,11 +89,11 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
 
     @Override
     public void delete(String key) {
-        employeeRepository.delete(key);
+        employeeDao.delete(key);
     }
 
     public Long count() {
-        return employeeRepository.count();
+        return employeeDao.count();
     }
 
     private EmployeeDto convertToDto(Employee employee) {

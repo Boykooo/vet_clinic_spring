@@ -1,14 +1,16 @@
 package services;
 
+import dao.SequenceDao;
 import dto.AnimalDto;
 import dto.ClientDto;
 import entities.Animal;
 import entities.Client;
+import enums.RequestStatus;
 import exceptions.ObjectAlreadyExistException;
 import exceptions.ObjectNotFoundException;
 import forms.ClientRequestForm;
-import mongoEntities.ClientRequest;
-import mongoEntities.RequestInfo;
+import entities.issue.Issue;
+import entities.issue.IssueInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -17,8 +19,8 @@ import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import repository.ClientRepository;
-import repository.ClientRequestRepository;
+import dao.ClientDao;
+import dao.IssueDao;
 import util.DateManager;
 
 import java.sql.Date;
@@ -32,18 +34,22 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 public class ClientService implements GenericService<ClientDto, String> {
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientDao clientDao;
     @Autowired
     private AnimalService animalService;
     @Autowired
-    private ClientRequestRepository clientRequestRepository;
-
+    private IssueDao issueDao;
+    @Autowired
+    private SequenceDao sequenceDao;
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    private final String seqName = "issueInfo";
+
+
     public List<ClientDto> findAll() {
         List<ClientDto> users = new ArrayList<ClientDto>();
-        clientRepository.findAll().stream().forEach(
+        clientDao.findAll().stream().forEach(
                 (Client client) -> users.add(convertToDto(client))
         );
 
@@ -51,13 +57,13 @@ public class ClientService implements GenericService<ClientDto, String> {
     }
 
     public ClientDto findById(String key) {
-        return convertToDto(clientRepository.findOne(key));
+        return convertToDto(clientDao.findOne(key));
     }
 
     public void add(ClientDto clientDto) throws ObjectAlreadyExistException {
-        Client client = clientRepository.findOne(clientDto.getEmail());
+        Client client = clientDao.findOne(clientDto.getEmail());
         if (client == null) {
-            clientRepository.save(convertToEntity(clientDto));
+            clientDao.save(convertToEntity(clientDto));
         } else {
             throw new ObjectAlreadyExistException();
         }
@@ -65,12 +71,12 @@ public class ClientService implements GenericService<ClientDto, String> {
     }
 
     public void update(ClientDto clientDto) throws ObjectNotFoundException {
-        Client client = clientRepository.findOne(clientDto.getEmail());
+        Client client = clientDao.findOne(clientDto.getEmail());
 
         if (client != null) {
 
             clientDto.setRegDate(client.getRegDate());
-            clientRepository.save(convertToEntity(clientDto));
+            clientDao.save(convertToEntity(clientDto));
         } else {
             throw new ObjectNotFoundException();
         }
@@ -78,24 +84,21 @@ public class ClientService implements GenericService<ClientDto, String> {
     }
 
     public void delete(String key) {
-        clientRepository.delete(key);
+        clientDao.delete(key);
     }
 
-    public RequestInfo findLastClientRequest(String email) {
+    public IssueInfo findLastClientRequest(String email) {
 
         GroupOperation groupOpt = group("history");
         MatchOperation matchOpt = match(new Criteria("clientEmail").is(email));
         SortOperation sortOpt = sort(new Sort(Sort.Direction.DESC, "_id.requestDate"));
         UnwindOperation unwind = Aggregation.unwind("history");
 
-        Aggregation aggregation = Aggregation.newAggregation(matchOpt, unwind, sortOpt, groupOpt);
+        Aggregation aggregation = Aggregation.newAggregation(matchOpt, unwind, groupOpt, sortOpt);
 
-        AggregationResults<RequestInfo> aggregate = mongoTemplate.aggregate(aggregation, "request", RequestInfo.class);
+        AggregationResults<IssueInfo> aggregate = mongoTemplate.aggregate(aggregation, "request", IssueInfo.class);
 
-        RequestInfo info = aggregate.getMappedResults().get(0);
-
-        return info;
-
+        return aggregate.getMappedResults().get(0);
     }
 
     public void addRequest(ClientRequestForm requestForm) {
@@ -105,18 +108,22 @@ public class ClientService implements GenericService<ClientDto, String> {
         if (foundAnimal.getPatient().getEmployee() != null) {
             requestForm.employeeEmail = foundAnimal.getPatient().getEmployee().getEmail();
 
-            RequestInfo info = new RequestInfo(requestForm.header, requestForm.description, requestForm.employeeEmail,
-                    DateManager.getCurrentDate() , new ArrayList<>());
+            IssueInfo info = new IssueInfo(sequenceDao.getNextSequenceId(seqName), requestForm.header, requestForm.description,
+                    requestForm.employeeEmail, DateManager.getCurrentDate(), new ArrayList<>(), RequestStatus.OPEN);
 
-            ClientRequest clientRequest = clientRequestRepository.findByAnimalId(requestForm.animalId);
-            if (clientRequest != null) {
-                clientRequest.addRequestInfo(info);
+            Issue issue = issueDao.findByAnimalId(requestForm.animalId);
+            if (issue != null) {
+                issue.addRequestInfo(info);
             } else {
-                clientRequest = new ClientRequest(requestForm.animalId, requestForm.clientEmail, info);
+                issue = new Issue(requestForm.animalId, requestForm.clientEmail, info);
             }
 
-            clientRequestRepository.save(clientRequest);
+            issueDao.save(issue);
         }
+
+    }
+
+    public void closeRequest() {
 
     }
 

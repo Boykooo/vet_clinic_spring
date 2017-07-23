@@ -5,7 +5,7 @@ db.request.save({
         {
             header: "header message",
             description: "descr request",
-            employeeEmail : "employee email",
+            employeeEmail: "employee email",
             requestDate: "2017-07-20",
             messages: [
                 {
@@ -18,3 +18,11 @@ db.request.save({
         }
     ]
 });
+
+
+db.sequence.insert(
+    {
+        _id: "issueInfo",
+        seq: 0
+    }
+);

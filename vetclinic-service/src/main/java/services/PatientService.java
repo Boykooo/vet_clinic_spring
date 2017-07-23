@@ -7,7 +7,7 @@ import enums.PatientStatus;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.PatientRepository;
+import dao.PatientDao;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -22,12 +22,12 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     @Autowired
     private EmployeeService employeeService;
     @Autowired
-    private PatientRepository patientRepository;
+    private PatientDao patientDao;
 
     @Override
     public List<PatientDto> findAll() {
         List<PatientDto> patients = new ArrayList();
-        patientRepository.findAll()
+        patientDao.findAll()
                 .forEach(
                         (Patient patient) -> patients.add(convertToDto(patient))
                 );
@@ -38,7 +38,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     public List<PatientDto> findNew() {
         List<PatientDto> newPatients = new ArrayList<>();
 
-        patientRepository.findNew().forEach(
+        patientDao.findNew().forEach(
                 (patient -> newPatients.add(convertToDto(patient)))
         );
 
@@ -48,7 +48,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     public List<PatientDto> findInProgress(String email){
         List<PatientDto> newPatients = new ArrayList<>();
 
-        patientRepository.findInProgress(email).forEach(
+        patientDao.findInProgress(email).forEach(
                 (patient -> newPatients.add(convertToDto(patient)))
         );
 
@@ -57,17 +57,17 @@ public class PatientService implements GenericService<PatientDto, Integer> {
 
     @Override
     public PatientDto findById(Integer key) {
-        return convertToDto(patientRepository.findOne(key));
+        return convertToDto(patientDao.findOne(key));
     }
 
     @Override
     public void add(PatientDto patientDto) {
-        patientRepository.save(convertToEntity(patientDto));
+        patientDao.save(convertToEntity(patientDto));
     }
 
     @Override
     public void update(PatientDto patientDto) throws ObjectNotFoundException {
-        Patient patient = patientRepository.findOne(patientDto.getId());
+        Patient patient = patientDao.findOne(patientDto.getId());
         if (patient != null) {
             Patient updatePatient = convertToEntity(patientDto);
 
@@ -78,7 +78,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
                 updatePatient.setEndDate(new Date(currDate.getTime()));
             }
 
-            patientRepository.save(updatePatient);
+            patientDao.save(updatePatient);
         } else {
             throw new ObjectNotFoundException();
         }
@@ -86,7 +86,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
 
     @Override
     public void delete(Integer key) {
-        patientRepository.delete(key);
+        patientDao.delete(key);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
 
     @Override
     public Long count() {
-        return patientRepository.count();
+        return patientDao.count();
     }
 
     public PatientDto convertToDto(Patient patient) {

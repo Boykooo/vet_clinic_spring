@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import repository.EmployeeRepository;
-import repository.ClientRepository;
+import dao.EmployeeDao;
+import dao.ClientDao;
 import util.UserUtils;
 
 import java.util.ArrayList;
@@ -22,20 +22,20 @@ import java.util.Optional;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientDao clientDao;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeDao employeeDao;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         BaseUser user;
         if (UserUtils.defineUserType(email) == UserType.CLIENT){
-            user = clientRepository.findOne(email);
+            user = clientDao.findOne(email);
         }
         else {
-            user = employeeRepository.findOne(email);
+            user = employeeDao.findOne(email);
         }
 
         if (user == null){
@@ -55,10 +55,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public Optional<BaseUser> findById(String email) {
         BaseUser user;
         if (UserUtils.defineUserType(email) == UserType.CLIENT){
-            user = clientRepository.findOne(email);
+            user = clientDao.findOne(email);
         }
         else {
-            user = employeeRepository.findOne(email);
+            user = employeeDao.findOne(email);
         }
 
         return Optional.ofNullable(user);

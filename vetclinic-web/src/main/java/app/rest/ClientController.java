@@ -6,8 +6,7 @@ import dto.ClientDto;
 import enums.Role;
 import exceptions.ObjectAlreadyExistException;
 import exceptions.ObjectNotFoundException;
-import mongoEntities.ClientRequest;
-import mongoEntities.RequestInfo;
+import entities.issue.IssueInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -98,7 +97,7 @@ public class ClientController {
     @RequestMapping(value = "/request/last", method = RequestMethod.GET)
     public BaseResponse getLastRequest() {
 
-        RequestInfo lastClientRequest = clientService.findLastClientRequest(
+        IssueInfo lastClientRequest = clientService.findLastClientRequest(
                 SecurityContextHolder
                         .getContext()
                         .getAuthentication()

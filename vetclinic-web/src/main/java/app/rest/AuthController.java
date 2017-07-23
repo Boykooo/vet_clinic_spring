@@ -13,14 +13,12 @@ import enums.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import repository.ClientRepository;
-import repository.EmployeeRepository;
+import dao.ClientDao;
+import dao.EmployeeDao;
 import security.TokenHandler;
 import util.CryptManager;
 import util.DateManager;
 import util.UserUtils;
-
-import java.awt.*;
 
 @RestController
 @RequestMapping(value = "/auth",
@@ -31,9 +29,9 @@ public class AuthController {
     @Autowired
     private TokenHandler tokenHandler;
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeDao employeeDao;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientDao clientDao;
 
     @RequestMapping(value = "/admin", method = RequestMethod.POST)
     public BaseResponse adminLogin(@RequestBody LoginForm loginForm) {
@@ -42,7 +40,7 @@ public class AuthController {
         }
 
         try {
-            Employee employee = employeeRepository.findOne(loginForm.email);
+            Employee employee = employeeDao.findOne(loginForm.email);
             if (employee.getRole() != Role.ADMIN) {
                 return new ErrorResponse(ErrorType.ACCESS_DENIED);
             }
@@ -65,8 +63,8 @@ public class AuthController {
             UserType userType = UserUtils.defineUserType(loginForm.email);
 
             user = (userType == UserType.CLIENT)
-                    ? clientRepository.findOne(loginForm.email)
-                    : employeeRepository.findOne(loginForm.email);
+                    ? clientDao.findOne(loginForm.email)
+                    : employeeDao.findOne(loginForm.email);
 
             if (CryptManager.matchesPasswords(loginForm.password, user.getPassword())) {
                 String token = tokenHandler.generateAccessToken(loginForm.email, DateManager.getDateForToken());

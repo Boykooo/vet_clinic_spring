@@ -1,33 +1,55 @@
-package mongoEntities;
+package entities.issue;
 
+import enums.RequestStatus;
 
+import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.List;
 
-public class RequestInfo {
+public class IssueInfo {
 
+    private Long id;
     private String header;
     private String description;
     private String employeeEmail;
+    private RequestStatus status;
     private Date requestDate;
-
     private List<Message> messages;
 
-    public RequestInfo(String header, String description, String employeeEmail,
-                       Date requestDate, List<Message> messages) {
+
+
+    public IssueInfo(Long id, String header, String description, String employeeEmail,
+                     Date requestDate, List<Message> messages, RequestStatus status) {
         this.header = header;
         this.description = description;
         this.employeeEmail = employeeEmail;
         this.requestDate = requestDate;
         this.messages = messages;
+        this.status = status;
+        this.id = id;
     }
 
-    public RequestInfo() {
+    public IssueInfo() {
 
     }
-
 
     //region GetSet
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public RequestStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(RequestStatus status) {
+        this.status = status;
+    }
 
     public String getHeader() {
         return header;

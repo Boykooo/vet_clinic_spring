@@ -1,4 +1,4 @@
-package mongoEntities;
+package entities.issue;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -8,41 +8,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "request")
-public class ClientRequest {
+public class Issue {
 
     @Id
     private ObjectId id;
     private Integer animalId;
     private String clientEmail;
 
-    private List<RequestInfo> history;
+    private List<IssueInfo> history;
 
-    public ClientRequest(ObjectId id, Integer animalId, String clientEmail, List<RequestInfo> history) {
+    public Issue(ObjectId id, Integer animalId, String clientEmail, List<IssueInfo> history) {
         this.id = id;
         this.animalId = animalId;
         this.clientEmail = clientEmail;
         this.history = history;
     }
 
-    public ClientRequest(Integer animalId, String clientEmail, RequestInfo info) {
+    public Issue(Integer animalId, String clientEmail, IssueInfo info) {
         this.animalId = animalId;
         this.clientEmail = clientEmail;
         this.history = new ArrayList<>();
         this.history.add(info);
     }
 
-    public ClientRequest(Integer animalId) {
+    public Issue(Integer animalId) {
         this.animalId = animalId;
     }
 
-    public ClientRequest() {
+    public Issue() {
 
     }
 
-    public void addRequestInfo(RequestInfo info) {
+    public void addRequestInfo(IssueInfo info) {
         this.history.add(info);
     }
-
 
     //region GetSet
 
@@ -67,10 +66,10 @@ public class ClientRequest {
         this.clientEmail = clientEmail;
     }
 
-    public List<RequestInfo> getHistory() {
+    public List<IssueInfo> getHistory() {
         return history;
     }
-    public void setHistory(List<RequestInfo> history) {
+    public void setHistory(List<IssueInfo> history) {
         this.history = history;
     }
 
