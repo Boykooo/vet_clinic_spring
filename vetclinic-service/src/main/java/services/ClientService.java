@@ -98,7 +98,11 @@ public class ClientService implements GenericService<ClientDto, String> {
 
         AggregationResults<IssueInfo> aggregate = mongoTemplate.aggregate(aggregation, "request", IssueInfo.class);
 
-        return aggregate.getMappedResults().get(0);
+        List<IssueInfo> mappedResults = aggregate.getMappedResults();
+
+        return mappedResults.size() > 0
+                ? aggregate.getMappedResults().get(0)
+                : null;
     }
 
     public void addRequest(ClientRequestForm requestForm) {

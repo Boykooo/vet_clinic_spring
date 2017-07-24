@@ -1,20 +1,20 @@
 package app.rest;
 
 
-import forms.LoginForm;
-import app.responses.BaseResponse;
-import app.responses.ErrorResponse;
-import app.responses.ErrorType;
-import app.responses.TokenResponse;
+import app.responses.*;
+import dao.ClientDao;
+import dao.EmployeeDao;
 import entities.BaseUser;
+import entities.Client;
 import entities.Employee;
 import enums.Role;
 import enums.UserType;
+import forms.LoginForm;
+import forms.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import dao.ClientDao;
-import dao.EmployeeDao;
 import security.TokenHandler;
 import util.CryptManager;
 import util.DateManager;
@@ -59,12 +59,15 @@ public class AuthController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public BaseResponse userLogin(@RequestBody LoginForm loginForm) {
         try {
-            BaseUser user;
             UserType userType = UserUtils.defineUserType(loginForm.email);
 
-            user = (userType == UserType.CLIENT)
+            BaseUser user = (userType == UserType.CLIENT)
                     ? clientDao.findOne(loginForm.email)
                     : employeeDao.findOne(loginForm.email);
+
+            if (user == null) {
+                return new ErrorResponse(ErrorType.BAD_REQUEST);
+            }
 
             if (CryptManager.matchesPasswords(loginForm.password, user.getPassword())) {
                 String token = tokenHandler.generateAccessToken(loginForm.email, DateManager.getDateForToken());
@@ -76,5 +79,40 @@ public class AuthController {
             e.printStackTrace();
             return new ErrorResponse(ErrorType.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public BaseResponse registration(@RequestBody RegistrationForm registrationForm){
+        try {
+            UserType userType = UserUtils.defineUserType(registrationForm.email);
+
+            if (userType == UserType.CLIENT) {
+                clientDao.save(new Client(
+                        registrationForm.email,
+                        new BCryptPasswordEncoder().encode(registrationForm.password),
+                        registrationForm.phoneNumber,
+                        registrationForm.firstName,
+                        registrationForm.lastName,
+                        DateManager.getCurrentSqlDate()
+                ));
+
+            } else {
+                employeeDao.save(new Employee(
+                        registrationForm.email,
+                        new BCryptPasswordEncoder().encode(registrationForm.password),
+                        registrationForm.phoneNumber,
+                        registrationForm.firstName,
+                        registrationForm.lastName,
+                        Role.EMPLOYEE,
+                        DateManager.getCurrentSqlDate()
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ErrorResponse(ErrorType.BAD_REQUEST);
+        }
+
+        return new SuccessResponse();
     }
 }

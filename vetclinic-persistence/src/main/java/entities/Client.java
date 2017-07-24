@@ -36,12 +36,14 @@ public class Client implements BaseUser {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
     private List<Animal> animals;
 
-    public Client(String email, String password, String phoneNumber, String firstName, String lastName) {
+    public Client(String email, String password, String phoneNumber, String firstName,
+                  String lastName, Date regDate) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.regDate = regDate;
     }
 
     public Client(String email) {

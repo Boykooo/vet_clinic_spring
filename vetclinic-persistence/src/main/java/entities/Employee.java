@@ -42,13 +42,14 @@ public class Employee implements BaseUser {
     private List<Patient> patients;
 
     public Employee(String email, String password, String phoneNumber,
-                    String firstName, String lastName, Role role) {
+                    String firstName, String lastName, Role role, Date regDate) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.regDate = regDate;
     }
 
     public Employee(String email) {
