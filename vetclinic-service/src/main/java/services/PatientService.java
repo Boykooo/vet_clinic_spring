@@ -1,13 +1,14 @@
 package services;
 
+import dao.PatientDao;
 import dto.PatientDto;
 import entities.Employee;
 import entities.Patient;
 import enums.PatientStatus;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import dao.PatientDao;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
         return newPatients;
     }
 
-    public List<PatientDto> findInProgress(String email){
+    public List<PatientDto> findInProgress(String email) {
         List<PatientDto> newPatients = new ArrayList<>();
 
         patientDao.findInProgress(email).forEach(
@@ -90,13 +91,24 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     }
 
     @Override
-    public List<PatientDto> getLimit(Integer startPage, Integer amount) {
-        return null;
+    public List<PatientDto> getLimit(String email, Integer startPage, Integer amount) {
+
+        List<PatientDto> patients = new ArrayList();
+        patientDao.findInProgressPagable(email, new PageRequest(startPage, amount)).getContent()
+                .forEach(
+                        (Patient patient) -> patients.add(convertToDto(patient))
+                );
+
+        return patients;
     }
 
     @Override
     public Long count() {
         return patientDao.count();
+    }
+
+    public Long getCountByEmail(String email) {
+        return patientDao.getCoundByEmployeeEmail(email);
     }
 
     public PatientDto convertToDto(Patient patient) {

@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import services.AnimalService;
 import services.PatientService;
-import util.DateManager;
 
 import java.sql.Date;
 
@@ -33,6 +32,23 @@ public class PatientController {
     public BaseResponse getAll() {
         return new DataResponse<>(patientService.findAll());
     }
+
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public BaseResponse getCount() {
+        return new DataResponse<>(patientService.getCountByEmail(
+                SecurityContextHolder.getContext().getAuthentication().getName()
+        ));
+    }
+
+    @RequestMapping(value = "/page/{number}/{amount}", method = RequestMethod.GET)
+    public BaseResponse getPage(@PathVariable("number") Integer number, @PathVariable("amount") Integer amount) {
+        return new DataResponse<>(patientService.getLimit(
+                SecurityContextHolder.getContext().getAuthentication().getName(),
+                number,
+                amount
+        ));
+    }
+
 
     @RequestMapping(value = "/progress", method = RequestMethod.GET)
     public BaseResponse getInProgressPatient() {

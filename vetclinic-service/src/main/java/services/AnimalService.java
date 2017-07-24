@@ -56,7 +56,7 @@ public class AnimalService {
         animalDao.delete(key);
     }
 
-    public List<AnimalDto> getLimit(Integer startPage, Integer amount) {
+    public List<AnimalDto> getLimit(String email,Integer startPage, Integer amount) {
         return null;
     }
 

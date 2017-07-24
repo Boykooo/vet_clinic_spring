@@ -36,7 +36,12 @@ public class EmployeeController {
     public List<EmployeeDto> getLimitEmployees(
             @PathVariable("startPage") Integer startPage,
             @PathVariable("amount") Integer amount) {
-        return employeeService.getLimit(startPage, amount);
+
+        return employeeService.getLimit(
+                SecurityContextHolder.getContext().getAuthentication().getName(),
+                startPage,
+                amount
+        );
     }
 
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)

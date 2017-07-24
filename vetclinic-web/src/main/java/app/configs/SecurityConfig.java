@@ -40,6 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/auth/*");
         web.ignoring().antMatchers("/images/animal/*");
         web.ignoring().antMatchers("/mongo/*");
+        web.ignoring().antMatchers("/es/*");
+        web.ignoring().antMatchers("/es");
     }
 
     @Autowired

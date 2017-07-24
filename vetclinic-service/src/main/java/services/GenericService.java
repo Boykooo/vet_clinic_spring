@@ -12,6 +12,6 @@ public interface GenericService<Entity, PK> {
     void add(Entity entity) throws ObjectAlreadyExistException;
     void update(Entity entity) throws ObjectNotFoundException;
     void delete(PK key);
-    List<Entity> getLimit(Integer startPage, Integer amount);
+    List<Entity> getLimit(String email, Integer startPage, Integer amount);
     Long count();
 }

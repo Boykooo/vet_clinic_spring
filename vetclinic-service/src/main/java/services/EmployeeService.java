@@ -37,7 +37,7 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
     }
 
     @Override
-    public List<EmployeeDto> getLimit(Integer startPage, Integer amount) {
+    public List<EmployeeDto> getLimit(String email,Integer startPage, Integer amount) {
         List<EmployeeDto> employees = new ArrayList<>();
         startPage--;
 
