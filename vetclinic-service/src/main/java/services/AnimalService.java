@@ -1,12 +1,12 @@
 package services;
 
+import dao.AnimalDao;
 import dto.AnimalDto;
 import entities.Animal;
 import entities.Client;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import dao.AnimalDao;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -22,9 +22,11 @@ public class AnimalService {
     @Autowired
     private PatientService patientService;
 
-    public List<AnimalDto> findAll() {
+    public List<AnimalDto> findAllByEmail(String email) {
+
         List<AnimalDto> animals = new ArrayList<>();
-        animalDao.findAll().stream().forEach(
+        animalDao.findByClientEmail(email)
+                .forEach(
                 (Animal animal) -> animals.add(convertToDto(animal))
         );
 

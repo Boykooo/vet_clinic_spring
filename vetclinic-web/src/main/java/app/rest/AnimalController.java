@@ -29,7 +29,8 @@ public class AnimalController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<AnimalDto> getAll() {
-        return animalService.findAll();
+
+        return animalService.findAllByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     @RequestMapping(value = "/{id}/image", method = RequestMethod.POST)

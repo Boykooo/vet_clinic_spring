@@ -48,6 +48,10 @@ public class Animal {
         this.patient = patient;
     }
 
+    public Animal(String email) {
+        this.client = new Client(email);
+    }
+
     public Animal() {
 
     }
