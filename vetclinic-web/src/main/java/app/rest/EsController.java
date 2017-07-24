@@ -3,10 +3,8 @@ package app.rest;
 import dao.EsPatientDao;
 import entities.EsPatient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import services.EsService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +16,9 @@ public class EsController {
 
     @Autowired
     private EsPatientDao esPatientDao;
+
+    @Autowired
+    private EsService esService;
 
     @RequestMapping(method = RequestMethod.GET)
     public Iterable<EsPatient> getAll() {
@@ -31,9 +32,14 @@ public class EsController {
         return patientList;
     }
 
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void add() {
-        EsPatient esPatient = new EsPatient("test1", "test2");
+        EsPatient esPatient = new EsPatient("employee@vetclinic.ru", "denis@mail.ru", "Денис Валинуров");
         esPatientDao.save(esPatient);
+    }
+
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    public List<EsPatient> search(@PathVariable("name") String name) {
+        return esService.searchByClientName(name);
     }
 }
