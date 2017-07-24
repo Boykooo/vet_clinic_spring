@@ -41,6 +41,7 @@ public class IssueInfo {
     }
 
     public void addMessage(Message message) {
+        message.setIssueId(this.issueId);
         this.messages.add(message);
     }
 

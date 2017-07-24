@@ -4,6 +4,8 @@ package entities.issue;
 import java.util.Date;
 
 public class Message {
+
+    private Long issueId;
     private String email;
     private String message;
     private Date date;
@@ -18,6 +20,13 @@ public class Message {
     }
 
     //region GetSet
+
+    public Long getIssueId() {
+        return issueId;
+    }
+    public void setIssueId(Long issueId) {
+        this.issueId = issueId;
+    }
 
     public String getEmail() {
         return email;

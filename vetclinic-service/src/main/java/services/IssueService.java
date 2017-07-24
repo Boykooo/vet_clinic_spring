@@ -5,20 +5,19 @@ import entities.issue.Issue;
 import entities.issue.IssueInfo;
 import entities.issue.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 import util.DateManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 @Service
 public class IssueService {
@@ -100,7 +99,7 @@ public class IssueService {
         return aggregate.getMappedResults();
     }
 
-    public IssueInfo findLastChangedByEmail(String email) {
+    public List<IssueInfo> findLastChangedByEmail(String email) {
 
         UnwindOperation historyUnwind = Aggregation.unwind("history");
         GroupOperation historyGroup = group("history.messages");
@@ -108,7 +107,7 @@ public class IssueService {
         GroupOperation idGroup = group("_id");
         MatchOperation matchOpt = match(new Criteria("_id.email").is(email));
         SortOperation sortOpt = sort(new Sort(Sort.Direction.DESC, "_id.date"));
-        LimitOperation limitOperation = new LimitOperation(1);
+        LimitOperation limitOperation = new LimitOperation(3);
 
         Aggregation aggregation = Aggregation.newAggregation(
                 historyUnwind,
@@ -120,17 +119,15 @@ public class IssueService {
         );
 
         AggregationResults<Message> aggregate = mongoTemplate.aggregate(aggregation, "request", Message.class);
-        Message message = aggregate.getUniqueMappedResult();
+        List<Message> messages = aggregate.getMappedResults();
 
-        Issue one = issueDao.findOne(Example.of(
-                new Issue(
-                        new IssueInfo(message)
-                )
-        ));
+        List<IssueInfo> issueInfos = new ArrayList<>();
+        for (Message message: messages) {
+            issueInfos.add(getIssueInfoById(message.getIssueId()));
+        }
 
-        return null;
+        return issueInfos;
     }
-
 
     public List<IssueInfo> findByIdAndEmail(Integer animalId, String email){
 
