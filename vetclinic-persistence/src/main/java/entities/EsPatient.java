@@ -10,10 +10,10 @@ public class EsPatient {
 
     @Id
     private String id;
-    private Integer patientId;
     private String employeeEmail;
     private String clientEmail;
     private String clientName;
+    private Integer patientId;
 
     public EsPatient(String employeeEmail, String clientEmail, String clientName, Integer patientId) {
         this.employeeEmail = employeeEmail;

@@ -1,0 +1,13 @@
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost/postgres
+#    username: postgres
+#    password: 123root123
+#    driver-class-name: org.postgresql.Driver
+#    platform: org.hibernate.dialect.PostgreSQLDialect
+#    schema: vetclinic.sql
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#

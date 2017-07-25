@@ -4,7 +4,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -19,20 +18,20 @@ import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 @EnableElasticsearchRepositories(basePackages = "dao")
 public class EsConfig {
 
-    @Value("${elasticsearch.host}")
-    private String EsHost;
-
-    @Value("${elasticsearch.port}")
-    private int EsPort;
-
-    @Value("${elasticsearch.clustername}")
-    private String EsClusterName;
+//    @Value("${elasticsearch.host}")
+//    private String EsHost;
+//
+//    @Value("${elasticsearch.port}")
+//    private int EsPort;
+//
+//    @Value("${elasticsearch.clustername}")
+//    private String EsClusterName;
 
     @Bean
     public Client client() throws Exception {
 
         Settings esSettings = Settings.settingsBuilder()
-                .put("cluster.name", EsClusterName)
+                .put("cluster.name", "elasticsearch")
                 .build();
 
         //https://www.elastic.co/guide/en/elasticsearch/guide/current/_transport_client_versus_node_client.html
@@ -40,7 +39,7 @@ public class EsConfig {
                 .settings(esSettings)
                 .build()
                 .addTransportAddress(
-                        new InetSocketTransportAddress(InetAddress.getByName(EsHost), EsPort));
+                        new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
     }
 
 //    @Bean

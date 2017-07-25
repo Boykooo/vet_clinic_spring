@@ -1,21 +1,42 @@
+import app.SpringApp;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import security.TokenHandler;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {SpringApp.class})
+@WebAppConfiguration
+@TestPropertySource("/application.properties")
 public class TokenTest {
 
+    @Autowired
+    @Qualifier("tokenHandler")
+    private TokenHandler tokenHandler;
+
     @Test
-    public void tokenTest(){
-        TokenHandler handler = new TokenHandler();
-        String token = handler.generateAccessToken("user@user.ru", LocalDateTime.now().plusDays(14));
+    public void tokenTest() {
+        String token = tokenHandler.generateAccessToken("user@user.ru", LocalDateTime.now().plusDays(14));
+        String extractId = tokenHandler.extractId(token).get();
 
-        System.out.println(token);
+        assertTrue(extractId.equals("user@user.ru"));
+    }
 
-        String employeeToken = "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJlbXBsb3llZUB2ZXRjbGluaWMucnUiLCJleHAiOjE1MzA4MTE3OTN9.IJ2I1W1tECQWpR4v4KlmUOTCX05cHWQ1AikdgmdTWge0ghAmhSXwcSlFy1faytnnBcOlABsdf6NBd2oQaiBS1g";
-        Optional<String> email = handler.extractId(employeeToken);
+    @Test
+    public void wrongTokenTest() {
+        String token = tokenHandler.generateAccessToken("user@user.ru", LocalDateTime.now().plusDays(14));
+        String extractId = tokenHandler.extractId(token).get();
 
-        System.out.println(email.orElse("null"));
+        assertFalse(extractId.equals("user1@user.ru"));
     }
 }
