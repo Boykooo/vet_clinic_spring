@@ -29,7 +29,7 @@ public class Animal {
     @Column(name = "reg_date", nullable = false)
     private Date regDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "client_email", nullable = false)
     @JsonIgnoreProperties("animals")
     private Client client;

@@ -31,13 +31,10 @@ public class ClientServiceTest  {
 
     @Test
     public void add() throws ObjectAlreadyExistException, ParseException {
-
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date parsed = format.parse("2017-07-24");
         java.sql.Date sql = new java.sql.Date(parsed.getTime());
-
         ClientDto dto = new ClientDto("testEmail@test", "testPassword", "testPhoneNumber", "testFirstName", "testLastName", sql);
-
         clientService.add(dto);
 
         assertTrue(clientService.findById(dto.getEmail()) != null);
@@ -45,12 +42,11 @@ public class ClientServiceTest  {
 
     @Test
     public void update() throws ObjectAlreadyExistException, ParseException, ObjectNotFoundException {
-
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date parsed = format.parse("2017-07-24");
         java.sql.Date sql = new java.sql.Date(parsed.getTime());
-
         ClientDto dto = new ClientDto("testEmail@test", "testPassword", "testPhoneNumber", "testFirstName", "testLastName", sql);
+
         clientService.add(dto);
         dto.setPhoneNumber("newPhoneNumber");
         clientService.update(dto);
@@ -60,11 +56,9 @@ public class ClientServiceTest  {
 
     @Test
     public void delete() throws ObjectAlreadyExistException, ParseException {
-
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date parsed = format.parse("2017-07-24");
         java.sql.Date sql = new java.sql.Date(parsed.getTime());
-
         ClientDto dto = new ClientDto("testEmail@test", "testPassword", "testPhoneNumber", "testFirstName", "testLastName", sql);
 
         clientService.add(dto);
