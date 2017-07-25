@@ -48,4 +48,24 @@ public class EsService {
         return patientList;
     }
 
+    public List<EsPatient> searchByEmployeeEmail(String email) {
+        List<EsPatient> patientList = new ArrayList<>();
+
+        QueryBuilder qb = QueryBuilders.matchQuery(
+                "employeeEmail",
+                email
+        );
+
+        esPatientDao.search(qb)
+                .forEach(
+                        patientList::add
+                );
+
+        return patientList;
+    }
+
+    public void add(EsPatient esPatient) {
+        esPatientDao.save(esPatient);
+    }
+
 }

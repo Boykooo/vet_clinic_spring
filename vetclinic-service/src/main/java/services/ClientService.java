@@ -3,6 +3,7 @@ package services;
 import dao.SequenceDao;
 import dto.AnimalDto;
 import dto.ClientDto;
+import dto.PatientDto;
 import entities.Animal;
 import entities.Client;
 import enums.RequestStatus;
@@ -60,7 +61,7 @@ public class ClientService implements GenericService<ClientDto, String> {
         return convertToDto(clientDao.findOne(key));
     }
 
-    public void add(ClientDto clientDto) throws ObjectAlreadyExistException {
+    public PatientDto add(ClientDto clientDto) throws ObjectAlreadyExistException {
         Client client = clientDao.findOne(clientDto.getEmail());
         if (client == null) {
             clientDao.save(convertToEntity(clientDto));
@@ -68,9 +69,10 @@ public class ClientService implements GenericService<ClientDto, String> {
             throw new ObjectAlreadyExistException();
         }
 
+        return null;
     }
 
-    public void update(ClientDto clientDto) throws ObjectNotFoundException {
+    public PatientDto update(ClientDto clientDto) throws ObjectNotFoundException {
         Client client = clientDao.findOne(clientDto.getEmail());
 
         if (client != null) {
@@ -81,6 +83,7 @@ public class ClientService implements GenericService<ClientDto, String> {
             throw new ObjectNotFoundException();
         }
 
+        return null;
     }
 
     public void delete(String key) {

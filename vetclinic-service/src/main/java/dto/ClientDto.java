@@ -34,6 +34,11 @@ public class ClientDto {
     public ClientDto() {
     }
 
+    public String getFullName() {
+        StringBuilder sb = new StringBuilder();
+        return sb.append(firstName).append(" ").append(lastName).toString();
+    }
+
     //region GetSet
 
     public List<AnimalDto> getAnimals() {

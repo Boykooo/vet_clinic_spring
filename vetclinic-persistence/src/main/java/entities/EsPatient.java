@@ -10,14 +10,16 @@ public class EsPatient {
 
     @Id
     private String id;
+    private Integer patientId;
     private String employeeEmail;
     private String clientEmail;
     private String clientName;
 
-    public EsPatient(String employeeEmail, String clientEmail, String clientName) {
+    public EsPatient(String employeeEmail, String clientEmail, String clientName, Integer patientId) {
         this.employeeEmail = employeeEmail;
         this.clientEmail = clientEmail;
         this.clientName = clientName;
+        this.patientId = patientId;
     }
 
     public EsPatient() {
@@ -52,6 +54,13 @@ public class EsPatient {
     }
     public void setClientEmail(String clientEmail) {
         this.clientEmail = clientEmail;
+    }
+
+    public Integer getPatientId() {
+        return patientId;
+    }
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
     }
 
     //endregion

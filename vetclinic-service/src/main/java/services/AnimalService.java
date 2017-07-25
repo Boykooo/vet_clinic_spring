@@ -43,10 +43,10 @@ public class AnimalService {
         return convertToDto(animal);
     }
 
-    public void update(AnimalDto animalDto) throws ObjectNotFoundException {
+    public AnimalDto update(AnimalDto animalDto) throws ObjectNotFoundException {
         Animal animal = animalDao.findOne(animalDto.getId());
         if (animal != null) {
-            animalDao.save(convertToEntity(animalDto));
+            return convertToDto(animalDao.save(convertToEntity(animalDto)));
         } else {
             throw new ObjectNotFoundException();
         }

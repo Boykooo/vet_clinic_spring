@@ -9,8 +9,8 @@ import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import util.DateManager;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,12 +62,12 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     }
 
     @Override
-    public void add(PatientDto patientDto) {
-        patientDao.save(convertToEntity(patientDto));
+    public PatientDto add(PatientDto patientDto) {
+        return convertToDto(patientDao.save(convertToEntity(patientDto)));
     }
 
     @Override
-    public void update(PatientDto patientDto) throws ObjectNotFoundException {
+    public PatientDto update(PatientDto patientDto) throws ObjectNotFoundException {
         Patient patient = patientDao.findOne(patientDto.getId());
         if (patient != null) {
             Patient updatePatient = convertToEntity(patientDto);
@@ -75,11 +75,10 @@ public class PatientService implements GenericService<PatientDto, Integer> {
             if (updatePatient.getStatus() == PatientStatus.DONE ||
                     updatePatient.getStatus() == PatientStatus.REJECTED) {
 
-                java.util.Date currDate = new java.util.Date();
-                updatePatient.setEndDate(new Date(currDate.getTime()));
+                updatePatient.setEndDate(DateManager.getCurrentSqlDate());
             }
 
-            patientDao.save(updatePatient);
+            return convertToDto(patientDao.save(updatePatient));
         } else {
             throw new ObjectNotFoundException();
         }

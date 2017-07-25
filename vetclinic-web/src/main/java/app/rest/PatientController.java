@@ -5,6 +5,7 @@ import app.util.RoleManager;
 import dto.AnimalDto;
 import dto.EmployeeDto;
 import dto.PatientDto;
+import entities.EsPatient;
 import enums.PatientStatus;
 import enums.Role;
 import exceptions.ObjectNotFoundException;
@@ -13,7 +14,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import services.AnimalService;
+import services.EsService;
 import services.PatientService;
+import util.DateManager;
 
 import java.sql.Date;
 
@@ -27,6 +30,8 @@ public class PatientController {
     private PatientService patientService;
     @Autowired
     private AnimalService animalService;
+    @Autowired
+    private EsService esService;
 
     @RequestMapping(method = RequestMethod.GET)
     public BaseResponse getAll() {
@@ -48,7 +53,6 @@ public class PatientController {
                 amount
         ));
     }
-
 
     @RequestMapping(value = "/progress", method = RequestMethod.GET)
     public BaseResponse getInProgressPatient() {
@@ -74,6 +78,11 @@ public class PatientController {
 
     @RequestMapping(method = RequestMethod.POST)
     public BaseResponse add(@RequestBody PatientDto patient) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(RoleManager.hasRole(authentication, Role.CLIENT)) {
+            return new ErrorResponse(ErrorType.ACCESS_DENIED);
+        }
+
         if (patient != null) {
             try {
                 AnimalDto animal = patient.getAnimal();
@@ -129,11 +138,21 @@ public class PatientController {
 
             patient.setEmployee(new EmployeeDto(authentication.getName()));
             patient.setStatus(PatientStatus.IN_PROGRESS);
-            java.util.Date currDate = new java.util.Date();
-            patient.setStartDate(new Date(currDate.getTime()));
+            patient.setStartDate(DateManager.getCurrentSqlDate());
+
 
             try {
-                patientService.update(patient);
+                PatientDto patientDto = patientService.update(patient);
+                AnimalDto animalDto = animalService.findById(patientDto.getAnimal().getId());
+                esService.add(
+                        new EsPatient(
+                                authentication.getName(),
+                                animalDto.getClient().getEmail(),
+                                animalDto.getClient().getFullName(),
+                                patientDto.getId()
+                        )
+                );
+
             } catch (ObjectNotFoundException e) {
                 return new ErrorResponse(ErrorType.BAD_REQUEST);
             }
@@ -143,5 +162,4 @@ public class PatientController {
 
         return new SuccessResponse();
     }
-
 }

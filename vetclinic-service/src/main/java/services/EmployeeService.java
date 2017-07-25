@@ -66,17 +66,18 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
     }
 
     @Override
-    public void add(EmployeeDto employeeDto) throws ObjectAlreadyExistException {
+    public PatientDto add(EmployeeDto employeeDto) throws ObjectAlreadyExistException {
         Employee employee = employeeDao.findOne(employeeDto.getEmail());
         if (employee == null) {
             employeeDao.save(convertToEntity(employeeDto));
         } else {
             throw new ObjectAlreadyExistException();
         }
+        return null;
     }
 
     @Override
-    public void update(EmployeeDto employeeDto) throws ObjectNotFoundException {
+    public PatientDto update(EmployeeDto employeeDto) throws ObjectNotFoundException {
         Employee employee = employeeDao.findOne(employeeDto.getEmail());
         if (employee != null) {
             employeeDto.setRegDate(employee.getRegDate());
@@ -85,6 +86,7 @@ public class EmployeeService implements GenericService<EmployeeDto, String> {
             throw new ObjectNotFoundException();
         }
 
+        return null;
     }
 
     @Override
