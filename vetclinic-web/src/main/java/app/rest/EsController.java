@@ -23,16 +23,7 @@ import java.util.List;
 public class EsController {
 
     @Autowired
-    private EsPatientDao esPatientDao;
-
-    @Autowired
     private EsService esService;
-
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void add() {
-        EsPatient esPatient1 = new EsPatient("employee@vetclinic.ru", "1@1", "Валера", 7);
-        esPatientDao.save(esPatient1);
-    }
 
     @RequestMapping(value = "/search/client/{name}", method = RequestMethod.GET)
     public BaseResponse search(@PathVariable("name") String name) {
@@ -50,12 +41,4 @@ public class EsController {
 
         return new DataResponse<>(esService.searchByEmployeeEmail(authentication.getName()));
     }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public void deleteAll() {
-
-        esPatientDao.deleteAll();
-
-    }
-
 }

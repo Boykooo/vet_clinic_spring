@@ -127,11 +127,6 @@ public class ClientService implements GenericService<ClientDto, String> {
 
             issueDao.save(issue);
         }
-
-    }
-
-    public void closeRequest() {
-
     }
 
     @Override
@@ -141,18 +136,25 @@ public class ClientService implements GenericService<ClientDto, String> {
 
     @Override
     public Long count() {
-        return null;
+        return clientDao.count();
     }
 
     private ClientDto convertToDto(Client client) {
-        ClientDto clientDto = convertToDtoWithoutDepend(client);
+        ClientDto clientDto = null;
 
-        List<AnimalDto> animals = new ArrayList<>();
-        client.getAnimals().stream().forEach(
-                (Animal animal) -> animals.add(animalService.convertToDto(animal))
-        );
+        if (client != null) {
+            clientDto = convertToDtoWithoutDepend(client);
 
-        clientDto.setAnimals(animals);
+            List<AnimalDto> animals = new ArrayList<>();
+            if (client.getAnimals() != null) {
+                client.getAnimals().stream().forEach(
+                        (Animal animal) -> animals.add(animalService.convertToDto(animal))
+                );
+
+                clientDto.setAnimals(animals);
+            }
+        }
+
 
         return clientDto;
     }
