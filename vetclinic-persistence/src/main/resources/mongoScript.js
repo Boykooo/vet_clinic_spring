@@ -19,15 +19,12 @@ db.request.save({
     ]
 });
 
-
 db.sequence.insert(
     {
         _id: "issueInfo",
         seq: 0
     }
 );
-
-
 
 // Aggregation func example
 db.request.aggregate(
