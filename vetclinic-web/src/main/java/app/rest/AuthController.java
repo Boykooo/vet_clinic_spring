@@ -13,6 +13,7 @@ import forms.LoginForm;
 import forms.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import security.TokenHandler;
@@ -35,9 +36,14 @@ public class AuthController {
 
     @RequestMapping(value = "/admin", method = RequestMethod.POST)
     public BaseResponse adminLogin(@RequestBody LoginForm loginForm) {
-        if (UserUtils.defineUserType(loginForm.email) == UserType.CLIENT) {
+        try {
+            if (UserUtils.defineUserType(loginForm.email) == UserType.CLIENT) {
+                return new ErrorResponse(ErrorType.ACCESS_DENIED);
+            }
+        } catch (UsernameNotFoundException e) {
             return new ErrorResponse(ErrorType.ACCESS_DENIED);
         }
+
 
         try {
             Employee employee = employeeDao.findOne(loginForm.email);

@@ -1,9 +1,6 @@
 package app.rest;
 
-import app.responses.BaseResponse;
-import app.responses.ErrorResponse;
-import app.responses.ErrorType;
-import app.responses.SuccessResponse;
+import app.responses.*;
 import dto.EmployeeDto;
 import enums.Role;
 import exceptions.ObjectAlreadyExistException;
@@ -19,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping(value = "/api/employee", produces="application/json")
+@RequestMapping(value = "/api/employee", produces = "application/json")
 @CrossOrigin
 public class EmployeeController {
 
@@ -27,12 +24,11 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<EmployeeDto> getAll() {
-        return employeeService.findAll();
+    public BaseResponse getAll() {
+        return new DataResponse<>(employeeService.findAll());
     }
 
-    @RequestMapping(value = "/{startPage}/{amount}",
-            method = RequestMethod.GET)
+    @RequestMapping(value = "/{startPage}/{amount}", method = RequestMethod.GET)
     public List<EmployeeDto> getLimitEmployees(
             @PathVariable("startPage") Integer startPage,
             @PathVariable("amount") Integer amount) {
@@ -50,16 +46,16 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public EmployeeDto getEmployeeInfo(){
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public EmployeeDto getEmployeeInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean accessRole = false;
-        for (GrantedAuthority authority: authentication.getAuthorities()){
-            if (!Objects.equals(authority.getAuthority(), Role.CLIENT.toString())){
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (!Objects.equals(authority.getAuthority(), Role.CLIENT.toString())) {
                 accessRole = true;
                 break;
             }
         }
-        if (accessRole){
+        if (accessRole) {
             return employeeService.findById(authentication.getName());
         }
 
@@ -67,7 +63,7 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)
-    public Long count(){
+    public Long count() {
         return employeeService.count();
     }
 

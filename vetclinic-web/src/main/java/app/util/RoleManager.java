@@ -11,7 +11,7 @@ public final class RoleManager {
     public static boolean hasRole(Authentication authentication, Role role) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority authority : authorities) {
-            if (authority.getAuthority().equals(role)){
+            if (authority.getAuthority().equals(role.toString())){
                 return true;
             }
         }

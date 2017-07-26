@@ -1,6 +1,7 @@
 package app.rest;
 
 import app.responses.*;
+import app.util.RoleManager;
 import forms.ClientRequestForm;
 import dto.ClientDto;
 import enums.Role;
@@ -26,8 +27,8 @@ public class ClientController {
     private ClientService clientService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<ClientDto> getAll() {
-        return clientService.findAll();
+    public BaseResponse getAll() {
+        return new DataResponse<>(clientService.findAll());
     }
 
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)
@@ -36,20 +37,14 @@ public class ClientController {
     }
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public ClientDto getClientInfo() {
+    public BaseResponse getClientInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean founded = false;
-        for (GrantedAuthority authority : authentication.getAuthorities()) {
-            if (Objects.equals(authority.getAuthority(), Role.CLIENT.toString())) {
-                founded = true;
-                break;
-            }
-        }
-        if (founded) {
-            return clientService.findById(authentication.getName());
+
+        if (RoleManager.hasRole(authentication, Role.CLIENT)) {
+            return new DataResponse<>(clientService.findById(authentication.getName()));
         }
 
-        return null;
+        return new ErrorResponse(ErrorType.ACCESS_DENIED);
     }
 
     @RequestMapping(value = "/{email}", method = RequestMethod.DELETE)
