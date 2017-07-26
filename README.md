@@ -10,6 +10,6 @@ MongoDB 3.2<br/>
 GridFS <br/>
 Elasticsearch 2.3 </br>
 Spring 4 (data, web, security, test) <br/>
-Javax javaee-api 7.0
-DbUnit 2.5.3
-JUnit 4
+Javax javaee-api 7.0 </br>
+DbUnit 2.5.3 </br>
+JUnit 4 </br>
