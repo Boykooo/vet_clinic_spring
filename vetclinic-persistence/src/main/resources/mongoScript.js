@@ -19,6 +19,7 @@ db.request.save({
     ]
 });
 
+//For autoinc
 db.sequence.insert(
     {
         _id: "issueInfo",

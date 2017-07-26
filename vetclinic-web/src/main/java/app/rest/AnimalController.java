@@ -56,11 +56,15 @@ public class AnimalController {
     @RequestMapping(value = "/{id}/image", method = RequestMethod.PUT)
     public BaseResponse updateImage(@PathVariable("id") Integer id,
                                     @RequestBody MultipartFile file) {
-        try {
-            animalImageService.update(file.getInputStream(), id);
-            return new SuccessResponse();
+        if (file != null) {
+            try {
+                animalImageService.update(file.getInputStream(), id);
+                return new SuccessResponse();
 
-        } catch (ObjectAlreadyExistException | IOException e) {
+            } catch (ObjectAlreadyExistException | IOException e) {
+                return new ErrorResponse(ErrorType.BAD_REQUEST);
+            }
+        } else {
             return new ErrorResponse(ErrorType.BAD_REQUEST);
         }
     }

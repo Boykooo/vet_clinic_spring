@@ -31,8 +31,8 @@
     </schema>
     <schema id="9" parent="2" name="vetclinic">
       <ObjectId>16925</ObjectId>
-      <IntrospectionTimestamp>2017-07-26.12:42:41.145</IntrospectionTimestamp>
-      <IntrospectionStateNumber>918</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2017-07-26.14:12:54.553</IntrospectionTimestamp>
+      <IntrospectionStateNumber>1010</IntrospectionStateNumber>
       <Visible>1</Visible>
     </schema>
     <object-type id="10" parent="3" name="status">
@@ -95,7 +95,11 @@ ADMIN</Labels>
       <ObjectId>16978</ObjectId>
       <StateNumber>918</StateNumber>
     </table>
-    <column id="20" parent="16" name="id">
+    <table id="20" parent="9" name="sequence">
+      <ObjectId>17013</ObjectId>
+      <StateNumber>1006</StateNumber>
+    </table>
+    <column id="21" parent="16" name="id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -103,61 +107,61 @@ ADMIN</Labels>
       <SequenceName>vetclinic.animal_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;vetclinic.animal_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="21" parent="16" name="name">
+    <column id="22" parent="16" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>892</StateNumber>
     </column>
-    <column id="22" parent="16" name="age">
+    <column id="23" parent="16" name="age">
       <Position>3</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>892</StateNumber>
     </column>
-    <column id="23" parent="16" name="description">
+    <column id="24" parent="16" name="description">
       <Position>4</Position>
       <DataType>varchar(1000)|0</DataType>
       <StateNumber>892</StateNumber>
     </column>
-    <column id="24" parent="16" name="reg_date">
+    <column id="25" parent="16" name="reg_date">
       <Position>5</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>892</StateNumber>
     </column>
-    <column id="25" parent="16" name="client_email">
+    <column id="26" parent="16" name="client_email">
       <Position>6</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>892</StateNumber>
     </column>
-    <column id="26" parent="16" name="ill">
+    <column id="27" parent="16" name="ill">
       <Position>7</Position>
       <DataType>boolean|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>892</StateNumber>
       <DefaultExpression>false</DefaultExpression>
     </column>
-    <index id="27" parent="16" name="animal_pkey">
+    <index id="28" parent="16" name="animal_pkey">
       <ObjectId>16961</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="28" parent="16" name="animal_pkey">
+    <key id="29" parent="16" name="animal_pkey">
       <ObjectId>16962</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>animal_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="29" parent="16" name="fk1g380saadb4a3qjyu1nwmew6m">
+    <foreign-key id="30" parent="16" name="fk1g380saadb4a3qjyu1nwmew6m">
       <ObjectId>16998</ObjectId>
       <ColNames>client_email</ColNames>
       <RefTableName>client</RefTableName>
       <RefKeyName>client_pkey</RefKeyName>
       <RefColNames>email</RefColNames>
     </foreign-key>
-    <foreign-key id="30" parent="16" name="fk_client_email">
+    <foreign-key id="31" parent="16" name="fk_client_email">
       <ObjectId>16963</ObjectId>
       <ColNames>client_email</ColNames>
       <RefTableName>client</RefTableName>
@@ -166,107 +170,107 @@ ADMIN</Labels>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="31" parent="17" name="email">
+    <column id="32" parent="17" name="email">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>891</StateNumber>
     </column>
-    <column id="32" parent="17" name="password">
+    <column id="33" parent="17" name="password">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>891</StateNumber>
     </column>
-    <column id="33" parent="17" name="phone_number">
+    <column id="34" parent="17" name="phone_number">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>891</StateNumber>
     </column>
-    <column id="34" parent="17" name="first_name">
+    <column id="35" parent="17" name="first_name">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>891</StateNumber>
     </column>
-    <column id="35" parent="17" name="last_name">
+    <column id="36" parent="17" name="last_name">
       <Position>5</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>891</StateNumber>
     </column>
-    <column id="36" parent="17" name="reg_date">
+    <column id="37" parent="17" name="reg_date">
       <Position>6</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>891</StateNumber>
     </column>
-    <index id="37" parent="17" name="client_pkey">
+    <index id="38" parent="17" name="client_pkey">
       <ObjectId>16949</ObjectId>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="38" parent="17" name="client_pkey">
+    <key id="39" parent="17" name="client_pkey">
       <ObjectId>16950</ObjectId>
       <ColNames>email</ColNames>
       <UnderlyingIndexName>client_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="39" parent="18" name="email">
+    <column id="40" parent="18" name="email">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>893</StateNumber>
     </column>
-    <column id="40" parent="18" name="password">
+    <column id="41" parent="18" name="password">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>893</StateNumber>
     </column>
-    <column id="41" parent="18" name="phone_number">
+    <column id="42" parent="18" name="phone_number">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>893</StateNumber>
     </column>
-    <column id="42" parent="18" name="first_name">
+    <column id="43" parent="18" name="first_name">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>893</StateNumber>
     </column>
-    <column id="43" parent="18" name="last_name">
+    <column id="44" parent="18" name="last_name">
       <Position>5</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>893</StateNumber>
     </column>
-    <column id="44" parent="18" name="reg_date">
+    <column id="45" parent="18" name="reg_date">
       <Position>6</Position>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>893</StateNumber>
     </column>
-    <column id="45" parent="18" name="role">
+    <column id="46" parent="18" name="role">
       <Position>7</Position>
       <DataType>vetclinic.role|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>893</StateNumber>
     </column>
-    <index id="46" parent="18" name="employee_pkey">
+    <index id="47" parent="18" name="employee_pkey">
       <ObjectId>16974</ObjectId>
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="47" parent="18" name="employee_pkey">
+    <key id="48" parent="18" name="employee_pkey">
       <ObjectId>16975</ObjectId>
       <ColNames>email</ColNames>
       <UnderlyingIndexName>employee_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="48" parent="19" name="id">
+    <column id="49" parent="19" name="id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -274,51 +278,51 @@ ADMIN</Labels>
       <SequenceName>vetclinic.patient_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;vetclinic.patient_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="49" parent="19" name="animal_id">
+    <column id="50" parent="19" name="animal_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>894</StateNumber>
     </column>
-    <column id="50" parent="19" name="employee_email">
+    <column id="51" parent="19" name="employee_email">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <StateNumber>894</StateNumber>
     </column>
-    <column id="51" parent="19" name="description">
+    <column id="52" parent="19" name="description">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>894</StateNumber>
     </column>
-    <column id="52" parent="19" name="start_date">
+    <column id="53" parent="19" name="start_date">
       <Position>5</Position>
       <DataType>date|0</DataType>
       <StateNumber>894</StateNumber>
     </column>
-    <column id="53" parent="19" name="end_date">
+    <column id="54" parent="19" name="end_date">
       <Position>6</Position>
       <DataType>date|0</DataType>
       <StateNumber>894</StateNumber>
     </column>
-    <column id="54" parent="19" name="status">
+    <column id="55" parent="19" name="status">
       <Position>7</Position>
       <DataType>vetclinic.status|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>894</StateNumber>
     </column>
-    <index id="55" parent="19" name="patient_pkey">
+    <index id="56" parent="19" name="patient_pkey">
       <ObjectId>16982</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="56" parent="19" name="patient_pkey">
+    <key id="57" parent="19" name="patient_pkey">
       <ObjectId>16983</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>patient_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="57" parent="19" name="fk_animal_id">
+    <foreign-key id="58" parent="19" name="fk_animal_id">
       <ObjectId>16984</ObjectId>
       <ColNames>animal_id</ColNames>
       <RefTableName>animal</RefTableName>
@@ -327,14 +331,14 @@ ADMIN</Labels>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="58" parent="19" name="fkaxj6dnqn2ylw2cic0w0najs8a">
+    <foreign-key id="59" parent="19" name="fkaxj6dnqn2ylw2cic0w0najs8a">
       <ObjectId>17003</ObjectId>
       <ColNames>animal_id</ColNames>
       <RefTableName>animal</RefTableName>
       <RefKeyName>animal_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="59" parent="19" name="fk_employee_email">
+    <foreign-key id="60" parent="19" name="fk_employee_email">
       <ObjectId>16989</ObjectId>
       <ColNames>employee_email</ColNames>
       <RefTableName>employee</RefTableName>
@@ -342,12 +346,34 @@ ADMIN</Labels>
       <RefColNames>email</RefColNames>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <foreign-key id="60" parent="19" name="fkoqtqy6m65jj3p9fbxgg6r2ad">
+    <foreign-key id="61" parent="19" name="fkoqtqy6m65jj3p9fbxgg6r2ad">
       <ObjectId>17008</ObjectId>
       <ColNames>employee_email</ColNames>
       <RefTableName>employee</RefTableName>
       <RefKeyName>employee_pkey</RefKeyName>
       <RefColNames>email</RefColNames>
     </foreign-key>
+    <column id="62" parent="20" name="_id">
+      <Position>1</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1010</StateNumber>
+    </column>
+    <column id="63" parent="20" name="seq">
+      <Position>2</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>1008</StateNumber>
+    </column>
+    <index id="64" parent="20" name="sequence_pkey">
+      <ObjectId>17016</ObjectId>
+      <ColNames>_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="65" parent="20" name="sequence_pkey">
+      <ObjectId>17017</ObjectId>
+      <ColNames>_id</ColNames>
+      <UnderlyingIndexName>sequence_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
   </database-model>
 </dataSource>

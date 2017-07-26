@@ -79,9 +79,6 @@ public class PatientController {
     @RequestMapping(method = RequestMethod.POST)
     public BaseResponse add(@RequestBody PatientDto patient) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(RoleManager.hasRole(authentication, Role.CLIENT)) {
-            return new ErrorResponse(ErrorType.ACCESS_DENIED);
-        }
 
         if (patient != null) {
             try {
