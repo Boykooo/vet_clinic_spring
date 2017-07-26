@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import services.AnimalImageService;
 import services.AnimalService;
+import services.ClientService;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +27,8 @@ public class AnimalController {
     private AnimalImageService animalImageService;
     @Autowired
     private AnimalService animalService;
+    @Autowired
+    private ClientService clientService;
 
     @RequestMapping(method = RequestMethod.GET)
     public BaseResponse getAll() {
@@ -68,6 +71,8 @@ public class AnimalController {
         if (form != null) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+//            ClientDto clientDto = clientService.findById(authentication.getName());
+
             AnimalDto dto = animalService.add(
                     new AnimalDto(
                             form.name,
@@ -78,7 +83,6 @@ public class AnimalController {
             );
 
             return new DataResponse<Integer>(dto.getId());
-
         } else {
             return new ErrorResponse(ErrorType.BAD_REQUEST);
         }

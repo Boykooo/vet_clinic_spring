@@ -11,7 +11,7 @@ public class Animal {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name", length = 100, nullable = false)
@@ -29,7 +29,7 @@ public class Animal {
     @Column(name = "reg_date", nullable = false)
     private Date regDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_email", nullable = false)
     @JsonIgnoreProperties("animals")
     private Client client;
