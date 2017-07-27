@@ -68,8 +68,8 @@ public class AnimalService {
         return animals;
     }
 
-    public Long getCount() {
-        return animalDao.count();
+    public Long getCount(String email) {
+        return animalDao.countByClientEmail(email);
     }
 
     public AnimalDto convertToDto(Animal animal) {

@@ -41,7 +41,8 @@ public class AnimalController {
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)
     public BaseResponse getCount() {
-        return new DataResponse<>(animalService.getCount());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new DataResponse<>(animalService.getCount(authentication.getName()));
     }
 
     @RequestMapping(value = "/page/{startPage}/{amount}", method = RequestMethod.GET)

@@ -20,4 +20,6 @@ public interface AnimalDao extends JpaRepository<Animal, Integer> {
     @Query("select a from Animal a where a.client_email = :#{#email}")
     Page<Animal> findByClientEmail(@Param("email") String email, Pageable pageable);
 
+    Long countByClientEmail(@Param("email") String email);
+
 }
