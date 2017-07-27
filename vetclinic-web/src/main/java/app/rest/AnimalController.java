@@ -16,7 +16,6 @@ import services.AnimalService;
 import services.ClientService;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -38,6 +37,22 @@ public class AnimalController {
                         SecurityContextHolder.getContext().getAuthentication().getName()
                 )
         );
+    }
+
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public BaseResponse getCount() {
+        return new DataResponse<>(animalService.getCount());
+    }
+
+    @RequestMapping(value = "/page/{startPage}/{amount}", method = RequestMethod.GET)
+    public BaseResponse getPage(@PathVariable("startPage") Integer startPage,
+                                @PathVariable("amount") Integer amount) {
+
+        return new DataResponse<>(animalService.getPage(
+                SecurityContextHolder.getContext().getAuthentication().getName(),
+                startPage,
+                amount
+        ));
     }
 
     @RequestMapping(value = "/{id}/image", method = RequestMethod.POST)

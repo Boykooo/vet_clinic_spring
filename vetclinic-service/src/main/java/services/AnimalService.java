@@ -6,6 +6,7 @@ import entities.Animal;
 import entities.Client;
 import exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -56,12 +57,19 @@ public class AnimalService {
         animalDao.delete(key);
     }
 
-    public List<AnimalDto> getLimit(String email,Integer startPage, Integer amount) {
-        return null;
+    public List<AnimalDto> getPage(String email, Integer startPage, Integer amount) {
+
+        List<AnimalDto> animals = new ArrayList();
+        animalDao.findByClientEmail(email, new PageRequest(startPage, amount)).getContent()
+                .forEach(
+                        (Animal animal) -> animals.add(convertToDto(animal))
+                );
+
+        return animals;
     }
 
-    public Long count() {
-        return null;
+    public Long getCount() {
+        return animalDao.count();
     }
 
     public AnimalDto convertToDto(Animal animal) {

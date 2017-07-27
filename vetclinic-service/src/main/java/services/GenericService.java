@@ -13,6 +13,6 @@ public interface GenericService<Entity, PK> {
     PatientDto add(Entity entity) throws ObjectAlreadyExistException;
     PatientDto update(Entity entity) throws ObjectNotFoundException;
     void delete(PK key);
-    List<Entity> getLimit(String email, Integer startPage, Integer amount);
+    List<Entity> getPage(String email, Integer startPage, Integer amount);
     Long count();
 }

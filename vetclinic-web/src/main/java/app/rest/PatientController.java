@@ -18,8 +18,6 @@ import services.EsService;
 import services.PatientService;
 import util.DateManager;
 
-import java.sql.Date;
-
 
 @RestController
 @RequestMapping(value = "/api/patient", produces = "application/json")
@@ -45,11 +43,12 @@ public class PatientController {
         ));
     }
 
-    @RequestMapping(value = "/page/{number}/{amount}", method = RequestMethod.GET)
-    public BaseResponse getPage(@PathVariable("number") Integer number, @PathVariable("amount") Integer amount) {
-        return new DataResponse<>(patientService.getLimit(
+    @RequestMapping(value = "/page/{startPage}/{amount}", method = RequestMethod.GET)
+    public BaseResponse getPage(@PathVariable("startPage") Integer startPage,
+                                @PathVariable("amount") Integer amount) {
+        return new DataResponse<>(patientService.getPage(
                 SecurityContextHolder.getContext().getAuthentication().getName(),
-                number,
+                startPage,
                 amount
         ));
     }

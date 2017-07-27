@@ -33,7 +33,7 @@ public class EmployeeController {
             @PathVariable("startPage") Integer startPage,
             @PathVariable("amount") Integer amount) {
 
-        return employeeService.getLimit(
+        return employeeService.getPage(
                 SecurityContextHolder.getContext().getAuthentication().getName(),
                 startPage,
                 amount

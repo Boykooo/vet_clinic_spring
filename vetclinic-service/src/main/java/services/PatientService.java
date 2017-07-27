@@ -90,7 +90,7 @@ public class PatientService implements GenericService<PatientDto, Integer> {
     }
 
     @Override
-    public List<PatientDto> getLimit(String email, Integer startPage, Integer amount) {
+    public List<PatientDto> getPage(String email, Integer startPage, Integer amount) {
 
         List<PatientDto> patients = new ArrayList();
         patientDao.findInProgressPagable(email, new PageRequest(startPage, amount)).getContent()

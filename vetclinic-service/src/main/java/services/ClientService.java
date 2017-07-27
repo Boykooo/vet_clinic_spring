@@ -130,7 +130,7 @@ public class ClientService implements GenericService<ClientDto, String> {
     }
 
     @Override
-    public List<ClientDto> getLimit(String email,Integer startPage, Integer amount) {
+    public List<ClientDto> getPage(String email, Integer startPage, Integer amount) {
         return null;
     }
 
